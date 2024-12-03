@@ -6,6 +6,7 @@ class Item {
     width;
     height;
     img;
+    speed=1;
 
 
     constructor() {
@@ -29,5 +30,10 @@ class Item {
 
     nextImage() {
         this.index=++this.index % this.images.length;
+    }
+
+    draw(ctx) {
+        ctx.drawImage(this.img,this.x,this.y,this.width,this.height);
+        // requestAnimationFrame(function () {self.draw(ctx)});
     }
 }
