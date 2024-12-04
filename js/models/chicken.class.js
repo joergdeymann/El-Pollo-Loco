@@ -2,16 +2,23 @@ class Chicken extends MovableObject {
     stoptimer=false;
     count=0;
 
+    IMAGES_WALKING=[
+        './assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
+        './assets/img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
+        './assets/img/3_enemies_chicken/chicken_normal/1_walk/3_w.png',
+    ];
+
     constructor() {
         super();
-        this.loadImage('./assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png'); 
+        this.loadImages(this.IMAGES_WALKING); 
         this.x = Math.random()*620 +720; // Random Position in first screen + screensize-center 
-        this.y= 350;
+        this.y= 365;
         this.width=75;
         this.height=60;
         this.speed= 0;
         this.moveLeft();
         this.resetPosition();
+        this.animateStart()
 
         setTimeout(() => this.adjustSpeed(), Math.random()*1000*10); //SpeedDelay
         
@@ -44,9 +51,4 @@ class Chicken extends MovableObject {
         },1000)
     }
 
-    moveLeft() {
-        setInterval(() => {
-            this.x-=this.speed;
-        },1000/60)
-    }
 }

@@ -3,9 +3,9 @@ class Cloud extends MovableObject {
     count=0;
     static time;
 
-    constructor() {
+    constructor(image) {
         super();
-        this.loadImage('./assets/img/5_background/layers/4_clouds/1.png'); 
+        this.loadImage(image); 
         this.width=300;
         this.height=120;
         this.speed=0;
@@ -15,9 +15,10 @@ class Cloud extends MovableObject {
     } 
 
     init() {
-        setTimeout(() => this.moveLeft(), Math.random()*1000*10); //Move Delay
+        setTimeout(() => this.moveLeft(), Math.random()*1000*5); //Move Delay First Time
         this.resetPosition();
         this.start();
+        this.adjustSpeed();
     }
 
     pick() {
@@ -45,8 +46,9 @@ class Cloud extends MovableObject {
         // this.speed=(0.2+this.speed*Math.random());
         // delay=Math.random*1000*10;
 
-        setTimeout(() => this.adjustSpeed(), Math.random*1000*10); //SpeedDelay
+        // setTimeout(() => this.adjustSpeed(), Math.random*1000*10); //SpeedDelay
     }
+
 
     resetPosition() {
         setInterval(() => {
@@ -54,10 +56,4 @@ class Cloud extends MovableObject {
         },1000)
     }
 
-    moveLeft() {
-        setInterval(() => {
-            this.x-=this.speed;
-        },1000/60)
-        
-    }
 }

@@ -8,7 +8,6 @@ class Item {
     img;
     speed=1;
 
-
     constructor() {
         this.x=150;
         this.y=250;
@@ -21,14 +20,17 @@ class Item {
         console.log(this);
     }
 
-    addImages(images) {
-        for(let image of images) {
-            let img = new Image(image);
-            this.images.add(img);
+    loadImages(images) {
+        for(let path of images) {
+            let img = new Image();
+            img.src= path;
+            this.images.push(img);  //# im Video as JSON this.images[path]=path;
         }
+        this.img=this.images[0];
     }
 
     nextImage() {
+        this.img=this.images[this.index];
         this.index=++this.index % this.images.length;
     }
 
