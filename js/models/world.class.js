@@ -24,21 +24,25 @@ class World {
     
     ctx;
     canvas;
+    key;
 
-    constructor(canvas) {
+    constructor(canvas,keyboard) {
         this.canvas=canvas;
-        console.log(canvas);
+        this.key=keyboard;
+
         this.ctx=canvas.getContext('2d');
         this.ctx.size=this.canvas;
-//         {width:this.canvas.width,height:this.canvas.height};
-        this.draw();        
+        this.draw();      
+        this.addWorld();  
+    }
+
+    addWorld() {
+        this.character.world=this;
     }
 
 
     draw() {
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-        // this.ctx.canvas=canvas; 
-        // this.ctx.drawImage(this.character.img,this.character.x,this.character.y,this.character.width,this.character.height);
 
         this.addToMap(this.backgrounds);
         this.addToMap(this.clouds);

@@ -1,5 +1,8 @@
-class Chicken extends MovableObject {
-    stoptimer=false;
+class Chicken extends AnimatedObject {
+    y= 365;
+    width=75;
+    height=60;
+
     count=0;
 
     IMAGES_WALKING=[
@@ -10,45 +13,30 @@ class Chicken extends MovableObject {
 
     constructor() {
         super();
-        this.loadImages(this.IMAGES_WALKING); 
         this.x = Math.random()*620 +720; // Random Position in first screen + screensize-center 
-        this.y= 365;
-        this.width=75;
-        this.height=60;
-        this.speed= 0;
-        this.moveLeft();
-        this.resetPosition();
-        this.animateStart()
 
-        setTimeout(() => this.adjustSpeed(), Math.random()*1000*10); //SpeedDelay
+        this.loadImages(this.IMAGES_WALKING);
+        this.init();
+    
+
         
 
         // this.moveLeft();       
     } 
 
+    init() {
+        this.animationStart();
+        this.initListenerMoveLeft();
+        this.initListenerLeftPosition();
+        this.adjustSpeedTimer();
+    }
+ 
+
     pick() {
 
     }
 
-    /**
-     * AdjustSpeed every 5 Seconds + random of 0-1 Seconds random
-     * set speed to random of 0 to 2
-     */
-    adjustSpeed() {
-        this.speed=1*Math.random();
 
-        let intervalDelay=Math.random()*5000;
-        let intervalTime=1000;
 
-        if (!this.stoptimer) { 
-            setTimeout(() => this.adjustSpeed(), intervalTime+intervalDelay); 
-        }
-    }
-
-    resetPosition() {
-        setInterval(() => {
-            if (this.x < -500) this.x=720;
-        },1000)
-    }
 
 }

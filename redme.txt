@@ -1,0 +1,8 @@
+Fragen
+========
+wenn ich ein Image erstelle
+und dann ein bild mit bild.src="text.png" muss das bild geladen werden
+kostet das nicht zeit ?
+1. Sollte man nicht das erstellte Image Tag in das array/JSON schreiben ?
+2. Warum ein JSON mit dem Link als Key ?
+3. 

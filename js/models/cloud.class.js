@@ -1,59 +1,43 @@
 class Cloud extends MovableObject {
-    stoptimer=false;
     count=0;
-    static time;
+    width=300;
+    height=120;
+
+    //Speed Settings for each Cloud
+    speedRange=0.2;
+    speedMin=0.2;
+    speedIntervalRange=5000;
+    speedIntervalMin=5000;
 
     constructor(image) {
         super();
         this.loadImage(image); 
-        this.width=300;
-        this.height=120;
-        this.speed=0;
-
-
         this.init();
     } 
 
     init() {
-        setTimeout(() => this.moveLeft(), Math.random()*1000*5); //Move Delay First Time
-        this.resetPosition();
-        this.start();
+        // setTimeout(() => this.initMoveLeft(), Math.random()*1000*5); //Move Delay First Time
+        this.initListenerMoveLeft();       //let Cloud move dircetly
+        this.initListenerLeftPosition();   //listener LeftPosition
+        this.initStartPosition();          //set StartPosition
         this.adjustSpeed();
     }
 
-    pick() {
-
+    initListenerLeftPosition() {
+        setInterval(() => {
+            if (this.x < -this.width) this.newStartPosition(); // Map Width
+        },1000)
     }
 
-    /**
-     * AdjustSpeed every 5 Seconds + random of 0-1 Seconds random
-     * set speed to random of 0 to 2
-     */
-    adjustSpeed() {
-        this.speed=(0.2+this.speed*Math.random());
-        
-        let intervalDelay=Math.random()*5000;
-        let intervalTime=5000;
-
-        if (!this.stoptimer) { 
-            setTimeout(() => this.adjustSpeed(), intervalTime+intervalDelay); 
-        }
+    initStartPosition() {
+        this.x = Math.random()*720; // Random Position in first screen + screensize-center 
+        this.y=15+Math.random()*100;
+        this.speed=0.3;
     }
 
-    start() {
+    newStartPosition() {
         this.x = Math.random()*620 +720; // Random Position in first screen + screensize-center 
         this.y=15+Math.random()*100;
-        // this.speed=(0.2+this.speed*Math.random());
-        // delay=Math.random*1000*10;
-
-        // setTimeout(() => this.adjustSpeed(), Math.random*1000*10); //SpeedDelay
-    }
-
-
-    resetPosition() {
-        setInterval(() => {
-            if (this.x < -500) this.start();
-        },1000)
     }
 
 }

@@ -1,7 +1,9 @@
-class Character extends MovableObject {
+class Character extends AnimatedObject {
     width=195;
     height=300;
     y=135;
+    x=150;
+    world;
 
     IMAGES_WALKING=[
         'assets/img/2_character_pepe/2_walk/W-21.png',
@@ -14,17 +16,15 @@ class Character extends MovableObject {
 
     constructor() {
         super();
-
-        this.loadImage('assets/img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
-        this.animateStart();
-        // this.x=150;
-        
+        this.animationStart();        
     } 
 
-    animateStart() {
+    animationStart() {
+        let interval=this.randomInterval();
         setInterval(() => {
-            this.nextImage();
-        },200);
+            if (this.world.key.RIGHT) this.nextImage();
+        },interval);
     }
+
 }
