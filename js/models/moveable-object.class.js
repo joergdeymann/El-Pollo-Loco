@@ -1,5 +1,6 @@
 class MovableObject extends Item {
     speed= 0;
+    speedType=0;
     speedRange=1;
     speedMin=0;
     speedMax=1;
@@ -49,14 +50,16 @@ class MovableObject extends Item {
      * set speed to random of 0 to 2
      */
     adjustSpeed() {
-        this.adjustSpeedRandom();
+        if (this.speedType==0)  this.adjustSpeedRandom(); 
+        if (this.speedType==1)  this.adjustSpeedSmooth(); 
+        
         if (!this.stoptimer) { 
             this.adjustSpeedTimer();
         }
     }
 
     adjustSpeedSmoth() {
-        this.speed=min(max(this.speedMin,this.speed*Math.random()*this.speedRange),this.speedMax);
+        this.speed=min(max(this.speedMin,this.speed+Math.random()*this.speedRange-this.speedRange/2),this.speedMax);
     }
 
     adjustSpeedRandom() {

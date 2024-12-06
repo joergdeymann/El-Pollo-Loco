@@ -1,3 +1,36 @@
+Features
+========
+1. Wolken: 
+    - unterschiedliche Geschwindigkeiten 
+    - Respawn auf unterschiedlichen Y Positionen
+    - Geschwindikeitsänderungen der Wolken nach einer Random Zeit auf einer Random Geschwindigkeit angepssst auf die derzeitige Geschwindigkeit
+
+2. Chicken
+    - unterschiedliche Geschwindigkeiten 
+    - Respawn auf unterschiedlichen Y Positionen
+    - Fussbewegungen unterschiedlicher Start
+    - Geschwindikeitsänderungen der Chicken nach einer Random Zeit auf einer Random Geschwindigkeit 
+
+3. Al Pollo Bewegungen
+    - Gehen
+    - Rennen 
+    - Springen 
+    - Ducken
+    - Schlafen Kurz
+    - Schlafen lang
+    
+4. Al Pollo Waffen    
+    - auf ein Chicken springen
+    - Flaschen als Wurfwaffe E
+    - Rollangriff (Ansturm mit sich drehenden Körper) Q
+
+5. Schadennehmen
+    - Berühren der Chicken
+    - gepickt werden
+    - Springender Boss
+    - Werfen von coins vom Boss
+    - Federregen vom Boss
+    
 Fragen
 ========
 wenn ich ein Image erstelle

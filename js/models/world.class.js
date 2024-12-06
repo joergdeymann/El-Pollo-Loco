@@ -1,30 +1,15 @@
 class World {
-    character = new Character();
+    character;
+    level; // =level1;
 
-    enemies=[
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-    ];
 
-    clouds=[
-        new Cloud('./assets/img/5_background/layers/4_clouds/1.png'),
-        new Cloud('./assets/img/5_background/layers/4_clouds/2.png'),
-        new Cloud('./assets/img/5_background/layers/4_clouds/1.png'),
-        new Cloud('./assets/img/5_background/layers/4_clouds/2.png'),
-    ];
-
-    backgrounds=[
-        new Background('./assets/img/5_background/layers/air.png',0),
-        new Background('./assets/img/5_background/layers/3_third_layer/1.png',0),
-        new Background('./assets/img/5_background/layers/2_second_layer/1.png',0),
-        new Background('./assets/img/5_background/layers/1_first_layer/1.png',0),
-        
-    ];
-    
     ctx;
     canvas;
     key;
+    cameraX=-100;
+
+    width=720*2*5;
+
 
     constructor(canvas,keyboard) {
         this.canvas=canvas;
@@ -32,22 +17,34 @@ class World {
 
         this.ctx=canvas.getContext('2d');
         this.ctx.size=this.canvas;
-        this.draw();      
+        this.character=new Character();    
         this.addWorld();  
+        // this.draw();  
     }
+
+    chooseLevel(level) {
+        this.level=level;
+        this.draw();
+    }
+
+
 
     addWorld() {
         this.character.world=this;
+        
     }
 
 
     draw() {
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+        this.ctx.translate(this.cameraX,0);
 
-        this.addToMap(this.backgrounds);
-        this.addToMap(this.clouds);
+        this.addToMap(this.level.backgrounds);
+        this.addToMap(this.level.clouds);
         this.character.draw(this.ctx);
-        this.addToMap(this.enemies);
+        this.addToMap(this.level.enemies);
+
+        this.ctx.translate(-this.cameraX,0);
 
         requestAnimationFrame(() => this.draw());
 
@@ -57,6 +54,7 @@ class World {
     addToMap(objects) {
         for(let object of objects) {
             object.draw(this.ctx);
+            object.world=this;
         }
     }
 }
