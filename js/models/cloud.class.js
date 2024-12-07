@@ -1,5 +1,5 @@
 class Cloud extends MovableObject {
-    count=0;
+    static id=0;
     width=300;
     height=120;
 
@@ -15,14 +15,15 @@ class Cloud extends MovableObject {
         super();
         this.loadImage(image); 
         this.init();
+        Cloud.id++;
     } 
 
     init() {
         // setTimeout(() => this.initMoveLeft(), Math.random()*1000*5); //Move Delay First Time
-        this.initListenerMoveLeft();       //let Cloud move dircetly
-        this.initListenerLeftPosition();   //listener LeftPosition
         this.initStartPosition();          //set StartPosition
         this.adjustSpeed();
+        this.initListenerMoveLeft(); 
+        this.initListenerLeftPosition();   //listener LeftPosition
     }
 
     initListenerLeftPosition() {
@@ -32,16 +33,37 @@ class Cloud extends MovableObject {
     }
 
     initStartPosition() {
-        this.x = Math.random()*(this.levelwidth+720); // Random Position in first screen + screensize-center 
-        this.y=-15+Math.random()*100;
-        this.speed=0.3;
+
+        if (this.world?.level?.width) {
+            // this.x = Math.random()*(this.levelwidth+720); // Random Position in first screen + screensize-center 
+            this.setRandomStartPositionX(); 
+            this.setRandomPositionY();
+            this.speed=0.3;    
+ 
+        } else {
+            setTimeout(() => this.initStartPosition(),50);
+        }
     }
 
-    newStartPosition() {
-        this.x = Math.random()*2000 + this.world.level.levelwidth; // Random Position in first screen + screensize-center 
-        if (this.x > this.world.character.x-150) this.x = this.world.character.x-150;  
-        if (this.x < this.world.character.x+150) this.x = this.world.character.x+150;
+
+    setRandomPositionX() {
+        this.x = Math.random()*2000 + this.world.level.width;
+    }
+
+    setRandomPositionY() {
         this.y=-15+Math.random()*100;
     }
+
+    respawn() {
+        super.respawn();
+        this.setRandomPositionY(); 
+    } 
+
+
+    newStartPosition() {
+        this.setRandomPositionX(); 
+        this.setRandomPositionY(); 
+    }
+
 
 }

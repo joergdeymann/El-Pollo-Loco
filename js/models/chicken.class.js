@@ -13,7 +13,6 @@ class Chicken extends AnimatedObject {
 
     constructor() {
         super();
-        this.x = Math.random()*this.levelwidth +720;
 
         this.loadImages(this.IMAGES_WALKING);
         this.init();
@@ -29,6 +28,8 @@ class Chicken extends AnimatedObject {
         this.initListenerMoveLeft();
         this.initListenerLeftPosition();
         this.adjustSpeedTimer();
+        
+        this.setRandomStartPositionX();
     }
  
 

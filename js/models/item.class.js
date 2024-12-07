@@ -5,20 +5,18 @@ class Item {
     height;
     img;
     speed=1;
-    flip=0;
-    levelwidth=2*720*5;
-    
+    flip=false;
+    world;
+
 
     constructor() {
         this.x=150;
         this.y=250;
-        // this.addImages(images);
     }
     
     loadImage(path) {
         this.img= new Image();
         this.img.src= path;
-        console.log(this);
     }
 
 
@@ -36,4 +34,23 @@ class Item {
             ctx.restore();
         }
     }
+
+    setRandomPositionX() {
+        this.x = Math.random()*this.world.canvas.width + this.world.level.width;
+    }
+
+    setRandomStartPositionX() {
+        if (this.world?.level?.width) {
+            this.x = Math.random()*this.world.level.width;
+        } else {
+            setTimeout(() => this.setRandomStartPositionX(),50);
+        }
+    }
+
+    getCenterX(obj) {
+        return obj.x+obj.width/2;
+    }
+
+
+
 }

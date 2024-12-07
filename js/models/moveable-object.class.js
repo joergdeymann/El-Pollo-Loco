@@ -1,4 +1,7 @@
-class MovableObject extends Item {
+// extends ActionOnjects, 
+// hier solllen nur die direkten Movements rein
+
+class MovableObject extends AutomatedObject {
     speed= 0;
     speedType=0;
     speedRange=1;
@@ -19,54 +22,27 @@ class MovableObject extends Item {
 
     }
 
-    initListenerMoveLeft() {
-        setInterval(() => {
-            this.x-=this.speed;
-        },1000/60)        
-    }
-
     jump() {
         
     }
 
-    initListenerLeftPosition() {
-        setInterval(() => {
-            if (this.x < -this.width) this.x=720; // Map Width
-        },1000)
-    }
- 
 
-    adjustSpeedTimer() {
-        setTimeout(() => this.adjustSpeed(), this.speedInterval); //First SpeedDelay
+
+
+
+    isLeftFromCharacter() {
+        return this.getCenterX(this) < this.getCenterX(this.world.character);
     }
 
-    get speedInterval() {
-        let intervalDelay=Math.random()*this.speedIntervalRange;
-        return this.speedIntervalMin+intervalDelay;
+    isRightFromCharacter() {
+        return this.getCenterX(this) > this.getCenterX(this.world.character);
     }
 
-    /**
-     * AdjustSpeed every 5 Seconds + random of 0-1 Seconds random
-     * set speed to random of 0 to 2
-     */
-    adjustSpeed() {
-        if (this.speedType==0)  this.adjustSpeedRandom(); 
-        if (this.speedType==1)  this.adjustSpeedSmooth(); 
-        
-        if (!this.stoptimer) { 
-            this.adjustSpeedTimer();
-        }
-    }
-
-    adjustSpeedSmoth() {
-        this.speed=min(max(this.speedMin,this.speed+Math.random()*this.speedRange-this.speedRange/2),this.speedMax);
-    }
-
-    adjustSpeedRandom() {
-        this.speed=this.speedMin+Math.random()*this.speedRange;
-    }
-
-
-
+    // this.x + this.width/2
+    isNearCharacter() {
+        let enemy = this.getCenterX(this);
+        let character = this.getCenterX(this.world.character);
+        return enemy > character-150 && enemy < character+150;
+    }    
 
 }

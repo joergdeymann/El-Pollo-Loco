@@ -1,6 +1,6 @@
 class World {
     character;
-    level; // =level1;
+    level; 
 
 
     ctx;
@@ -18,20 +18,26 @@ class World {
         this.ctx=canvas.getContext('2d');
         this.ctx.size=this.canvas;
         this.character=new Character();    
-        this.addWorld();  
+        this.addWorld(this.character);  
         // this.draw();  
     }
 
     chooseLevel(level) {
         this.level=level;
+        this.addWorldOf(this.level.enemies);  
+        this.addWorldOf(this.level.clouds);  
+
         this.draw();
     }
 
+    addWorldOf(objects) {
+        for(let object of objects) {
+            object.world=this;
+        }
+    }
 
-
-    addWorld() {
-        this.character.world=this;
-        
+    addWorld(object) {
+        object.world=this;
     }
 
 
@@ -54,7 +60,6 @@ class World {
     addToMap(objects) {
         for(let object of objects) {
             object.draw(this.ctx);
-            object.world=this;
         }
     }
 }
