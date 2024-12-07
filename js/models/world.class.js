@@ -26,6 +26,7 @@ class World {
         this.level=level;
         this.addWorldOf(this.level.enemies);  
         this.addWorldOf(this.level.clouds);  
+        this.addWorldOf(this.level.endboss);  
 
         this.draw();
     }
@@ -47,6 +48,7 @@ class World {
 
         this.addToMap(this.level.backgrounds);
         this.addToMap(this.level.clouds);
+        this.addToMap(this.level.endboss);
         this.character.draw(this.ctx);
         this.addToMap(this.level.enemies);
 

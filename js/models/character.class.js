@@ -32,20 +32,19 @@ class Character extends AnimatedObject {
         this.soundWalk.pause();
         setInterval(() => {
             if (this.world.key.FAST) {
-                this.speedMultiplier=5;
-                this.soundWalk.playbackRate = 1.00 * this.speedMultiplier*this.speed  *2/5;
+                this.speed=5;
+                this.soundWalk.playbackRate = this.speed  *2/5;
             } else {
-                this.speedMultiplier=1;
+                this.speed=1;
                 this.soundWalk.playbackRate=1;
-                // this.soundWalk.playbackRate = 1.00/(this.speed*this.speedMultiplier);
             }
             if (this.world.key.RIGHT && this.x < this.world.level.width-425) {
-                this.x+=this.speed*this.speedMultiplier;
+                this.x+=this.speed;
                 this.flip=false;
                 this.soundWalk.play();
             }
             if (this.world.key.LEFT && this.x>300) {
-                this.x-=this.speed * this.speedMultiplier;
+                this.x-=this.speed;
                 this.flip=true;
                 this.soundWalk.play();
             }

@@ -3,10 +3,16 @@ class Keyboard {
         "37":"LEFT",
         "39":"RIGHT",
         "40":"DUCK",
-        "32":"JUMP",
+        "32":"JUMP",  // Jump or Fire
         "69":"FIRE",  // E 
         "81":"ALTFIRE", // Q
-        "16":"FAST" //Shift
+        "16":"FAST", //Shift
+
+        "65":"LEFT",  // A
+        "68":"RIGHT", // D
+        "87":"JUMP",  // W
+        "83":"DUCK"   // S
+
     }
 
     LEFT    = false;

@@ -2,12 +2,14 @@ class Level {
     enemies;
     clouds;
     backgrounds;
+    endboss;
     width;
     
-    constructor(enemies,clouds,backgrounds) {
+    constructor(enemies,clouds,backgrounds,endboss) {
         this.enemies=enemies;
         this.clouds=clouds;
         this.backgrounds=backgrounds;
+        this.endboss=endboss;
 
         this.addBackgrounds(countBackgrounds);
     }

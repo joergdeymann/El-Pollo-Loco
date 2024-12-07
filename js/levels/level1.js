@@ -20,6 +20,8 @@ let clouds=[];
 
 let enemies=[];
 
+let endboss=[]; 
+
 for(i=0;i<countClouds;i++) {
     clouds.push(new Cloud('./assets/img/5_background/layers/4_clouds/1.png'));
     clouds.push(new Cloud('./assets/img/5_background/layers/4_clouds/2.png'));
@@ -28,6 +30,6 @@ for(i=0;i<countClouds;i++) {
 for(i=0;i<countChicken;i++) {
     enemies.push(new Chicken());
 }
-
-const level1= new Level(enemies,clouds,backgrounds);
+endboss.push(new Endboss());
+const level1= new Level(enemies,clouds,backgrounds,endboss);
 // level1.width=backgrounds[0].width*(2*5+1);
