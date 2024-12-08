@@ -48,9 +48,10 @@ class Character extends AnimatedObject {
         this.applyGravity();
     }
     
+
     setWalkSpeed(speed) {
         this.speed=speed;
-        this.soundWalk.playbackRate = (100+speed*20)/100;
+        this.soundWalk.playbackRate = (this.speed-1)/2;
     }
 
     isLevelEnd() {
@@ -65,21 +66,17 @@ class Character extends AnimatedObject {
         this.soundWalk.pause();
         setInterval(() => {
             if (this.world.key.FAST) {
-                this.setWalkSpeed(5);
+                this.setWalkSpeed(5); // this.soundWalk.playbackRate = this.speed  *2/5;
             } else {
                 this.setWalkSpeed(1);
             }
+
             if (this.world.key.RIGHT && !this.isLevelEnd()) {
                 this.moveRight(this.soundWalk);
-                // this.x+=this.speed;
-                // this.flip=false;
-                // this.soundWalk.play();
             }
-            if (this.world.key.LEFT && !this.isLevelStart()) {
+
+            if (this.world.key.LEFT && !this.isLevelStart) {
                 this.moveLeft(this.soundWalk);
-                // this.x-=this.speed;
-                // this.flip=true;
-                // this.soundWalk.play();
             }
 
             if (this.world.key.JUMP && !this.isAboveGround()) {
@@ -94,7 +91,7 @@ class Character extends AnimatedObject {
             if (this.isAboveGround()) {
                 this.nextImage(this.IMAGES_JUMPING);
             } else {
-              if (this.world.key.RIGHT || this.world.key.LEFT) this.nextImage(this.IMAGES_WALKING);
+                if (this.world.key.RIGHT || this.world.key.LEFT) this.nextImage(this.IMAGES_WALKING);
             }
         },interval);
     }

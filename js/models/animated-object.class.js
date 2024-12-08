@@ -1,8 +1,10 @@
 class AnimatedObject extends MovableObject {
     intervalTime=175;
     intervalRange=50;
-    images=[];
+    images={};
     index=0;
+    IMAGES=[];
+
  
     constructor() {
         super()
@@ -29,18 +31,24 @@ class AnimatedObject extends MovableObject {
         for(let path of images) {
             let img = new Image();
             img.src= path;
-            this.images.push(img);  //# im Video as JSON this.images[path]=path;
+            this.images[path]=img;  //# im Video as JSON this.images[path]=path;
         }
-        this.img=this.images[0];
+        this.img=this.images[images[0]];
+        if (this.IMAGES.length == 0) this.IMAGES=images;
     }
 
-    nextImage() {
+    nextImage(images=this.IMAGES) {
+        this.IMAGES=images; // if (images != this.IMAGES) this.IMAGES=images;
         // this.images={};
-        // path=this.IMAGES_WALKING[this.index];
         // this.img=this.images[path];
 
-        this.img=this.images[this.index];
-        this.index=++this.index % this.images.length;
+        this.index=this.index % this.IMAGES.length;
+        let path=this.IMAGES[this.index];
+        this.img=this.images[path];
+        ++this.index;
+
+        // this.img=this.images[this.index];
+        // this.index=++this.index % this.images.length;
     }
 
 }

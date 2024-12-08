@@ -2,28 +2,52 @@
 // hier solllen nur die direkten Movements rein
 
 class MovableObject extends AutomatedObject {
-    speed= 0;
-    speedType=0;
-    speedRange=1;
-    speedMin=0;
-    speedMax=1;
-    speedIntervalRange=5000;
-    speedIntervalMin=1000;
-    stoptimer=false;
+    speedY=1;
+    accelerationY=0.2;
+
+
 
     constructor() {
         super()
 
     }
 
+    applyGravity() {
+        setInterval(() => {
+            if (this.isAboveGround()) {
+                this.y -= this.speedY;
+                this.speedY -= this.accelerationY;
+            }
+
+        },1000/60);
+    }
  
 
-    moveRight() {
+    isAboveGround() {
+        return this.y < 230;
+    }
 
+    // noch nicht ganz richtig
+    isFalling() {
+        return this.y < 0 && this.isAboveGround();
+    }
+ 
+
+    moveRight(sound=null) {
+        this.x+=this.speed;
+        this.flip=false;
+        if (sound) sound.play();
+    }
+
+    moveLeft(sound=null) {
+        this.x-=this.speed;
+        this.flip=true;
+        if (sound) sound.play();
     }
 
     jump() {
-        
+        this.speedY=3; 
+        this.y-=100;          
     }
 
 

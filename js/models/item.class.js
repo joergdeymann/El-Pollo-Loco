@@ -1,4 +1,4 @@
-class Item {
+class Item extends Drawable {
     x;
     y;
     width;
@@ -10,6 +10,7 @@ class Item {
 
 
     constructor() {
+        super();
         this.x=150;
         this.y=250;
     }
@@ -19,21 +20,6 @@ class Item {
         this.img.src= path;
     }
 
-
-    draw(ctx) {
-        if (this.flip) {
-            ctx.save();
-            ctx.translate(this.width,0);  
-            ctx.scale(-1,1);  
-            this.x=-this.x;
-        }
-        ctx.drawImage(this.img,this.x,this.y,this.width,this.height);
-        // requestAnimationFrame(function () {self.draw(ctx)});
-        if (this.flip) {
-            this.x=-this.x;
-            ctx.restore();
-        }
-    }
 
     setRandomPositionX() {
         this.x = Math.random()*this.world.canvas.width + this.world.level.width;

@@ -2,6 +2,7 @@ class Keyboard {
     KEYTABLE = {
         "37":"LEFT",
         "39":"RIGHT",
+        "38":"JUMP", //up
         "40":"DUCK",
         "32":"JUMP",  // Jump or Fire
         "69":"FIRE",  // E 
@@ -31,7 +32,7 @@ class Keyboard {
         let keyname=this.KEYTABLE[key.keyCode];
         if (keyname) this[keyname]=true;   
         key.preventDefault(); 
-        console.log(key.keyCode)
+        // console.log(key.keyCode)
     }
 
     getkeyUp(key) {

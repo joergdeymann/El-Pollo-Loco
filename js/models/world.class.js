@@ -1,6 +1,7 @@
 class World {
     character;
     level; 
+    endboss;
 
 
     ctx;
@@ -19,6 +20,7 @@ class World {
         this.ctx.size=this.canvas;
         this.character=new Character();    
         this.addWorld(this.character);  
+        
         // this.draw();  
     }
 
@@ -51,6 +53,9 @@ class World {
         this.addToMap(this.level.endboss);
         this.character.draw(this.ctx);
         this.addToMap(this.level.enemies);
+
+
+
 
         this.ctx.translate(-this.cameraX,0);
 
