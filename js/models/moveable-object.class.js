@@ -27,9 +27,8 @@ class MovableObject extends AutomatedObject {
         return this.y < 230;
     }
 
-    // noch nicht ganz richtig
     isFalling() {
-        return this.y < 0 && this.isAboveGround();
+        return this.speedY < 0 && this.isAboveGround();
     }
  
 

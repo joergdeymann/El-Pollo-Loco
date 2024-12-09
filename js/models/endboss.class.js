@@ -5,6 +5,35 @@ class Endboss extends AnimatedObject {
     height=350; // 60;
     speed=0;
 
+    hitboxes = [
+        {
+            dx:20,
+            dy:70,
+            width: 100,
+            height:100
+        },
+        {
+            dx:70,
+            dy:135,
+            width: 250,
+            height: 130
+        },
+        {
+            dx:135,
+            dy:265,
+            width: 115,
+            height:70
+        },
+        
+
+    ]
+    hitbox = {
+        dx:30,
+        dy:70,
+        width: 290,
+        height: 265
+    }
+
 
     count=0;
 

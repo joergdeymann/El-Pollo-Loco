@@ -3,6 +3,13 @@ class Chicken extends AnimatedObject {
     width=50;  // 75
     height=40; // 60;
 
+    hitbox = {
+        dx:2,
+        dy:10,
+        width: 44,
+        height: 24
+    }
+
     count=0;
 
     IMAGES_WALKING=[

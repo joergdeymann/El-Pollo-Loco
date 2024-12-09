@@ -8,6 +8,12 @@ class Character extends AnimatedObject {
     speed=1;
     speedMultiplier=1;
     offsetX=300;
+    hitbox = {
+        dx:25,
+        dy:80,
+        width: 65,
+        height: 110
+    }
 
 
     IMAGES_WALKING=[
