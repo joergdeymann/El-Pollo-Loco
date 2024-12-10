@@ -34,6 +34,9 @@ class Endboss extends AnimatedObject {
         height: 265
     }
 
+    damage={touch:10,jump:3000,fire:10};
+    live=10000;
+
 
     count=0;
 

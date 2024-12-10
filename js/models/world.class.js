@@ -1,5 +1,5 @@
 class World {
-    character;
+    character=new Character();
     level; 
     endboss;
 
@@ -18,19 +18,20 @@ class World {
 
         this.ctx=canvas.getContext('2d');
         this.ctx.size=this.canvas;
-        this.character=new Character();    
-        this.addWorld(this.character);  
+
         
         // this.draw();  
     }
 
     chooseLevel(level) {
         this.level=level;
+        this.addWorld(this.character);
         this.addWorldOf(this.level.enemies);  
         this.addWorldOf(this.level.clouds);  
         this.addWorldOf(this.level.endboss);  
 
         this.draw();
+        this.addCollisionListener();
     }
 
     addWorldOf(objects) {
@@ -42,6 +43,29 @@ class World {
     addWorld(object) {
         object.world=this;
     }
+
+    collisionAction(enemy) {
+        if (this.character.isColliding(enemy)) {
+            this.character.reduceLive(enemy,"touch");
+            console.log("Collission");
+        }
+    }
+
+    addCollisionListener() {
+
+        setInterval(() => {
+            this.character.resetCollision();
+            for (let enemy of this.level.enemies) {
+                this.collisionAction(enemy);
+            }
+            for (let enemy of this.level.endboss) {
+                this.collisionAction(enemy);
+            }
+            // this.collisionAction(this.level.endboss);
+
+        },200);
+    }
+
 
 
     draw() {
@@ -69,4 +93,5 @@ class World {
             object.draw(this.ctx);
         }
     }
+
 }
