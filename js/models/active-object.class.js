@@ -1,4 +1,4 @@
-class Item extends Drawable {
+class ActiveObject extends DrawableObject {
     x;
     y;
     width;
@@ -20,10 +20,6 @@ class Item extends Drawable {
         this.y=250;
     }
     
-    loadImage(path) {
-        this.img= new Image();
-        this.img.src= path;
-    }
 
 
     setRandomPositionX() {
@@ -82,10 +78,11 @@ class Item extends Drawable {
 
     reduceLive(obj,weapon) {
         this.live-=obj.damage[weapon];
+        if (this.live<0) this.live=0;
     }
 
     isDead() {
-        return this.live<0;
+        return this.live==0;
     }
 
     resetCollision() {

@@ -1,7 +1,7 @@
 // extends ActionOnjects, 
 // hier solllen nur die direkten Movements rein
 
-class AutomatedObject extends Item {
+class AutomatedObject extends ActiveObject {
     speed= 0;
     speedType=0;
     speedRange=1;

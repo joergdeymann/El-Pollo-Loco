@@ -26,13 +26,15 @@ class Endboss extends AnimatedObject {
         },
         
 
-    ]
+    ];
+
     hitbox = {
         dx:30,
         dy:70,
         width: 290,
         height: 265
-    }
+    };
+    
 
     damage={touch:10,jump:3000,fire:10};
     live=10000;

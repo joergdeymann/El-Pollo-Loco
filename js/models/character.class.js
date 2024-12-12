@@ -3,11 +3,12 @@ class Character extends AnimatedObject {
     height=300-100;
     y=230;// 400-this.image[0].height// 135;
     y=100;
-    x=150+400;
+    x=150+200;
     world;
     speed=1;
     speedMultiplier=1;
     offsetX=300;
+
     hitbox = {
         dx:25,
         dy:80,
@@ -16,6 +17,8 @@ class Character extends AnimatedObject {
     }
     damage={touch:0,jump:100,fire:10};
     live=100; // 1000;
+    maxlive=this.live;
+
 
 
 
@@ -81,6 +84,9 @@ class Character extends AnimatedObject {
         this.speed=speed;
         this.soundWalk.playbackRate = (100+speed*20)/100;
     }
+    get livePercentage() {
+        return 100*this.live/this.maxlive;
+    }
 
     isLevelEnd() {
         return this.x > this.world.level.width-425;
@@ -137,9 +143,10 @@ class Character extends AnimatedObject {
             }
 
             if (this.isDead()) {
-                clearInterval(animation);
+                this.nextImage(this.IMAGES_DEAD);  // let it run for some sconds and then stop everything 
+                // clearInterval(animation);
                 clearInterval(moveInterval);
-                this.deadAnimation();
+                // this.deadAnimation();
                 return;
             }
 

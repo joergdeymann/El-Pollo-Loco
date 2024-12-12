@@ -1,23 +1,22 @@
-class AnimatedObject extends MovableObject {
-    intervalTime=175;
-    intervalRange=50;
-    images={};
-    index=0;
+class DrawableObject extends Drawable {
+    x=150;
+    y=250;
+    height=150;
+    width=100;
+
+    img;
+    images=[];
     IMAGES=[];
+    currentImage =0;
 
- 
+
     constructor() {
-        super()
-        // this.animationStart();
+        super();
     }
 
-    setInterval(time,range) {
-        this.intervalTime=time;
-        this.intervalRange=range;
-    }
-
-    randomInterval() {
-        return this.intervalTime+this.intervalRange*Math.random();
+    loadImage(path) {
+        this.img= new Image();
+        this.img.src= path;
     }
 
     animationStart() {

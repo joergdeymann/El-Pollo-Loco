@@ -2,6 +2,12 @@ class World {
     character=new Character();
     level; 
     endboss;
+    statusBar={
+        LIVE:new Statusbar("IMAGES_LIVE",0),
+        COINS:new Statusbar("IMAGES_COINS",25),
+        BOTTLES:new Statusbar("IMAGES_BOTTLES",50),
+        ENDBOSS:new Statusbar("IMAGES_ENDBOSS",75),
+    };
 
 
     ctx;
@@ -26,22 +32,24 @@ class World {
     chooseLevel(level) {
         this.level=level;
         this.addWorld(this.character);
-        this.addWorldOf(this.level.enemies);  
-        this.addWorldOf(this.level.clouds);  
-        this.addWorldOf(this.level.endboss);  
+        this.addWorld(this.level.enemies);  
+        this.addWorld(this.level.clouds);  
+        this.addWorld(this.level.endboss);  
 
         this.draw();
         this.addCollisionListener();
     }
 
-    addWorldOf(objects) {
+
+    addWorld(objects) {
+        if (!Array.isArray(objects)) {
+            objects.world=this;
+            return;
+        }
         for(let object of objects) {
             object.world=this;
         }
-    }
 
-    addWorld(object) {
-        object.world=this;
     }
 
     collisionAction(enemy) {
@@ -57,6 +65,7 @@ class World {
             this.character.resetCollision();
             for (let enemy of this.level.enemies) {
                 this.collisionAction(enemy);
+                this.statusBar.LIVE.setPercentage(this.character.livePercentage);
             }
             for (let enemy of this.level.endboss) {
                 this.collisionAction(enemy);
@@ -77,11 +86,11 @@ class World {
         this.addToMap(this.level.endboss);
         this.character.draw(this.ctx);
         this.addToMap(this.level.enemies);
-
-
-
-
+        // this.addToMap(this.statusBar);
         this.ctx.translate(-this.cameraX,0);
+
+        this.addToMap(Object.values(this.statusBar)); // Als JSON JSON.parse(jsonString);
+        // statusBar.draw(this.ctx);
 
         requestAnimationFrame(() => this.draw());
 
