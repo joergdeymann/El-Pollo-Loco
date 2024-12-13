@@ -30,7 +30,14 @@ class Drawable {
     }
 
     drawRect(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss) {
+        // if (this instanceof Character 
+        //     || this instanceof Chicken 
+        //     || this instanceof Endboss
+        //     || this instanceof ThrowableObject
+        // ) 
+        
+        if (this instanceof AnimatedObject)
+        {
             this.rect(ctx,'Blue',{x:this.x,y:this.y,width:this.width,height:this.height});
             this.rectHitbox(ctx,'Red',this.hitbox);
             if (this.hitboxes.length) {

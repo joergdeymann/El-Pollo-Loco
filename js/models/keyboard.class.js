@@ -16,16 +16,16 @@ class Keyboard {
 
     }
 
-    LEFT    = false;
-    RIGHT   = false;
-    JUMP    = false;
-    FIRE    = false;
-    ALTFIRE = false;
-    FAST    = false;
-
     constructor() {
         document.addEventListener("keydown",e => this.getkeyDown(e));
         document.addEventListener("keyup",e => this.getkeyUp(e));
+        this.setKeys(false);
+    }
+    
+    setKeys(status) {
+        for  (let key of Object.values(this.KEYTABLE)) {
+            this[key]=status;
+        }
     }
 
     getkeyDown(key) {

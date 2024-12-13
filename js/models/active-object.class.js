@@ -1,6 +1,6 @@
 class ActiveObject extends DrawableObject {
-    x;
-    y;
+    x=150;
+    y=250;
     width;
     height;
     img;
@@ -16,8 +16,6 @@ class ActiveObject extends DrawableObject {
 
     constructor() {
         super();
-        this.x=150;
-        this.y=250;
     }
     
 

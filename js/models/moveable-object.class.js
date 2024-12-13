@@ -4,6 +4,8 @@
 class MovableObject extends AutomatedObject {
     speedY=1;
     accelerationY=0.2;
+    accelerationX=0.1;
+    direction=0;
 
 
 
@@ -15,33 +17,56 @@ class MovableObject extends AutomatedObject {
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround()) {
-                this.y -= this.speedY;
-                this.speedY -= this.accelerationY;
+                this.fall();
             }
 
         },1000/60);
     }
- 
 
+    fall() {
+        this.y -= this.speedY;
+        this.speedY -= this.accelerationY;    
+    }
+
+    applyGravityX() {
+        setInterval(() => {
+            if (this.isMoving()) {
+                this.slowDownX();
+            }
+        },1000/60);
+    }
+    
+ 
+    slowDownX() {
+        this.x += this.speed*this.direction;
+        this.speed -= this.accelerationX;
+        if (this.speed < 0) this.speed=0;
+    }                
+    
     isAboveGround() {
-        return this.y < 230;
+        return (this.y+this.hitbox.height+this.hitbox.dy) < 420;
     }
 
     isFalling() {
         return this.speedY < 0 && this.isAboveGround();
     }
  
+    isMoving() {
+        return this.speed >0;
+    }
 
     moveRight(sound=null) {
         this.x+=this.speed;
         this.flip=false;
         if (sound) sound.play();
+        this.direction=1;
     }
 
     moveLeft(sound=null) {
         this.x-=this.speed;
         this.flip=true;
         if (sound) sound.play();
+        this.direction=-1;
     }
 
     jump() {

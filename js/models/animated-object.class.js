@@ -5,10 +5,9 @@ class AnimatedObject extends MovableObject {
     index=0;
     IMAGES=[];
 
- 
+
     constructor() {
         super()
-        // this.animationStart();
     }
 
     setInterval(time,range) {
@@ -31,7 +30,7 @@ class AnimatedObject extends MovableObject {
         for(let path of images) {
             let img = new Image();
             img.src= path;
-            this.images[path]=img;  //# im Video as JSON this.images[path]=path;
+            this.images[path]=img; 
         }
         this.img=this.images[images[0]];
         if (this.IMAGES.length == 0) this.IMAGES=images;

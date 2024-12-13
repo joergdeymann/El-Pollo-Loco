@@ -3,11 +3,17 @@ class World {
     level; 
     endboss;
     statusBar={
-        LIVE:new Statusbar("IMAGES_LIVE",0),
-        COINS:new Statusbar("IMAGES_COINS",25),
+        LIVE:   new Statusbar("IMAGES_LIVE",0),
+        COINS:  new Statusbar("IMAGES_COINS",25),
         BOTTLES:new Statusbar("IMAGES_BOTTLES",50),
         ENDBOSS:new Statusbar("IMAGES_ENDBOSS",75),
     };
+    thowableObjects = [];
+    collectableObjects = [
+        new CollectableObject(),
+        new CollectableObject(),
+        new CollectableObject()
+    ];
 
 
     ctx;
@@ -35,6 +41,7 @@ class World {
         this.addWorld(this.level.enemies);  
         this.addWorld(this.level.clouds);  
         this.addWorld(this.level.endboss);  
+        this.addWorld(this.collectableObjects);  
 
         this.draw();
         this.addCollisionListener();
@@ -55,26 +62,35 @@ class World {
     collisionAction(enemy) {
         if (this.character.isColliding(enemy)) {
             this.character.reduceLive(enemy,"touch");
-            console.log("Collission");
         }
     }
 
     addCollisionListener() {
 
         setInterval(() => {
-            this.character.resetCollision();
-            for (let enemy of this.level.enemies) {
-                this.collisionAction(enemy);
-                this.statusBar.LIVE.setPercentage(this.character.livePercentage);
-            }
-            for (let enemy of this.level.endboss) {
-                this.collisionAction(enemy);
-            }
-            // this.collisionAction(this.level.endboss);
-
+            this.checkCollisions();
+            this.checkThrowObjects();
         },200);
     }
 
+    checkCollisions() {
+        this.character.resetCollision();
+        for (let enemy of this.level.enemies) {
+            this.collisionAction(enemy);
+            this.statusBar.LIVE.setPercentage(this.character.livePercentage);
+        }
+        for (let enemy of this.level.endboss) {
+            this.collisionAction(enemy);
+        }    
+        
+    }
+
+    checkThrowObjects() {
+        if (this.key.FIRE) {
+            let bottle=new ThrowableBottle(this.character.x+this.character.width/2,this.character.y+this.character.height/2-20,90);
+            this.thowableObjects.push(bottle);
+        }
+    }
 
 
     draw() {
@@ -85,7 +101,9 @@ class World {
         this.addToMap(this.level.clouds);
         this.addToMap(this.level.endboss);
         this.character.draw(this.ctx);
+        this.addToMap(this.thowableObjects);
         this.addToMap(this.level.enemies);
+        this.addToMap(this.collectableObjects);
         // this.addToMap(this.statusBar);
         this.ctx.translate(-this.cameraX,0);
 

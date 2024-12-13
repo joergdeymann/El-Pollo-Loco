@@ -3,6 +3,7 @@ class Level {
     clouds;
     backgrounds;
     endboss;
+    collectableObjects;
     width;
     
     constructor(enemies,clouds,backgrounds,endboss) {

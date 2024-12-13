@@ -1,6 +1,7 @@
 let countChicken=40;
 let countClouds=10;
 let countBackgrounds=5;
+let countBottlesGround=5;
 
 
 // character = new Character();
@@ -33,3 +34,10 @@ for(i=0;i<countChicken;i++) {
 endboss.push(new Endboss());
 const level1= new Level(enemies,clouds,backgrounds,endboss);
 // level1.width=backgrounds[0].width*(2*5+1);
+
+let collectableObjects=[];
+for (i=0;i<countBottlesGround;i++) {
+    level1.collectableObjects.push(new CollectableObject());
+}
+
+
