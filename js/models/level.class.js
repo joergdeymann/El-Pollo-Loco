@@ -1,9 +1,9 @@
 class Level {
-    enemies;
-    clouds;
-    backgrounds;
-    endboss;
-    collectableObjects;
+    enemies=[];
+    clouds=[];
+    backgrounds=[];
+    endboss=[];
+    collectableObjects=[];
     width;
     
     constructor(enemies,clouds,backgrounds,endboss) {
