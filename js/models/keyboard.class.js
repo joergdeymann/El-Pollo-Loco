@@ -16,6 +16,17 @@ class Keyboard {
 
     }
 
+    COOLDOWN = {
+        FIRE: 2000,
+        ALTFIRE: 5000,
+        POD: 30000,
+    }
+
+    cooldownTime = {
+        FIRE: null,
+        ALTFIRE: null,
+    }
+
     constructor() {
         document.addEventListener("keydown",e => this.getkeyDown(e));
         document.addEventListener("keyup",e => this.getkeyUp(e));
@@ -30,15 +41,26 @@ class Keyboard {
 
     getkeyDown(key) {
         let keyname=this.KEYTABLE[key.keyCode];
-        if (keyname) this[keyname]=true;   
+        if (this.hasCooldown(keyname)) return;
+        if (keyname) this[keyname]=true;           
         key.preventDefault(); 
-        // console.log(key.keyCode)
     }
 
     getkeyUp(key) {
         let keyname=this.KEYTABLE[key.keyCode];
         if (keyname) this[keyname]=false;    
         key.preventDefault(); 
+    }
+
+    hasCooldown(keyname) {
+        let date=Date.now();
+        if (this.COOLDOWN[keyname] && this.cooldownTime[keyname] && (date-this.cooldownTime[keyname])<this.COOLDOWN[keyname]) {
+            // console.log("Cooldown auf ",keyname); 
+            return true;
+        }
+        this.cooldownTime[keyname]=date;        
+        return false;
+
     }
 
 

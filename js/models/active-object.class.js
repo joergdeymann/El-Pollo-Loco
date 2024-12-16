@@ -10,6 +10,7 @@ class ActiveObject extends DrawableObject {
     damage={touch:1,jump:100,fire:10};
     live=100;
     collision=false;
+    harmable=true;
 
 
 
@@ -33,7 +34,13 @@ class ActiveObject extends DrawableObject {
     }
 
     getCenterX(obj) {
+        if (obj == null) obj=this;
         return obj.x+obj.width/2;
+    }
+
+    getCenterY(obj) {
+        if (obj == null) obj=this;
+        return obj.y+obj.height/2;
     }
 
     /**
@@ -75,8 +82,10 @@ class ActiveObject extends DrawableObject {
     }
 
     reduceLive(obj,weapon) {
-        this.live-=obj.damage[weapon];
-        if (this.live<0) this.live=0;
+        if (this.harmable) {
+            this.live-=obj.damage[weapon];
+            if (this.live<0) this.live=0;    
+        }
     }
 
     isDead() {
@@ -88,8 +97,7 @@ class ActiveObject extends DrawableObject {
     }
 
     isHurt() {
-        // if (this.collision) console.log("isHurt");
-        return this.collision;
+        return this.collision && this.harmable;
     }
 
     isColliding(obj) {        
@@ -100,7 +108,11 @@ class ActiveObject extends DrawableObject {
         if (collision) this.collision=true;
 
         return collision;
+    }
 
+    get isMovingLeft() {
+        return this.flip;
     } 
+ 
 
 }

@@ -3,12 +3,12 @@ class World {
     level; 
     endboss;
     statusBar={
-        LIVE:   new Statusbar("IMAGES_LIVE",0),
-        COINS:  new Statusbar("IMAGES_COINS",25),
-        BOTTLES:new Statusbar("IMAGES_BOTTLES",50),
-        ENDBOSS:new Statusbar("IMAGES_ENDBOSS",75),
+        LIVE:   new Statusbar("IMAGES_LIVE",10,0),
+        COINS:  new Statusbar("IMAGES_COINS",10,30),
+        BOTTLES:new Statusbar("IMAGES_BOTTLES",10,60),
+        ENDBOSS:new Statusbar("IMAGES_ENDBOSS",500,0),
     };
-    thowableObjects = [];
+    throwableObjects = [];
     collectableObjects;
 
 
@@ -66,7 +66,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
-        },200);
+        },50);
     }
 
     checkCollisions() {
@@ -82,9 +82,11 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.key.FIRE) {
-            let bottle=new ThrowableBottle(this.character.x+this.character.width/2,this.character.y+this.character.height/2-20,90);
-            this.thowableObjects.push(bottle);
+        if (this.key.FIRE ) { // && !this.key.hasCooldown("FIRE")
+            let bottle=new ThrowableBottle();            
+            bottle.throwFromObject(this.character,90);
+            this.throwableObjects.push(bottle);
+            this.key.FIRE=false;
         }
     }
 
@@ -97,7 +99,7 @@ class World {
         this.addToMap(this.level.clouds);
         this.addToMap(this.level.endboss);
         this.character.draw(this.ctx);
-        this.addToMap(this.thowableObjects);
+        this.addToMap(this.throwableObjects);
         this.addToMap(this.level.enemies);
         this.addToMap(this.level.collectableObjects);
         // this.addToMap(this.statusBar);

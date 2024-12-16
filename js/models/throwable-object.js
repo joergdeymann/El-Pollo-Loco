@@ -15,19 +15,10 @@ class ThrowableObject extends AnimatedObject {
         height: 24
     }
 
-    IMAGES_THROW=[
-        'assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
-        'assets/img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
-        'assets/img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png',
-        'assets/img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png'
-    ];
+    IMAGES_THROW=[];
 
-    constructor(x,y,speed) {
+    constructor() {
         super();
-
-        this.loadImages(this.IMAGES_THROW);
-        this.init();
-        this.throw(x,y,speed);
     } 
 
     init() {
@@ -43,9 +34,10 @@ class ThrowableObject extends AnimatedObject {
     throw(x,y,speed) {
         this.x = x;
         this.y = y;
+        this.direction=(speed==0?0:speed/Math.abs(speed));
+        speed=Math.abs(speed);
         this.speed=7*speed/100; // 3-8
         this.speedY=this.speed*5/7; //*50/100;
-        this.direction=1;
         this.applyGravity(); 
         this.applyGravityX(); 
     }

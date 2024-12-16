@@ -10,6 +10,9 @@ class AutomatedObject extends ActiveObject {
     speedIntervalRange=5000;
     speedIntervalMin=1000;
     stoptimer=false;
+    respawnInterval=null;
+    moveInterval=null;
+
 
     constructor() {
         super()
@@ -20,13 +23,15 @@ class AutomatedObject extends ActiveObject {
 
     // ab hier die Action Objects
     initListenerMoveLeft() {
+        if (this.moveInterval) return;
         setInterval(() => {
             this.x-=this.speed;
         },1000/60)        
     }
 
     initListenerLeftPosition() {
-        setInterval(() => {
+        if (this.respawnInterval) return;
+        this.respawnInterval=setInterval(() => {
             if (this.x < -this.width) this.respawn(); 
         },1000)
     }

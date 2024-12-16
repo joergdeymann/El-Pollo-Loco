@@ -8,6 +8,8 @@ class Character extends AnimatedObject {
     speed=1;
     speedMultiplier=1;
     offsetX=300;
+    harmable=false;
+
 
     hitbox = {
         dx:25,
@@ -16,7 +18,7 @@ class Character extends AnimatedObject {
         height: 110
     }
     damage={touch:0,jump:100,fire:10};
-    live=100; // 1000;
+    live=1000; // 1000;
     maxlive=this.live;
 
 
@@ -76,7 +78,7 @@ class Character extends AnimatedObject {
     } 
     
     async wait() {
-        await new Promise(e => setTimeout(e,4000));
+        setTimeout(() => this.harmable=true,4000);
         this.applyGravity();
     }
     

@@ -1,6 +1,7 @@
 class AnimatedObject extends MovableObject {
     intervalTime=175;
     intervalRange=50;
+    animationInterval=null;
     images={};
     index=0;
     IMAGES=[];
@@ -20,10 +21,16 @@ class AnimatedObject extends MovableObject {
     }
 
     animationStart() {
+        if (this.animationInterval) return;
         let interval=this.randomInterval();
-        setInterval(() => {
+        this.animationInterval=setInterval(() => {
             this.nextImage();
         },interval);
+    }
+
+    stopAnimation() {
+        clearInterval(this.animationInterval);
+        this.animationInterval=null;
     }
 
     loadImages(images) {
