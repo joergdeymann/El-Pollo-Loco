@@ -9,11 +9,7 @@ class World {
         ENDBOSS:new Statusbar("IMAGES_ENDBOSS",75),
     };
     thowableObjects = [];
-    collectableObjects = [
-        new CollectableObject(),
-        new CollectableObject(),
-        new CollectableObject()
-    ];
+    collectableObjects;
 
 
     ctx;
@@ -41,7 +37,7 @@ class World {
         this.addWorld(this.level.enemies);  
         this.addWorld(this.level.clouds);  
         this.addWorld(this.level.endboss);  
-        this.addWorld(this.collectableObjects);  
+        this.addWorld(this.level.collectableObjects);  
 
         this.draw();
         this.addCollisionListener();
@@ -103,7 +99,7 @@ class World {
         this.character.draw(this.ctx);
         this.addToMap(this.thowableObjects);
         this.addToMap(this.level.enemies);
-        this.addToMap(this.collectableObjects);
+        this.addToMap(this.level.collectableObjects);
         // this.addToMap(this.statusBar);
         this.ctx.translate(-this.cameraX,0);
 
