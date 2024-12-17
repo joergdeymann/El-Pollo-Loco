@@ -98,6 +98,7 @@ class Character extends AnimatedObject {
         return this.x < 330;
     }
 
+    
     continueHurtAnimation() {
         return (this.IMAGES===this.IMAGES_HURT) && (this.index>1);
     }

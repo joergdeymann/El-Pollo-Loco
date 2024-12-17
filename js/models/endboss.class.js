@@ -73,7 +73,11 @@ class Endboss extends AnimatedObject {
         
         // this.setRandomStartPositionX();
     }
- 
+
+    isColliding(obj) {     
+        return this.isCollidingGroup(obj);
+    }
+
 
     pick() {
 

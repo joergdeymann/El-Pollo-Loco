@@ -10,6 +10,9 @@ class ActiveObject extends DrawableObject {
     damage={touch:1,jump:100,fire:10};
     live=100;
     collision=false;
+    collisionHitbox;     //the hitbox of the Multi hitbox which collided 
+    hitboxes={};
+    
     harmable=true;
 
 
@@ -110,8 +113,22 @@ class ActiveObject extends DrawableObject {
         return collision;
     }
 
+    isCollidingGroup(obj) {
+        let hitboxOther=this.getCoordinatesHitbox(obj);
+        for (hitbox of this.hitboxes) {
+            let collision=this.overlap(hitbox,hitboxOther);
+            if (collision) {
+                this.collision=true;
+                this.collisionHitbox=hitbox; 
+                break;
+            }   
+        }
+        return this.collision;
+    }
+
     get isMovingLeft() {
-        return this.flip;
+        if (this instanceof Character) return this.flip;
+        return !this.flip;
     } 
  
 
