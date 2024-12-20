@@ -11,10 +11,11 @@ class ActiveObject extends DrawableObject {
     live=100;
     collision=false;
     collisionHitbox;     //the hitbox of the Multi hitbox which collided 
-    hitboxes={};
+    hitboxes=[];
     
     harmable=true;
-
+    initialLive;
+    name;
 
 
 
@@ -23,6 +24,11 @@ class ActiveObject extends DrawableObject {
     }
     
 
+    setLive(live) {
+        if (!live) live=this.live;
+        this.initialLive=live;
+        this.live=live;
+    }
 
     setRandomPositionX() {
         this.x = Math.random()*this.world.canvas.width + this.world.level.width;
@@ -76,7 +82,18 @@ class ActiveObject extends DrawableObject {
         return true;
     }
 
-    getCoordinatesHitbox(obj) {
+
+    getHitbox(hitbox) {
+        if (!hitbox) hitbox=this.hitbox;
+        let x=this.x+hitbox.dx;
+        let y=this.y+hitbox.dy;
+        let width=hitbox.width;
+        let height=hitbox.height;
+        return {x,y,width,height}
+    }
+
+    XgetCoordinatesHitbox(obj) {
+        if (!obj) obj=this;
         let x=obj.x+obj.hitbox.dx;
         let y=obj.y+obj.hitbox.dy;
         let width=obj.hitbox.width;
@@ -85,7 +102,7 @@ class ActiveObject extends DrawableObject {
     }
 
     reduceLive(obj,weapon) {
-        if (this.harmable) {
+        if (this.harmable && !obj.isDead()) {
             this.live-=obj.damage[weapon];
             if (this.live<0) this.live=0;    
         }
@@ -93,6 +110,9 @@ class ActiveObject extends DrawableObject {
 
     isDead() {
         return this.live==0;
+    }
+    get livePercentage() {
+        return this.live*100/this.initialLive;
     }
 
     resetCollision() {
@@ -103,33 +123,39 @@ class ActiveObject extends DrawableObject {
         return this.collision && this.harmable;
     }
 
-    isColliding(obj) {        
-        let hitbox=this.getCoordinatesHitbox(this);
-        let hitboxOther=this.getCoordinatesHitbox(obj);
+    isColliding(obj) {
+        // if (obj.hitboxes.length>0) {
+        //     return this.isCollidingGroup(obj);
+        // } 
+
+        if (this.hitboxes && this.hitboxes.length>0) return this.isCollidingGroup(obj)
+
+        let hitbox=this.getHitbox();
+        let hitboxOther=obj.getHitbox();
         // this.reduceLive(mo,"touch");
         let collision=this.overlap(hitbox,hitboxOther);
         if (collision) this.collision=true;
+        // if (collision && obj.name && this.name) console.log("Coliding",obj.name,"and",this.name);
 
         return collision;
     }
 
+ 
     isCollidingGroup(obj) {
-        let hitboxOther=this.getCoordinatesHitbox(obj);
-        for (hitbox of this.hitboxes) {
+        this.collision=false;
+        let hitboxOther=obj.getHitbox();
+        for (let hb of this.hitboxes) {
+            let hitbox=this.getHitbox(hb);
+
             let collision=this.overlap(hitbox,hitboxOther);
             if (collision) {
                 this.collision=true;
-                this.collisionHitbox=hitbox; 
+                // this.collisionPart=hitbox; // Give them a name so we can get waht makes damage {head:{x,y,width,height},body:{x,y,width,height}}
                 break;
             }   
         }
         return this.collision;
     }
 
-    get isMovingLeft() {
-        if (this instanceof Character) return this.flip;
-        return !this.flip;
-    } 
- 
 
 }

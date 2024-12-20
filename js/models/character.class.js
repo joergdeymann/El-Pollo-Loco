@@ -9,6 +9,7 @@ class Character extends AnimatedObject {
     speedMultiplier=1;
     offsetX=300;
     harmable=false;
+    name="Character";
 
 
     hitbox = {

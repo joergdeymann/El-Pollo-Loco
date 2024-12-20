@@ -1,7 +1,6 @@
 class World {
     character=new Character();
     level; 
-    endboss;
     statusBar={
         LIVE:   new Statusbar("IMAGES_LIVE",10,0),
         COINS:  new Statusbar("IMAGES_COINS",10,30),
@@ -61,6 +60,21 @@ class World {
         }
     }
 
+    /*
+        Überprüfen obj.isColliding(enemy) oder anders herunm
+    */ 
+    checkCollisionThrowableObjects(enemy) {
+        enemy.resetCollision();
+        for (let obj of this.throwableObjects) {
+            if (enemy.isColliding(obj)) {
+                obj.hitted(enemy);
+            }
+                // console.log("Boss Live:",enemy.live)
+
+            this.statusBar.ENDBOSS.setPercentage(enemy.livePercentage);
+        }
+    }
+
     addCollisionListener() {
 
         setInterval(() => {
@@ -77,7 +91,9 @@ class World {
         }
         for (let enemy of this.level.endboss) {
             this.collisionAction(enemy);
+            this.checkCollisionThrowableObjects(enemy);
         }    
+
         
     }
 
@@ -89,6 +105,7 @@ class World {
             this.key.FIRE=false;
         }
     }
+
 
 
     draw() {

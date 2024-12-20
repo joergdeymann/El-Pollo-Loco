@@ -52,7 +52,7 @@ class MovableObject extends AutomatedObject {
     }
  
     isMoving() {
-        return this.speed >0;
+        return this.speed != 0;
     }
 
     moveRight(sound=null) {
@@ -92,5 +92,14 @@ class MovableObject extends AutomatedObject {
         let character = this.getCenterX(this.world.character);
         return enemy > character-150 && enemy < character+150;
     }    
+
+    get isMovingLeft() {
+        if (this instanceof Character) return this.flip;
+        return !this.flip;
+    } 
+    
+    stopMovingX() {
+        this.speed=0;
+    }
 
 }

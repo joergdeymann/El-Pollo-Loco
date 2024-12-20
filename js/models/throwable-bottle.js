@@ -3,6 +3,7 @@ class ThrowableBottle extends ThrowableObject {
     height=60;  // 15 + 15y
     damage={touch:10,jump:0,fire:0};
     live=1;
+    name="ThrowAble Bottle";
 
     hitbox = {
         dx:8,
@@ -98,7 +99,19 @@ class ThrowableBottle extends ThrowableObject {
         this.throw(x,y,speed);
     }
 
-
-
-
+    hitted(enemy) {
+        if (this.isFalling() && this.live != 0) {
+            enemy.reduceLive(this,"touch");
+            this.stopMovingX();
+            this.live=0;
+            this.speedY=0;
+            let acceleration=this.accelerationY;
+            this.accelerationY=0;
+            setTimeout(() => {
+                this.speedY=-5;
+                this.accelerationY=acceleration;
+            
+            },500);    
+        }
+    }
 }

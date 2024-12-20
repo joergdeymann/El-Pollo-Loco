@@ -38,7 +38,7 @@ class Endboss extends AnimatedObject {
 
     damage={touch:10,jump:3000,fire:10};
     live=10000;
-
+    name="Enboss";
 
     count=0;
 
@@ -58,6 +58,7 @@ class Endboss extends AnimatedObject {
 
         this.loadImages(this.IMAGES_WALKING);
         this.init();
+        this.setLive();
     
 
         
@@ -74,9 +75,9 @@ class Endboss extends AnimatedObject {
         // this.setRandomStartPositionX();
     }
 
-    isColliding(obj) {     
-        return this.isCollidingGroup(obj);
-    }
+    // isColliding(obj) {     
+    //     return this.isCollidingGroup(obj);
+    // }
 
 
     pick() {
