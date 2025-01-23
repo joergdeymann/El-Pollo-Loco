@@ -74,6 +74,11 @@ class MovableObject extends AutomatedObject {
         this.y-=100;          
     }
 
+    jumpSmall() {
+        this.speedY=3; 
+        this.y-=50;          
+    }
+
 
 
 

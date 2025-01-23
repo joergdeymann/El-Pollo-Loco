@@ -36,8 +36,8 @@ class Endboss extends AnimatedObject {
     };
     
 
-    damage={touch:10,jump:3000,fire:10};
-    live=10000;
+    damage={touch:2,jump:1000,fire:10};
+    live=2000;
     name="Enboss";
 
     count=0;

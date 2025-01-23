@@ -30,6 +30,7 @@ class Drawable {
     }
 
     drawRect(ctx) {
+        if (!this.world?.debug) return;
         // if (this instanceof Character 
         //     || this instanceof Chicken 
         //     || this instanceof Endboss

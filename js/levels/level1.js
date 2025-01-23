@@ -1,7 +1,7 @@
 let countChicken=40;
 let countClouds=10;
 let countBackgrounds=5;
-let countBottlesGround=5;
+let countBottlesGround=50;
 
 
 // character = new Character();

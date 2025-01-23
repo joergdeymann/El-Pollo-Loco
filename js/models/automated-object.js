@@ -9,7 +9,7 @@ class AutomatedObject extends ActiveObject {
     speedMax=1;
     speedIntervalRange=5000;
     speedIntervalMin=1000;
-    stoptimer=false;
+    stopTimer=false;
     respawnInterval=null;
     moveInterval=null;
 
@@ -51,10 +51,11 @@ class AutomatedObject extends ActiveObject {
      * set speed to random of 0 to 2
      */
     adjustSpeed() {
+        if (this.stopTimer) return;
         if (this.speedType==0)  this.adjustSpeedRandom(); 
         if (this.speedType==1)  this.adjustSpeedSmooth(); 
         
-        if (!this.stoptimer) this.adjustSpeedTimer();
+        if (!this.stopTimer) this.adjustSpeedTimer();
         
     }
 

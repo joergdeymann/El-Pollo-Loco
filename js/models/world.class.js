@@ -1,4 +1,5 @@
 class World {
+    debug=true;
     character=new Character();
     level; 
     statusBar={
@@ -6,6 +7,12 @@ class World {
         COINS:  new Statusbar("IMAGES_COINS",10,30),
         BOTTLES:new Statusbar("IMAGES_BOTTLES",10,60),
         ENDBOSS:new Statusbar("IMAGES_ENDBOSS",500,0),
+        // BG_ENDBOSS: new Statusbar("IMAGES_BACKGROUND",510,30),
+        // FR_ENDBOSS: new Statusbar("IMAGES_FRONT",510,30),
+        // CHICKEN:    new Statusbar("IMAGES_CHICKEN",495,30,50,40),
+        // BG_ENDBOSS: new Statusbar("IMAGES_BACKGROUND",500,30),
+        // VG_ENDBOSS: new Statusbar("IMAGES_CHICKEN",500,25,45,45),
+        
     };
     throwableObjects = [];
     collectableObjects;
@@ -17,6 +24,7 @@ class World {
     cameraX=-100;
 
     width=720*2*5;
+    
 
 
     constructor(canvas,keyboard) {
@@ -40,6 +48,7 @@ class World {
 
         this.draw();
         this.addCollisionListener();
+        this.addStatusbarAssosiation();
     }
 
 
@@ -54,11 +63,46 @@ class World {
 
     }
 
-    collisionAction(enemy) {
+
+
+    enemyDie(enemy) {
+        if (enemy.isDead()) return;
+        enemy.reduceLive(this.character,"jump");
+        this.character.jumpSmall();
+    }
+
+
+    /**
+     * 
+     * Check collision: Character with enemy
+     * 
+     * @param {Object} enemy - Chicken / Chicks 
+     */
+
+    collisionActionEnemy(enemy) {
         if (this.character.isColliding(enemy)) {
+            if (this.character.isFalling()) {
+                this.enemyDie(enemy);
+            } else {
+                if (enemy.isAboveGround()) {
+                    this.character.reduceLive(enemy,"jump");
+                } else {
+                    this.character.reduceLive(enemy,"touch");
+                }
+            }
+        } 
+    }
+
+
+
+
+    collisionAction(enemy) {
+         if (this.character.isColliding(enemy)) {
             this.character.reduceLive(enemy,"touch");
         }
     }
+
+
 
     /*
         Überprüfen obj.isColliding(enemy) oder anders herunm
@@ -83,15 +127,34 @@ class World {
         },50);
     }
 
+    addStatusbarAssosiation() {
+        this.statusBar.ENDBOSS.association=this.level.endboss[0];
+    }
+
+    checkCollisionCollectableObjects(bottle) {
+        if (this.character.isColliding(bottle) && this.character.hasBottleSpace() ) {
+            this.character.inventory.bottles+=1;
+            bottle.removeSelf();
+            this.statusBar.BOTTLES.setPercentage(this.character.bottlePercentage);
+
+        }
+    }
+
     checkCollisions() {
         this.character.resetCollision();
         for (let enemy of this.level.enemies) {
-            this.collisionAction(enemy);
+            this.collisionActionEnemy(enemy);
             this.statusBar.LIVE.setPercentage(this.character.livePercentage);
+
+
         }
         for (let enemy of this.level.endboss) {
             this.collisionAction(enemy);
             this.checkCollisionThrowableObjects(enemy);
+        }    
+
+        for (let bottle of this.level.collectableObjects) {
+            this.checkCollisionCollectableObjects(bottle);
         }    
 
         

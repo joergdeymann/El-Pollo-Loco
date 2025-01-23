@@ -19,10 +19,26 @@ class Character extends AnimatedObject {
         height: 110
     }
     damage={touch:0,jump:100,fire:10};
-    live=1000; // 1000;
+    live=3000; // 1000;
     maxlive=this.live;
 
+    inventory = {
+        bottles: 0,
+        coins: 0,
+        
+        //better only what is used/bought
+        flask: {
+            speed:0,
+            damage:0
+        },
+        item: {
+            weapon:0,
+            shield:0
+        }
 
+    }
+
+    MAX_BOTTLES=20;
 
 
     IMAGES_WALKING=[
@@ -62,6 +78,32 @@ class Character extends AnimatedObject {
         './assets/img/2_character_pepe/4_hurt/H-43.png'
     ];
 
+    IMAGES_IDLE=[
+        './assets/img/2_character_pepe/1_idle/idle/I-1.png',
+        './assets/img/2_character_pepe/1_idle/idle/I-2.png',
+        './assets/img/2_character_pepe/1_idle/idle/I-3.png',
+        './assets/img/2_character_pepe/1_idle/idle/I-4.png',
+        './assets/img/2_character_pepe/1_idle/idle/I-5.png',
+        './assets/img/2_character_pepe/1_idle/idle/I-6.png',
+        './assets/img/2_character_pepe/1_idle/idle/I-7.png',
+        './assets/img/2_character_pepe/1_idle/idle/I-8.png',
+        './assets/img/2_character_pepe/1_idle/idle/I-9.png',
+        './assets/img/2_character_pepe/1_idle/idle/I-10.png'
+    ];
+
+    IMAGES_SLEEP=[
+        './assets/img/2_character_pepe/1_idle/long_idle/I-11.png',
+        './assets/img/2_character_pepe/1_idle/long_idle/I-12.png',
+        './assets/img/2_character_pepe/1_idle/long_idle/I-13.png',
+        './assets/img/2_character_pepe/1_idle/long_idle/I-14.png',
+        './assets/img/2_character_pepe/1_idle/long_idle/I-15.png',
+        './assets/img/2_character_pepe/1_idle/long_idle/I-16.png',
+        './assets/img/2_character_pepe/1_idle/long_idle/I-17.png',
+        './assets/img/2_character_pepe/1_idle/long_idle/I-18.png',
+        './assets/img/2_character_pepe/1_idle/long_idle/I-19.png',
+        './assets/img/2_character_pepe/1_idle/long_idle/I-20.png'
+    ];
+
 
     soundWalk=new Audio('./assets/sound/walknormal.mp3');
     
@@ -72,6 +114,9 @@ class Character extends AnimatedObject {
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_SLEEP);
+        this.loadImages(this.IMAGES_IDLE);
+        
 
         this.animationStart();        
         this.wait(); // this.applyGravity();
@@ -87,8 +132,13 @@ class Character extends AnimatedObject {
         this.speed=speed;
         this.soundWalk.playbackRate = (100+speed*20)/100;
     }
+
     get livePercentage() {
         return 100*this.live/this.maxlive;
+    }
+
+    get bottlePercentage() {
+        return 100*this.bottles/this.MAX_BOTTLES;
     }
 
     isLevelEnd() {
@@ -108,7 +158,9 @@ class Character extends AnimatedObject {
         return this.index>1;
     }
 
-
+    hasBottleSpace() {
+        return this.inventory.bottles < this.MAX_BOTTLES;
+    }
 
     animationStart() {
         this.soundWalk.pause();
@@ -120,15 +172,9 @@ class Character extends AnimatedObject {
             }
             if (this.world.key.RIGHT && !this.isLevelEnd()) {
                 this.moveRight(this.soundWalk);
-                // this.x+=this.speed;
-                // this.flip=false;
-                // this.soundWalk.play();
             }
             if (this.world.key.LEFT && !this.isLevelStart()) {
                 this.moveLeft(this.soundWalk);
-                // this.x-=this.speed;
-                // this.flip=true;
-                // this.soundWalk.play();
             }
 
             if (this.world.key.JUMP && !this.isAboveGround()) {
@@ -142,19 +188,29 @@ class Character extends AnimatedObject {
         let animation=setInterval(() => {
             if (this.isAboveGround()) {
                 this.nextImage(this.IMAGES_JUMPING);
-            } else {
-              if (this.world.key.RIGHT || this.world.key.LEFT) this.nextImage(this.IMAGES_WALKING);
+            } 
+            else 
+                if (this.world.key.RIGHT || this.world.key.LEFT) this.nextImage(this.IMAGES_WALKING);
+            
+            else
+                if (this.isDead()) {
+                    this.nextImage(this.IMAGES_DEAD);  // let it run for some sconds and then stop everything 
+                    // clearInterval(animation);
+                    clearInterval(moveInterval);
+                    // this.deadAnimation();
+                    return;
+                }
+            
+            if(this.isHurt() || this.continueHurtAnimation()) {
+                this.nextImage(this.IMAGES_HURT);
             }
 
-            if (this.isDead()) {
-                this.nextImage(this.IMAGES_DEAD);  // let it run for some sconds and then stop everything 
-                // clearInterval(animation);
-                clearInterval(moveInterval);
-                // this.deadAnimation();
-                return;
-            }
+            else 
+                if (key.isSleeping()) this.nextImage(this.IMAGES_SLEEP);
+            else 
+                if (key.isIdle()) this.nextImage(this.IMAGES_IDLE);
 
-            if(this.isHurt() || this.continueHurtAnimation()) this.nextImage(this.IMAGES_HURT);
+
         },interval);
     }
 

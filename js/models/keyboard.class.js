@@ -27,7 +27,9 @@ class Keyboard {
         ALTFIRE: null,
     }
 
-    idleTime=0;
+    lastActionTime=Date.now()+60000;
+
+    keyDown=false;
 
     constructor() {
         document.addEventListener("keydown",e => this.getkeyDown(e));
@@ -41,14 +43,21 @@ class Keyboard {
         }
     }
 
+    isKeyDown() {
+        return this.keyDown; 
+    }
+
     getkeyDown(key) {
+        this.keyDown=true;
         let keyname=this.KEYTABLE[key.keyCode];
         if (this.hasCooldown(keyname)) return;
         if (keyname) this[keyname]=true;           
         key.preventDefault(); 
+        this.lastActionTime=Date.now();
     }
 
     getkeyUp(key) {
+        this.keyDown=false;
         let keyname=this.KEYTABLE[key.keyCode];
         if (keyname) this[keyname]=false;    
         key.preventDefault(); 
@@ -67,12 +76,15 @@ class Keyboard {
     }
 
     isIdle() {
-        console.log("Idlecheck");
-        return (Date.now()-this.idleTime) > 2000;
+        // console.log("Idlecheck");
+        let t=Date.now()-this.lastActionTime;
+        return t > 2000 && t < 10000;
     }
 
     isSleeping() {
-        return (Date.now()-this.idleTime) > 10000;
+        // console.log("Sleep");
+        let t=Date.now()-this.lastActionTime;
+        return t > 10000;
     }
 
 

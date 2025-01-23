@@ -27,4 +27,15 @@ class CollectableObject extends AnimatedObject {
 
     }
 
+    removeSelf() {
+        this.removeObjectFromArray(this.world.level.collectableObjects,this);
+    }
+
+    removeObjectFromArray(array,obj) {
+        const index=array.findIndex(e => e == obj);
+        if (index != -1) array.splice(index,1);
+    } 
+
+
+
 }
