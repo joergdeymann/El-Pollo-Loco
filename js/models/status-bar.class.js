@@ -68,7 +68,6 @@ class Statusbar extends DrawableObject {
     displaymode=this.ABSOLUTE;
     
 
-
     constructor(images,positionX,positionY,width=200,height=40) {
         super();
         this.imageSet=images;
@@ -78,11 +77,11 @@ class Statusbar extends DrawableObject {
         this.width=width;
         this.height=height;
 
-        //this.loadImages(this[images]);
         this.setCollection();
         this.setPercentage(this.getPercentageStart(images));
 
     }
+
     
     getPercentageStart(images) {
         let i={
@@ -94,6 +93,7 @@ class Statusbar extends DrawableObject {
         return i[images]??0;
     }
 
+
     setPercentage(p) {
         this.percentage=p;
         this.imgCollection[1].width=p*2;
@@ -102,11 +102,13 @@ class Statusbar extends DrawableObject {
         return;
     }
 
+
     resolveImageIndex() {
         if (this.percentage<0) this.percentage=0;
         if (this.percentage>100) this.percentage=100;
         return Math.floor((this.percentage+19)/20);
     }
+
 
     addImage(img,x=this.x,y=this.y,width=this.width,height=this.height) {
         let newImg=new Image();
@@ -120,44 +122,14 @@ class Statusbar extends DrawableObject {
         })
     }
 
+
     setCollection() {
         this.addImage(this.IMAGES_BACKGROUND[0],  this.x+10,  this.y);
         this.addImage(this.IMAGES_BAR[0],         this.x+10,  this.y);
         this.addImage(this[this.imageSet][0],     this.x -5,  this.y-10,50,50);
-/*        
-        this.imgBackground = new Image();
-        this.imgBackground.src= this.IMAGES_BACKGROUND[0];
-        this.imgFront = new Image();
-        this.imgFront.src= this[this.imageSet][0];
-        this.imgBar = new Image();
-        this.imgBar.src= this.IMAGES_BAR[0];
-        
-        this.imgCollection=[
-            {   
-                img:this.imgBackground, 
-                x:this.x+10, 
-                y:this.y,
-                width:this.width,
-                height:this.height
-            },
-            {   
-                img:this.imgBar, 
-                x:this.x+10, 
-                y:this.y,
-                width:this.width,
-                height:this.height
-            },
-            {   
-                img:this.imgFront, 
-                x:this.x-5, 
-                y:this.y-10,
-                width:50,
-                height:50
-            },            
-        ]
-*/            
     }
     
+
     drawImage(ctx) {
         for(let img of this.imgCollection) {
             ctx.drawImage(img.img,img.x,img.y,img.width,img.height);
@@ -165,25 +137,32 @@ class Statusbar extends DrawableObject {
         this.drawText(ctx,this.association);
     }
 
-    drawText(ctx,obj) {
-        if (!obj) return;
-        let img=this.imgCollection[1]
-        let text;
 
+    getDisplayMode(obj) {
+        let text;
         if (this.displaymode==this.ABSOLUTE) {
             text=obj.textLiveAbsolute;
         } else {
             text=obj.textLivePercentage;
         }
+        return text;
+    }
 
+
+    formatText(ctx) {
         ctx.font = '12px Arial';
         ctx.fillStyle = 'black';
         ctx.strokeStyle = 'red';        
         ctx.textBaseline = 'top';
-        ctx.fillText(text,img.x+50,img.y+15);
     }
 
 
+    drawText(ctx,obj) {
+        if (!obj) return;
+        let img=this.imgCollection[1]
+        let text=this.getDisplayMode(obj);
+        this.formatText();
 
-
+        ctx.fillText(text,img.x+50,img.y+15);
+    }
 }

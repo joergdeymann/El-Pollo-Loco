@@ -17,19 +17,22 @@ class ThrowableObject extends AnimatedObject {
 
     IMAGES_THROW=[];
 
+
     constructor() {
         super();
     } 
+
 
     init() {
         this.animationStart();
     }
 
+
     /**
      * 
      * @param {*} x 
      * @param {*} y 
-     * @param {*} speed 0-100; good values between 50 and 100;
+     * @param {*} speed - 0-100; good values between 50 and 100;
      */
     throw(x,y,speed) {
         this.x = x;

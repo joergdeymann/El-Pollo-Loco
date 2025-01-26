@@ -25,6 +25,7 @@ class Chicken extends AnimatedObject {
         './assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ]
 
+
     constructor() {
         super();
 
@@ -32,6 +33,7 @@ class Chicken extends AnimatedObject {
         this.loadImages(this.IMAGES_DEAD);
         this.init();
     } 
+
 
     init() {
         this.animationStart();
@@ -47,11 +49,13 @@ class Chicken extends AnimatedObject {
 
     }
 
+
     die() {
         this.live=0;
         this.nextImage(this.IMAGES_DEAD);
         this.removeSelf();
     }
+
 
     removeSelf() {
         setTimeout(() => {
@@ -59,12 +63,9 @@ class Chicken extends AnimatedObject {
         },this.removeTime);
     }
 
+
     removeObjectFromArray(array,obj) {
         const index=array.findIndex(e => e == obj);
         if (index != -1) array.splice(index,1);
     } 
-
-
-
-
 }

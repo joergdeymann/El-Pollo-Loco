@@ -53,27 +53,21 @@ class Endboss extends AnimatedObject {
         './assets/img/4_enemie_boss_chicken/2_alert/G12.png'
     ];
 
+
     constructor() {
         super();
 
         this.loadImages(this.IMAGES_WALKING);
         this.init();
         this.setLive();
-    
-
-        
-
-        // this.moveLeft();       
-    } 
+   } 
 
     init() {
         this.animationStart();
         this.initListenerMoveLeft();
         this.initListenerLeftPosition();
-        // this.adjustSpeedTimer();
-        
-        // this.setRandomStartPositionX();
     }
+
 
     // isColliding(obj) {     
     //     return this.isCollidingGroup(obj);
@@ -83,8 +77,4 @@ class Endboss extends AnimatedObject {
     pick() {
 
     }
-
-
-
-
 }

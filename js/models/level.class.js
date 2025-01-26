@@ -24,8 +24,6 @@ class Level {
             position=this.backgrounds[i].width*parts-parts+this.backgrounds[i].x;
             this.backgrounds.push(new Background(this.backgrounds[i].img.src,position));
         }
-
         this.width=position+this.backgrounds[this.backgrounds.length-1].width;
     }
-
 }

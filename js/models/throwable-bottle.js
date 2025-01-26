@@ -30,6 +30,7 @@ class ThrowableBottle extends ThrowableObject {
 
     splashInterval;
 
+
     constructor() {
         super();
         this.loadImages(this.IMAGES_THROW);
@@ -37,10 +38,9 @@ class ThrowableBottle extends ThrowableObject {
         this.initListenerSplash();
 
         this.init();
-        // this.throw(x,y,speed);
- 
     }
     
+
     smaller() {
         this.x+=18;
         this.y+=0;
@@ -54,6 +54,7 @@ class ThrowableBottle extends ThrowableObject {
         }        
     }
 
+
     stopAnimation() {
         clearInterval(this.splashInterval);
         this.splashInterval=null;
@@ -61,6 +62,7 @@ class ThrowableBottle extends ThrowableObject {
         this.smaller();
         super.stopAnimation();
     }
+
 
     splashOnGround() {
         if (this.IMAGES != this.IMAGES_SPLASH) {
@@ -72,11 +74,13 @@ class ThrowableBottle extends ThrowableObject {
         }
     }
 
+
     splashBottle() {
         if (!this.isMoving()) {
             this.splashOnGround();
         }
     }
+
 
     initListenerSplash() {
         if (this.splashInterval) return;
@@ -99,6 +103,7 @@ class ThrowableBottle extends ThrowableObject {
         this.throw(x,y,speed);
     }
 
+
     hitted(enemy) {
         if (this.isFalling() && this.live != 0) {
             enemy.reduceLive(this,"touch");
@@ -109,8 +114,7 @@ class ThrowableBottle extends ThrowableObject {
             this.accelerationY=0;
             setTimeout(() => {
                 this.speedY=-5;
-                this.accelerationY=acceleration;
-            
+                this.accelerationY=acceleration;          
             },500);    
         }
     }

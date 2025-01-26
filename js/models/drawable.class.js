@@ -23,19 +23,17 @@ class Drawable {
         ctx.rect(size.x,size.y,size.width,size.height);
         ctx.stroke();
     }
+
+
     rectHitbox(ctx,color,size) {
         let x=size.dx+this.x;
         let y=size.dy+this.y;
         this.rect(ctx,color,{x,y,width:size.width,height:size.height})
     }
 
+
     drawRect(ctx) {
         if (!this.world?.debug) return;
-        // if (this instanceof Character 
-        //     || this instanceof Chicken 
-        //     || this instanceof Endboss
-        //     || this instanceof ThrowableObject
-        // ) 
         
         if (this instanceof AnimatedObject)
         {
@@ -46,18 +44,14 @@ class Drawable {
                     this.rectHitbox(ctx,'Yellow',hitbox);
                 }
             }
-
-            // ctx.beginPath();
-            // ctx.strokeStyle='Blue';
-            // ctx.lineWidth='2';
-            // ctx.rect(this.x,this.y,this.width,this.height);
-            // ctx.stroke();
         } 
     }
+
 
     drawImage(ctx) {
         ctx.drawImage(this.img,this.x,this.y,this.width,this.height);
     }
+
 
     flipImage(ctx) {
         if (this.flip) {
@@ -68,6 +62,7 @@ class Drawable {
         }
     }
 
+
     flipImageBack(ctx) {
         if (this.flip) {
             this.x=-this.x;
@@ -75,6 +70,7 @@ class Drawable {
         }
     }
 
+    
     draw(ctx) {
         this.flipImage(ctx);
         this.drawImage(ctx);

@@ -8,6 +8,7 @@ class Character extends AnimatedObject {
     speed=1;
     speedMultiplier=1;
     offsetX=300;
+    soundWalk=new Audio('./assets/sound/walknormal.mp3');
 
 
     IMAGES_WALKING=[
@@ -18,6 +19,7 @@ class Character extends AnimatedObject {
         'assets/img/2_character_pepe/2_walk/W-25.png',
         'assets/img/2_character_pepe/2_walk/W-26.png'
     ];
+
 
     IMAGES_JUMPING=[
         './assets/img/2_character_pepe/3_jump/J-31.png',
@@ -31,7 +33,6 @@ class Character extends AnimatedObject {
         './assets/img/2_character_pepe/3_jump/J-39.png'
     ];
     
-    soundWalk=new Audio('./assets/sound/walknormal.mp3');
     
 
     constructor() {
@@ -43,6 +44,7 @@ class Character extends AnimatedObject {
 
     } 
     
+
     async wait() {
         await new Promise(e => setTimeout(e,4000));
         this.applyGravity();
@@ -54,46 +56,54 @@ class Character extends AnimatedObject {
         this.soundWalk.playbackRate = (this.speed-1)/2;
     }
 
+
     isLevelEnd() {
         return this.x > this.world.level.width-425;
     }
+
 
     isLevelStart() {
         return this.x < 330;
     }
 
+
+    animationMovements() {
+        if (this.world.key.FAST) {
+            this.setWalkSpeed(5); // this.soundWalk.playbackRate = this.speed  *2/5;
+        } else {
+            this.setWalkSpeed(1);
+        }
+
+        if (this.world.key.RIGHT && !this.isLevelEnd()) {
+            this.moveRight(this.soundWalk);
+        }
+
+        if (this.world.key.LEFT && !this.isLevelStart) {
+            this.moveLeft(this.soundWalk);
+        }
+
+        if (this.world.key.JUMP && !this.isAboveGround()) {
+            this.jump();
+        }
+
+        this.world.cameraX = -this.x+300;
+    }
+
+
+    nextAnimation() {
+        if (this.isAboveGround()) {
+            this.nextImage(this.IMAGES_JUMPING);
+        } else {
+            if (this.world.key.RIGHT || this.world.key.LEFT) this.nextImage(this.IMAGES_WALKING);
+        }
+    }
+
+
     animationStart() {
         this.soundWalk.pause();
-        setInterval(() => {
-            if (this.world.key.FAST) {
-                this.setWalkSpeed(5); // this.soundWalk.playbackRate = this.speed  *2/5;
-            } else {
-                this.setWalkSpeed(1);
-            }
-
-            if (this.world.key.RIGHT && !this.isLevelEnd()) {
-                this.moveRight(this.soundWalk);
-            }
-
-            if (this.world.key.LEFT && !this.isLevelStart) {
-                this.moveLeft(this.soundWalk);
-            }
-
-            if (this.world.key.JUMP && !this.isAboveGround()) {
-                this.jump();
-            }
-
-            this.world.cameraX = -this.x+300;
-        },1000/60);
-
+        setInterval(this.animationMovements,1000/60);
         let interval=this.randomInterval();
-        setInterval(() => {
-            if (this.isAboveGround()) {
-                this.nextImage(this.IMAGES_JUMPING);
-            } else {
-                if (this.world.key.RIGHT || this.world.key.LEFT) this.nextImage(this.IMAGES_WALKING);
-            }
-        },interval);
+        setInterval(nextAnimation,interval);
     }
 
 }

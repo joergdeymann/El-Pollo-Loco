@@ -14,10 +14,12 @@ class DrawableObject extends Drawable {
         super();
     }
 
+
     loadImage(path) {
         this.img= new Image();
         this.img.src= path;
     }
+
 
     animationStart() {
         let interval=this.randomInterval();
@@ -25,6 +27,7 @@ class DrawableObject extends Drawable {
             this.nextImage();
         },interval);
     }
+
 
     loadImages(images) {
         for(let path of images) {
@@ -36,6 +39,7 @@ class DrawableObject extends Drawable {
         if (this.IMAGES.length == 0) this.IMAGES=images;
     }
 
+    
     nextImage(images=this.IMAGES) {
         this.IMAGES=images; 
         this.index=this.index % this.IMAGES.length;

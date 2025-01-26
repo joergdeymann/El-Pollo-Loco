@@ -31,21 +31,25 @@ class Keyboard {
 
     keyDown=false;
 
+
     constructor() {
         document.addEventListener("keydown",e => this.getkeyDown(e));
         document.addEventListener("keyup",e => this.getkeyUp(e));
         this.setKeys(false);
     }
     
+
     setKeys(status) {
         for  (let key of Object.values(this.KEYTABLE)) {
             this[key]=status;
         }
     }
 
+
     isKeyDown() {
         return this.keyDown; 
     }
+
 
     getkeyDown(key) {
         this.keyDown=true;
@@ -56,6 +60,7 @@ class Keyboard {
         this.lastActionTime=Date.now();
     }
 
+
     getkeyUp(key) {
         this.keyDown=false;
         let keyname=this.KEYTABLE[key.keyCode];
@@ -64,28 +69,25 @@ class Keyboard {
         this.lastActionTime=Date.now();
     }
 
+
     hasCooldown(keyname) {
         let date=Date.now();
         if (this.COOLDOWN[keyname] && this.cooldownTime[keyname] && (date-this.cooldownTime[keyname])<this.COOLDOWN[keyname]) {
-            // console.log("Cooldown auf ",keyname); 
             return true;
         }
         this.cooldownTime[keyname]=date;        
         return false;
-
     }
 
+
     isIdle() {
-        // console.log("Idlecheck");
         let t=Date.now()-this.lastActionTime;
         return t > 2000 && t < 10000;
     }
 
+
     isSleeping() {
-        // console.log("Sleep");
         let t=Date.now()-this.lastActionTime;
         return t > 10000;
     }
-
-
 }

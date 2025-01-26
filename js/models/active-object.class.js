@@ -19,7 +19,6 @@ class ActiveObject extends DrawableObject {
     name;
 
 
-
     constructor() {
         super();
     }
@@ -31,9 +30,11 @@ class ActiveObject extends DrawableObject {
         this.live=live;
     }
 
+
     setRandomPositionX() {
         this.x = Math.random()*this.world.canvas.width + this.world.level.width;
     }
+
 
     setRandomStartPositionX() {
         if (this.world?.level?.width) {
@@ -43,15 +44,18 @@ class ActiveObject extends DrawableObject {
         }
     }
 
+
     getCenterX(obj) {
         if (obj == null) obj=this;
         return obj.x+obj.width/2;
     }
 
+
     getCenterY(obj) {
         if (obj == null) obj=this;
         return obj.y+obj.height/2;
     }
+
 
     /**
      * Überprüft, ob sich zwei Quadrate überlappen.
@@ -115,30 +119,37 @@ class ActiveObject extends DrawableObject {
 
     }
 
+
     isDead() {
         return this.live==0;
     }
+
 
     get livePercentage() {
         return this.live*100/this.initialLive;
     }
 
+
     get textLiveAbsolute() {
         return this.live + " / " + this.initialLive;
     }
 
+
     get textLivePercantage() {
         return this.livePercentage.toFixed(0) + " %";
     }
+
 
     resetCollision() {
         this.collision=false;
         this.isHit=false;
     }
 
+
     isHurt() {
         return this.isHit && this.harmable;
     }
+    
 
     isColliding(obj) {
         if (this.hitboxes && this.hitboxes.length>0) return this.isCollidingGroup(obj);
@@ -159,7 +170,6 @@ class ActiveObject extends DrawableObject {
         let hitboxOther=obj.getHitbox();
         for (let hb of this.hitboxes) {
             let hitbox=this.getHitbox(hb);
-
             let collision=this.overlap(hitbox,hitboxOther);
             if (collision) {
                 this.collision=true;
