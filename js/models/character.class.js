@@ -21,6 +21,7 @@ class Character extends AnimatedObject {
     damage={touch:0,jump:100,fire:10};
     live=3000; // 1000;
     maxlive=this.live;
+    initialLive=this.live;
 
     inventory = {
         bottles: 0,
@@ -138,7 +139,7 @@ class Character extends AnimatedObject {
 
 
     get bottlePercentage() {
-        return 100*this.bottles/this.MAX_BOTTLES;
+        return 100*this.inventory.bottles/this.MAX_BOTTLES;
     }
 
 
@@ -164,6 +165,21 @@ class Character extends AnimatedObject {
 
     hasBottleSpace() {
         return this.inventory.bottles < this.MAX_BOTTLES;
+    }
+
+    
+    hasBottle() {
+        return this.inventory.bottles>0;
+    }
+
+    
+    removeBottle() {
+        this.inventory.bottles-=1;
+    }
+
+
+    addBottle() {
+        this.inventory.bottles+=1;
     }
 
 
@@ -221,6 +237,9 @@ class Character extends AnimatedObject {
                 this.deadAction();
                 return;
             }
+        else {
+            if (this.IMAGES != this.IMAGES_WALKING) this.nextImage(this.IMAGES_WALKING);
+        }
         
         if(this.isHurt() || this.continueHurtAnimation()) {
             this.nextImage(this.IMAGES_HURT);

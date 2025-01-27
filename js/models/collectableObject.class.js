@@ -18,13 +18,12 @@ class CollectableObject extends AnimatedObject {
         'assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
     ]
 
+
     constructor() {
         super();
         this.loadImages(this.IMAGES_BOTTLE);
         this.animationStart();
-
         this.setRandomStartPositionX();
-
     }
 
 

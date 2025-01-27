@@ -26,6 +26,8 @@ class World {
 
         this.ctx=canvas.getContext('2d');
         this.ctx.size=this.canvas;
+        // this.statusBar.BOTTLES.imgCollection[2].x=-5;
+        // this.statusBar.LIVE.imgCollection[2].x=-15;
     }
 
 
@@ -119,12 +121,14 @@ class World {
 
     addStatusbarAssosiation() {
         this.statusBar.ENDBOSS.association=this.level.endboss[0];
+        this.statusBar.LIVE.association=this.character;
+        this.statusBar.BOTTLES.association=this.character;
     }
 
 
     checkCollisionCollectableObjects(bottle) {
         if (this.character.isColliding(bottle) && this.character.hasBottleSpace() ) {
-            this.character.inventory.bottles+=1;
+            this.character.addBottle();
             bottle.removeSelf();
             this.statusBar.BOTTLES.setPercentage(this.character.bottlePercentage);
         }
@@ -149,12 +153,22 @@ class World {
     }
 
 
+    throwBottle() {
+        let bottle=new ThrowableBottle();            
+        bottle.throwFromObject(this.character,90);
+        this.throwableObjects.push(bottle);
+    }
+
     checkThrowObjects() {
-        if (this.key.FIRE ) { // && !this.key.hasCooldown("FIRE")
-            let bottle=new ThrowableBottle();            
-            bottle.throwFromObject(this.character,90);
-            this.throwableObjects.push(bottle);
+        if (this.key.FIRE && this.character.hasBottle() ) { // && !this.key.hasCooldown("FIRE")
+            // let bottle=new ThrowableBottle();            
+            // bottle.throwFromObject(this.character,90);
+            // this.throwableObjects.push(bottle);
             this.key.FIRE=false;
+            this.throwBottle();
+            this.character.removeBottle();
+            this.statusBar.BOTTLES.setPercentage(this.character.bottlePercentage);
+
         }
     }
 

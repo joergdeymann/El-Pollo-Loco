@@ -158,7 +158,7 @@ class ActiveObject extends DrawableObject {
         let hitboxOther=obj.getHitbox();
         let collision=this.overlap(hitbox,hitboxOther);
         if (collision) this.collision=true;
-        if (!obj.isDead() && collision) this.isHit=true;
+        if (!obj.isDead() && collision && !(obj instanceof CollectableObject)) this.isHit=true;
 
         return collision;
     }

@@ -17,7 +17,7 @@ class Keyboard {
     }
 
     COOLDOWN = {
-        FIRE: 2000,
+        FIRE: 1000,
         ALTFIRE: 5000,
         POD: 30000,
     }

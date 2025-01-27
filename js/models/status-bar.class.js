@@ -60,6 +60,7 @@ class Statusbar extends DrawableObject {
     y=0;
     width=200;
     height=40;
+    dx=0;
     imageSet;
     imgCollection=[];
     imgBackground;
@@ -97,13 +98,14 @@ class Statusbar extends DrawableObject {
     setPercentage(p) {
         this.percentage=p;
         this.imgCollection[1].width=p*2;
+        this.dx=(100-p)/100*12;
         this.index=0;
 
         return;
     }
 
 
-    resolveImageIndex() {
+    XresolveImageIndex() {
         if (this.percentage<0) this.percentage=0;
         if (this.percentage>100) this.percentage=100;
         return Math.floor((this.percentage+19)/20);
@@ -125,12 +127,13 @@ class Statusbar extends DrawableObject {
 
     setCollection() {
         this.addImage(this.IMAGES_BACKGROUND[0],  this.x+10,  this.y);
-        this.addImage(this.IMAGES_BAR[0],         this.x+10,  this.y);
+        this.addImage(this.IMAGES_BAR[0],         this.x+10,  this.y,this.width-10);
         this.addImage(this[this.imageSet][0],     this.x -5,  this.y-10,50,50);
     }
     
 
     drawImage(ctx) {
+        this.imgCollection[1].x=this.x+10+this.dx;
         for(let img of this.imgCollection) {
             ctx.drawImage(img.img,img.x,img.y,img.width,img.height);
         }
@@ -161,7 +164,7 @@ class Statusbar extends DrawableObject {
         if (!obj) return;
         let img=this.imgCollection[1]
         let text=this.getDisplayMode(obj);
-        this.formatText();
+        this.formatText(ctx);
 
         ctx.fillText(text,img.x+50,img.y+15);
     }
