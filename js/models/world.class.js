@@ -39,6 +39,7 @@ class World {
         this.addWorld(this.level.endboss);  
         this.addWorld(this.level.collectableObjects);  
         this.addWorld(Object.values(this.statusBar));  
+        this.addWorld(this.level.backgrounds);  
 
         this.draw();
         this.addCollisionListener();
@@ -166,6 +167,7 @@ class World {
         this.throwableObjects.push(bottle);
     }
 
+
     checkThrowObjects() {
         if (this.key.FIRE && this.character.hasBottle() ) { 
             this.key.FIRE=false;
@@ -180,7 +182,7 @@ class World {
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
         this.ctx.translate(this.cameraX,0);
 
-        this.addToMap(this.level.backgrounds);
+        this.addToMap(this.level.backgrounds); // in Layer umwandeln
         this.addToMap(this.level.clouds);
         this.addToMap(this.level.endboss);
         this.character.draw(this.ctx);

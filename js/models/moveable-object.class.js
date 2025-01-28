@@ -61,6 +61,11 @@ class MovableObject extends AutomatedObject {
         return !this.flip;
     } 
 
+    get isMovingRight() {
+        if (this instanceof Character) return !this.flip;
+        return this.flip;
+    } 
+
 
     moveRight(sound=null) {
         this.x+=this.speed;

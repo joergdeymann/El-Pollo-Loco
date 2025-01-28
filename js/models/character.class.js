@@ -10,6 +10,7 @@ class Character extends AnimatedObject {
     offsetX=300;
     harmable=false;
     name="Character";
+    startX=this.x;
 
 
     hitbox = {
