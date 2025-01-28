@@ -37,7 +37,7 @@ const level1= new Level(enemies,clouds,backgrounds,endboss);
 
 let collectableObjects=[];
 for (i=0;i<countBottlesGround;i++) {
-    level1.collectableObjects.push(new CollectableObject());
+    level1.collectableObjects.push(new CollectableBottle());
 }
 
 

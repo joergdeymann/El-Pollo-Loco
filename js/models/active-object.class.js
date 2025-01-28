@@ -135,7 +135,7 @@ class ActiveObject extends DrawableObject {
     }
 
 
-    get textLivePercantage() {
+    get textLivePercentage() {
         return this.livePercentage.toFixed(0) + " %";
     }
 
@@ -171,9 +171,10 @@ class ActiveObject extends DrawableObject {
         for (let hb of this.hitboxes) {
             let hitbox=this.getHitbox(hb);
             let collision=this.overlap(hitbox,hitboxOther);
+            if (!obj.isDead() && collision && !(obj instanceof CollectableObject)) this.isHit=true;
+
             if (collision) {
                 this.collision=true;
-                this.isHit=!obj.isDead();
                 break;
             }   
         }

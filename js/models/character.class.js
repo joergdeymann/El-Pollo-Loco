@@ -2,7 +2,7 @@ class Character extends AnimatedObject {
     width=195-75;
     height=300-100;
     y=230;// 400-this.image[0].height// 135;
-    y=100;
+    //  y=100;
     x=150+200;
     world;
     speed=1;
@@ -138,10 +138,19 @@ class Character extends AnimatedObject {
     }
 
 
-    get bottlePercentage() {
+    get bottlesPercentage() {
         return 100*this.inventory.bottles/this.MAX_BOTTLES;
     }
 
+    
+    get textBottlesAbsolute() {
+        return `${this.inventory.bottles} / ${this.MAX_BOTTLES}`;
+    }
+
+
+    get textBottlesPercentage() {
+        return `${this.bottlesPercentage.toFixed(0)} %`;
+    }
 
     isLevelEnd() {
         return this.x > this.world.level.width-425;
@@ -223,6 +232,11 @@ class Character extends AnimatedObject {
         }
 
         this.world.cameraX = -this.x+300;
+
+        if (this.world.key.LEFT) {
+            this.displaymode=(this.displaymode+1) %2;
+        }    
+
     }
 
 

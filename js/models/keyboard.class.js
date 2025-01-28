@@ -12,7 +12,9 @@ class Keyboard {
         "65":"LEFT",  // A
         "68":"RIGHT", // D
         "87":"JUMP",  // W
-        "83":"DUCK"   // S
+        "83":"DUCK",  // S
+
+        "79":"OVERLAY" //O
 
     }
 
@@ -58,6 +60,7 @@ class Keyboard {
         if (keyname) this[keyname]=true;           
         key.preventDefault(); 
         this.lastActionTime=Date.now();
+        // console.log(key.keyCode);
     }
 
 
