@@ -22,11 +22,13 @@ class Keyboard {
         FIRE: 1000,
         ALTFIRE: 5000,
         POD: 30000,
+        OVERLAY: 50
     }
 
     cooldownTime = {
         FIRE: null,
         ALTFIRE: null,
+        OVERLAY: null
     }
 
     lastActionTime=Date.now()+60000;
@@ -58,6 +60,7 @@ class Keyboard {
         this.keyDown=true;
         let keyname=this.KEYTABLE[key.keyCode];
         if (this.hasCooldown(keyname)) return;
+        console.log(keyname);
         if (keyname) this[keyname]=true;           
         key.preventDefault(); 
         // console.log(key.keyCode);

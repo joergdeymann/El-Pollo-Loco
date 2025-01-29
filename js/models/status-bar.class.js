@@ -58,6 +58,7 @@ class Statusbar extends DrawableObject {
     imgFront;
     association;
     displaymode=this.ABSOLUTE;
+    keyCooldown=false;
     
 
     constructor(images,positionX,positionY,width=200,height=40) {
@@ -98,11 +99,19 @@ class Statusbar extends DrawableObject {
     }
 
     addKeyListener() {
-        setInterval(()=> {
+        this.keyCooldown=false;
+        setInterval(() => {
             if (this.world.key.OVERLAY) {
-                this.displaymode=this.displaymode?0:1;
+                if (!this.keyCooldown && this.world.key.hasCooldown("OVERLAY")) {
+                    this.displaymode=++this.displaymode%3;
+                    this.keyCooldown=true;
+                    setTimeout(() => {
+                        this.keyCooldown=false;
+                    },this.world.key.COOLDOWN.OVERLAY);
+                }
+                // this.displaymode=this.displaymode?0:1; //
             }    
-        },100);
+        },30);
 
     }
 
@@ -148,6 +157,7 @@ class Statusbar extends DrawableObject {
 
     // Hier die Anzahl der Coins / Bottles
     getDisplayMode(obj) {
+        if (this.displaymode==2) return "";
         let call=this.CALL[this.displaymode][this.imageSet];
         return obj[call];
     }
