@@ -13,6 +13,7 @@ class Level {
         this.endboss=endboss;
 
         this.addBackgrounds(countBackgrounds,backgrounds);
+        this.addLevelListener();
     }
 
     addBackgroundLayer(backgrounds,layer,count) {
@@ -49,7 +50,25 @@ class Level {
     }
 
     
-    addBottles() {
+    addCollectableBottles(count=countBottlesGround-10) {
+        console.log("Neue Bottles");
+        for (i=0;i<count;i++) {
+            let b=new CollectableBottle();
+            this.world.addWorld(b);
+            this.collectableObjects.push(b);
+        }
+    }
 
+    get collectableBottleCount() {
+        let b=this.collectableObjects.filter(e => e instanceof CollectableBottle);
+        return b.length; 
+    }
+
+    addLevelListener() {
+        setInterval(() => {
+            if (this.collectableBottleCount<10) {
+                this.addCollectableBottles();
+            }
+        },200);
     }
 }

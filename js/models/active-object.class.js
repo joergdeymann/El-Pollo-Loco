@@ -18,7 +18,6 @@ class ActiveObject extends DrawableObject {
     initialLive;
     name;
 
-
     constructor() {
         super();
     }
@@ -38,6 +37,7 @@ class ActiveObject extends DrawableObject {
 
     setRandomStartPositionX() {
         if (this.world?.level?.width) {
+            let range=this.world.level.width;
             this.x = Math.random()*this.world.level.width;
         } else {
             setTimeout(() => this.setRandomStartPositionX(),50);
@@ -148,6 +148,11 @@ class ActiveObject extends DrawableObject {
 
     isHurt() {
         return this.isHit && this.harmable;
+    }
+
+
+    canTakeDamageFrom(obj) {
+        return this.isColliding(obj) && !this.isDead() && this.harmable;
     }
     
 

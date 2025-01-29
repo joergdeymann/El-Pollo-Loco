@@ -28,6 +28,16 @@ class ThrowableObject extends AnimatedObject {
     }
 
 
+    
+    get isMovingLeft() {
+        return this.direction<0;
+    }
+
+ 
+    get isMovingRight() {
+        return this.direction>0;
+    }
+
     /**
      * 
      * @param {*} x 
@@ -44,4 +54,18 @@ class ThrowableObject extends AnimatedObject {
         this.applyGravity(); 
         this.applyGravityX(); 
     }
+
+
+    throwFromObject(character,speed) {
+        let dx=20;
+        if (character.isMovingLeft) {
+            speed=-speed;
+            dx-=dx;
+        } 
+        let x=character.getCenterX()-this.width/2;
+        let y=character.getCenterY()-this.height/2;
+        this.throw(x,y,speed);
+    }
+
+
  }

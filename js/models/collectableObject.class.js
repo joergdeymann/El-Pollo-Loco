@@ -31,4 +31,15 @@ class CollectableObject extends AnimatedObject {
         const index=array.findIndex(e => e == obj);
         if (index != -1) array.splice(index,1);
     } 
+
+
+    
+    setRandomStartPositionX() {
+        if (this.world?.level?.width) {
+            let unreachable=this.world.level.backgrounds[0].width/2*1.1;
+            this.x = Math.random()*(this.world.level.width - unreachable*2)+unreachable;
+        } else {
+            setTimeout(() => this.setRandomStartPositionX(),50);
+        }
+    }
 }

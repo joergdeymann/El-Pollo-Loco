@@ -57,7 +57,7 @@ class Statusbar extends DrawableObject {
     imgBackground;
     imgFront;
     association;
-    displaymode=1; // this.ABSOLUTE;
+    displaymode=this.ABSOLUTE;
     
 
     constructor(images,positionX,positionY,width=200,height=40) {
@@ -136,7 +136,6 @@ class Statusbar extends DrawableObject {
 
     isBottleBar() {
         return this.imageSet == "IMAGES_BOTTLES";
-
     }
 
     isCoinBar() {

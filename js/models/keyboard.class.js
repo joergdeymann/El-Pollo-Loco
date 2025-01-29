@@ -54,12 +54,12 @@ class Keyboard {
 
 
     getkeyDown(key) {
+        this.lastActionTime=Date.now();
         this.keyDown=true;
         let keyname=this.KEYTABLE[key.keyCode];
         if (this.hasCooldown(keyname)) return;
         if (keyname) this[keyname]=true;           
         key.preventDefault(); 
-        this.lastActionTime=Date.now();
         // console.log(key.keyCode);
     }
 
@@ -85,12 +85,12 @@ class Keyboard {
 
     isIdle() {
         let t=Date.now()-this.lastActionTime;
-        return t > 2000 && t < 10000;
+        return t > 2000 && t < 20000;
     }
 
 
     isSleeping() {
         let t=Date.now()-this.lastActionTime;
-        return t > 10000;
+        return t > 20000;
     }
 }

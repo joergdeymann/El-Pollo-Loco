@@ -26,13 +26,12 @@ class World {
 
         this.ctx=canvas.getContext('2d');
         this.ctx.size=this.canvas;
-        // this.statusBar.BOTTLES.imgCollection[2].x=-5;
-        // this.statusBar.LIVE.imgCollection[2].x=-15;
     }
 
 
     chooseLevel(level) {
         this.level=level;
+        this.addWorld(this.level);
         this.addWorld(this.character);
         this.addWorld(this.level.enemies);  
         this.addWorld(this.level.clouds);  
@@ -100,12 +99,13 @@ class World {
 
 
     /*
-        Überprüfen obj.isColliding(enemy) oder anders herunm
+        Colliding enemy width Bottle
     */ 
     checkCollisionThrowableObjects(enemy) {
         enemy.resetCollision();
         for (let obj of this.throwableObjects) {
-            if (enemy.isColliding(obj)) {
+
+            if (enemy.canTakeDamageFrom(obj)) {
                 obj.hitted(enemy);
             }
             this.statusBar.ENDBOSS.setPercentage(enemy.livePercentage);
@@ -120,11 +120,7 @@ class World {
         },50);
     }
 
-    addLevelListener() {
-        if (this.level.bottles.length<10) {
-            // addMoreBottles();
-        }
-    }
+
 
     addStatusbarAssosiation() {
         this.statusBar.ENDBOSS.association=this.level.endboss[0];
@@ -147,6 +143,7 @@ class World {
         this.character.resetCollision();
         for (let enemy of this.level.enemies) {
             this.collisionActionEnemy(enemy);
+            this.checkCollisionThrowableObjects(enemy);
             this.statusBar.LIVE.setPercentage(this.character.livePercentage);
         }
 
@@ -154,6 +151,7 @@ class World {
             this.collisionAction(enemy);
             this.checkCollisionThrowableObjects(enemy);
         }    
+
 
         for (let bottle of this.level.collectableObjects) {
             this.checkCollisionCollectableObjects(bottle);
