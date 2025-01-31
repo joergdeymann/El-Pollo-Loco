@@ -57,7 +57,7 @@ class MovableObject extends AutomatedObject {
 
 
     get isMovingLeft() {
-        if (this instanceof Character) return this.flip;
+        if (this instanceof Character) return this.flip;  //  || this instanceof Endboss
         return !this.flip;
     } 
 
@@ -69,7 +69,7 @@ class MovableObject extends AutomatedObject {
 
     moveRight(sound=null) {
         this.x+=this.speed;
-        this.flip=false;
+        this.flip=!this.FLIP;
         if (sound) sound.play();
         this.direction=1;
     }
@@ -77,7 +77,7 @@ class MovableObject extends AutomatedObject {
 
     moveLeft(sound=null) {
         this.x-=this.speed;
-        this.flip=true;
+        this.flip=this.FLIP;
         if (sound) sound.play();
         this.direction=-1;
     }
@@ -95,20 +95,36 @@ class MovableObject extends AutomatedObject {
     }
 
 
-    isLeftFromCharacter() {
-        return this.getCenterX(this) < this.getCenterX(this.world.character);
+    isLeftFrom(obj,limit) {
+        return this.getCenterX(this) < this.getCenterX(obj)-limit;
     }
 
 
-    isRightFromCharacter() {
-        return this.getCenterX(this) > this.getCenterX(this.world.character);
+    isLeftFromCharacter(limit=0) {
+        return this.isLeftFrom(this.world.character,limit);
     }
 
     
-    isNearCharacter() {
+
+    isRightFrom(obj,limit) {
+        return this.getCenterX(this) > this.getCenterX(obj)+limit;
+    }
+
+
+    isRightFromCharacter(limit=0) {
+        return this.isRightFrom(this.world.character,limit);
+    }
+
+    
+    isNear(obj,range=150) {
         let enemy = this.getCenterX(this);
-        let character = this.getCenterX(this.world.character);
-        return enemy > character-150 && enemy < character+150;
+        let character = this.getCenterX(obj);
+        return enemy > character-range && enemy < character+range;
+    }    
+
+    
+    isNearCharacter(range=150) {
+        return this.isNear(this.world.character,range);
     }    
     
 

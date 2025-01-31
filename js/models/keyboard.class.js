@@ -60,10 +60,8 @@ class Keyboard {
         this.keyDown=true;
         let keyname=this.KEYTABLE[key.keyCode];
         if (this.hasCooldown(keyname)) return;
-        console.log(keyname);
         if (keyname) this[keyname]=true;           
         key.preventDefault(); 
-        // console.log(key.keyCode);
     }
 
 

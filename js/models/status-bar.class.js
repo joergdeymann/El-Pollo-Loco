@@ -33,13 +33,13 @@ class Statusbar extends DrawableObject {
     CALL={
         0:{
             IMAGES_BOTTLES: "textBottlesAbsolute",
-            IMAGES_COINS: "textBottlesAbsolute",
+            IMAGES_COINS: "textCoinsAbsolute",
             IMAGES_LIVE: "textLiveAbsolute",
             IMAGES_ENDBOSS: "textLiveAbsolute",
         },
         1:{
             IMAGES_BOTTLES: "textBottlesPercentage",
-            IMAGES_COINS: "textBottlesPercentage",
+            IMAGES_COINS: "textCoinsPercentage",
             IMAGES_LIVE: "textLivePercentage",
             IMAGES_ENDBOSS: "textLivePercentage"
         }
@@ -91,27 +91,26 @@ class Statusbar extends DrawableObject {
         this.percentage=p;
         this.imgCollection[1].width=p*2;
         this.index=0;
+        this.dx=0;
         if (this.isBottleBar()) {
             this.dx=(100-p)/100*12;
         }
-
+        // if (this.isCoinBar()) debugger;
         return;
     }
 
+
     addKeyListener() {
         this.keyCooldown=false;
-        setInterval(() => {
-            if (this.world.key.OVERLAY) {
-                if (!this.keyCooldown && this.world.key.hasCooldown("OVERLAY")) {
-                    this.displaymode=++this.displaymode%3;
-                    this.keyCooldown=true;
-                    setTimeout(() => {
-                        this.keyCooldown=false;
-                    },this.world.key.COOLDOWN.OVERLAY);
-                }
-                // this.displaymode=this.displaymode?0:1; //
-            }    
-        },30);
+        document.addEventListener("keydown", () => {
+            if (this.world.key.OVERLAY && !this.keyCooldown && this.world.key.hasCooldown("OVERLAY")) {
+                this.displaymode=++this.displaymode%3;
+                this.keyCooldown=true;
+                setTimeout(() => {
+                    this.keyCooldown=false;
+                },this.world.key.COOLDOWN.OVERLAY);
+            }
+        })
 
     }
 
@@ -151,7 +150,7 @@ class Statusbar extends DrawableObject {
         return this.imageSet == "IMAGES_COINS";
     }
 
-    isCollectableBar() {
+    XisCollectableBar() {
         return this.imageSet == "IMAGES_BOTTLES" || this.imageSet == "IMAGES_COINS";
     }
 
@@ -173,7 +172,7 @@ class Statusbar extends DrawableObject {
 
     drawText(ctx,obj) {
         if (!obj) return;
-        let img=this.imgCollection[1]
+        let img=this.imgCollection[1];
         let text=this.getDisplayMode(obj);
         this.formatText(ctx);
 

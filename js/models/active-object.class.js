@@ -15,6 +15,7 @@ class ActiveObject extends DrawableObject {
     hitboxes=[];
     
     harmable=true;
+    active=true;
     initialLive;
     name;
 

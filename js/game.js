@@ -7,5 +7,4 @@ function init() {
     world = new World(canvas,key);
     world.chooseLevel(level1);
     world.debug=true;
-
 }

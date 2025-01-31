@@ -30,6 +30,7 @@ class World {
 
 
     chooseLevel(level) {
+        this.character.MAX_COINS=level.collectableCoinCount;
         this.level=level;
         this.addWorld(this.level);
         this.addWorld(this.character);
@@ -65,7 +66,7 @@ class World {
     }
 
 
-    enemyReduceLive(enemy) {
+    enemyAttack(enemy) {
         if (enemy.isAboveGround()) {
             this.character.reduceLive(enemy,"jump");
         } else {
@@ -85,7 +86,7 @@ class World {
             if (this.character.isFalling()) {
                 this.enemyDie(enemy);
             } else {
-                this.enemyReduceLive(enemy);
+                this.enemyAttack(enemy);
             }
         } 
     }
@@ -112,11 +113,18 @@ class World {
         }
     }
 
+    checkEndbossActivation() {
+        if (this.level.endboss[0].isNearCharacter(500) && !this.level.endboss[0].active) {
+            this.level.endboss[0].activate();
+        }
+    }
+
 
     addCollisionListener() {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
+            this.checkEndbossActivation();
         },50);
     }
 
@@ -126,14 +134,24 @@ class World {
         this.statusBar.ENDBOSS.association=this.level.endboss[0];
         this.statusBar.LIVE.association=this.character;
         this.statusBar.BOTTLES.association=this.character;
+        this.statusBar.COINS.association=this.character;
     }
 
 
-    checkCollisionCollectableObjects(bottle) {
-        if (this.character.isColliding(bottle) && this.character.hasBottleSpace() ) {
-            this.character.addBottle();
-            bottle.removeSelf();
-            this.statusBar.BOTTLES.setPercentage(this.character.bottlesPercentage);
+    checkCollisionCollectableObjects(item) {
+
+        if (this.character.isColliding(item)) {
+
+            if (item instanceof CollectableBottle && this.character.hasBottleSpace()) {
+                this.character.addBottle();
+                item.removeSelf();
+                this.statusBar.BOTTLES.setPercentage(this.character.bottlesPercentage);    
+            } else 
+            if (item instanceof CollectableCoin) {
+                this.character.addCoin();
+                item.removeSelf();
+                this.statusBar.COINS.setPercentage(this.character.coinsPercentage);    
+            }
 
         }
     }
@@ -182,11 +200,11 @@ class World {
 
         this.addToMap(this.level.backgrounds); // in Layer umwandeln
         this.addToMap(this.level.clouds);
+        this.addToMap(this.level.collectableObjects);
         this.addToMap(this.level.endboss);
         this.character.draw(this.ctx);
         this.addToMap(this.throwableObjects);
         this.addToMap(this.level.enemies);
-        this.addToMap(this.level.collectableObjects);
         this.ctx.translate(-this.cameraX,0);
 
         this.addToMap(Object.values(this.statusBar));

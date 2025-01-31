@@ -64,6 +64,11 @@ class Level {
         return b.length; 
     }
 
+    get collectableCoinCount() {
+        let b=this.collectableObjects.filter(e => e instanceof CollectableCoin);
+        return b.length; 
+    }
+
     addLevelListener() {
         setInterval(() => {
             if (this.collectableBottleCount<10) {
@@ -71,4 +76,5 @@ class Level {
             }
         },200);
     }
+    
 }

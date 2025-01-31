@@ -30,17 +30,31 @@ class Character extends AnimatedObject {
         
         //better only what is used/bought
         flask: {
-            speed:0,
-            damage:0
+            speed:0,     // ist 50% faster in running and attacking for 30 seconds
+            damage:0,    // makes 50% mor damage for 30 seconds
+            health:0,    // gives back health
+            resilient:0  // takes no damage for 30 seconds
+        },
+        gem: {
+            weapon:0,    // gets a weapon that gives additional 5% damage
+            shield:0     // gets a shield thas removes 5% of token damage
         },
         item: {
-            weapon:0,
-            shield:0
+            weapon:0,    // gets a weapon that you can use , has its own cooldown like 10 seconds 
+            shield:0     // gets a shield thas removes permanent 10% of token damage
         }
+}
 
+
+    using= {
+        flask: {
+            time: 0,      // last time used for count down and cooldown
+            type: null   // type of flask character uses, must be set null after timeout, -> add setTimeOut to remove 
+        }
     }
 
     MAX_BOTTLES=20;
+    MAX_COINS=20; // 50
 
     soundWalk=new Audio('./assets/sound/walknormal.mp3');
 
@@ -139,11 +153,12 @@ class Character extends AnimatedObject {
     }
 
 
+
+
     get bottlesPercentage() {
         return 100*this.inventory.bottles/this.MAX_BOTTLES;
     }
-
-    
+  
     get textBottlesAbsolute() {
         return `${this.inventory.bottles} / ${this.MAX_BOTTLES}`;
     }
@@ -152,6 +167,25 @@ class Character extends AnimatedObject {
     get textBottlesPercentage() {
         return `${this.bottlesPercentage.toFixed(0)} %`;
     }
+
+
+    get coinsPercentage() {
+        return 100*this.inventory.coins/this.MAX_COINS;
+    }
+
+
+    get textCoinsAbsolute() {
+        return `${this.inventory.coins} / ${this.MAX_COINS}`;
+    }
+
+
+    get textCoinsPercentage() {
+        return `${this.coinsPercentage.toFixed(0)} %`;
+    }
+
+
+
+
 
     isLevelEnd() {
         return this.x > this.world.level.width-425;
@@ -193,6 +227,22 @@ class Character extends AnimatedObject {
     }
 
 
+    hasCoin() {
+        return this.inventory.coins>0;
+    }
+
+    
+    removeCoin() {
+        this.inventory.coins-=1;
+    }
+
+
+    addCoin() {
+        this.inventory.coins+=1;
+        if (this.MAX_COINS<this.inventory.coins) this.MAX_COINS=this.inventory.coins;
+    }
+
+
     deadAnimation() {
         let interval=this.randomInterval();
  
@@ -212,7 +262,7 @@ class Character extends AnimatedObject {
         clearInterval(this.moveInterval);
         // this.deadAnimation();
         return;
-    }
+    } 
 
 
     animateMovement=() => {
