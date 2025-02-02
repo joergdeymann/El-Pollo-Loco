@@ -1,3 +1,5 @@
+
+
 Features
 ========
 1. Wolken: 
@@ -47,3 +49,109 @@ OwlStorm
 All my sounds are now CC0, so you don't have to credit me. But if you want to, credit Ashe Kirk or Owlish Media
 Lizens: https://creativecommons.org/publicdomain/zero/1.0/
 weitere von Ihm https://freesound.org/people/OwlStorm/packs/9344/
+
+Game Information for Tester
+============================
+KEY F12 -> View Hitboxes / toggle / Select Boss Attack / Live
+KEY F11 -> Display Live and Attack Bar over Character / Enemy
+KEY F1 -> Help screen
+KEY F2 -> 
+1 -> Defence 1 Use Live Pod / Faster Attack Pod / 
+2 -> Defence 2 Use Bought Defence as Item / Run Speed Upgrade
+3 -> Special Attack 1  Roll Attack
+4 -> Special Attack 2
+
+
+F1
+=================================
+Prepare:
+1. collect coins to Buy Items that are in a box in the Map
+2. ther are 2 Boxes 1 width Flask, 1 width a special Item
+3. collect 200 Flasks, to attack the Boss, the respawn after 3 Minutes, 
+    but only 50 
+4. The chicks can drop also items, either to sell or to use
+
+Bottles:
+    - You will need around 200 to defeat the Boss
+    - Your inventar of amor is 200;
+
+Coins:
+    - you can collect the coins to buy Flasks or Items, that you find 
+      in the boxes.
+
+
+Chicks:        
+    - avoid touching the Chicks
+    - jumping on Chicks will destroy them
+    - throwing bottles on Chicks will damage all Chicks touching the flask
+    
+    small:
+        Live: 10
+        attack: 5 Points / Second
+    big:
+        Live: 20
+        attack: 15 Points / Second
+    
+    jumping Chick:
+        will make double Damage on you, be careful
+
+
+
+Boss Attacks:
+    Planned Total Time: 5 minutes
+    Enrage: at 6 Minutes, Boss makes Double Damage;
+
+1. Feather Blizzard 
+    Cooldown: 1 Minute (50 - 70 Seconds)
+    Duration: 5 Seconds
+
+    Throws 100 feathers or more widthinn 5 Seconds
+    The Fethers make lots damage while touching the Character
+    You will need to use a immutable Item, that has a CD of 1 Minute also
+    or run away
+
+2. Earthquake (50 - 70 Seconds)
+    Cooldown: 1 Minute
+    Duration: 
+        jumping: 5 Seconds ?
+        Erthquake: 2 Seconds
+
+    The Boss jumps up and Falls down, the Ground will go up and down for 2 Seconds
+    you have to Jump to avoid damage.
+
+3. Pick Attack 
+    Cooldown: 30 Seconds (20-40 Seconds)
+    Duration: 6 Seconds
+    Moves to your Position, and makes 3 Picks
+    you will need to go away after Boss Moving to you,
+    you will be able to move behinde the Boss to make more damage in that time
+
+4. Chick Mania
+    Cooldown: 3min (150-210 Seconds)
+    Boss moves away, new Small Chicks come and Attack in salves
+    3 salves
+    10 seconds colldown  between salves
+     5 chicks / Jumpchance of 20%;
+
+    You need to jump on the chicks
+
+
+usable Flasks
+    duration: 20seconds
+    costs: 20coins
+    cooldown: 1minute
+    use: Key 1
+        
+    Engergy Flask: 1.5 times more damage
+    Speed Flask: 1.5 Attack speed
+    Live Flask: generates 20% of current Live
+
+
+Items:    
+    Shield: no damage for 10 Seconds, cooldown: 1 minute
+    use: Key 2 or Q
+
+Character:
+    You can carry 200 Flask 
+    that you have to collect best before you enter the Boss
+

@@ -9,42 +9,54 @@ class ActiveObject extends DrawableObject {
     world;
     damage={touch:1,jump:100,fire:10};
     live=100;
+    isHit=false;
     collision=false;
     collisionHitbox;     //the hitbox of the Multi hitbox which collided 
-    hitboxes={};
+    hitboxes=[];
     
     harmable=true;
-
-
-
+    active=true;
+    initialLive;
+    name;
 
     constructor() {
         super();
     }
     
 
+    setLive(live) {
+        if (!live) live=this.live;
+        this.initialLive=live;
+        this.live=live;
+    }
+
 
     setRandomPositionX() {
         this.x = Math.random()*this.world.canvas.width + this.world.level.width;
     }
 
+
     setRandomStartPositionX() {
         if (this.world?.level?.width) {
+            let range=this.world.level.width;
             this.x = Math.random()*this.world.level.width;
         } else {
             setTimeout(() => this.setRandomStartPositionX(),50);
         }
     }
 
+
     getCenterX(obj) {
         if (obj == null) obj=this;
         return obj.x+obj.width/2;
     }
 
+
     getCenterY(obj) {
         if (obj == null) obj=this;
         return obj.y+obj.height/2;
     }
+
 
     /**
      * Überprüft, ob sich zwei Quadrate überlappen.
@@ -76,60 +88,104 @@ class ActiveObject extends DrawableObject {
         return true;
     }
 
-    getCoordinatesHitbox(obj) {
-        let x=obj.x+obj.hitbox.dx;
-        let y=obj.y+obj.hitbox.dy;
-        let width=obj.hitbox.width;
-        let height=obj.hitbox.height;
+
+    getHitbox(hitbox) {
+        if (!hitbox) hitbox=this.hitbox;
+        let x=this.x+hitbox.dx;
+        let y=this.y+hitbox.dy;
+        let width=hitbox.width;
+        let height=hitbox.height;
         return {x,y,width,height}
     }
 
+
     reduceLive(obj,weapon) {
-        if (this.harmable) {
-            this.live-=obj.damage[weapon];
-            if (this.live<0) this.live=0;    
+        if (obj.isDead() || !this.harmable) return;
+
+        this.live-=obj.damage[weapon];
+        if (this.live<0) this.live=0;    
+
+
+        if (this.live == 0) {
+            this.speed=0;
+            this.stopTimer=true;
+            this.die();
         }
     }
+
+    /**
+     * handling is in Chicken / Chick and so on
+     */
+    die() {
+
+    }
+
 
     isDead() {
         return this.live==0;
     }
 
+
+    get livePercentage() {
+        return this.live*100/this.initialLive;
+    }
+
+
+    get textLiveAbsolute() {
+        return this.live + " / " + this.initialLive;
+    }
+
+
+    get textLivePercentage() {
+        return this.livePercentage.toFixed(0) + " %";
+    }
+
+
     resetCollision() {
         this.collision=false;
+        this.isHit=false;
     }
+
 
     isHurt() {
-        return this.collision && this.harmable;
+        return this.isHit && this.harmable;
     }
 
-    isColliding(obj) {        
-        let hitbox=this.getCoordinatesHitbox(this);
-        let hitboxOther=this.getCoordinatesHitbox(obj);
-        // this.reduceLive(mo,"touch");
+
+    canTakeDamageFrom(obj) {
+        return this.isColliding(obj) && !this.isDead() && this.harmable;
+    }
+    
+
+    isColliding(obj) {
+        if (this.hitboxes && this.hitboxes.length>0) return this.isCollidingGroup(obj);
+
+        let hitbox=this.getHitbox();
+        let hitboxOther=obj.getHitbox();
         let collision=this.overlap(hitbox,hitboxOther);
         if (collision) this.collision=true;
+        if (!obj.isDead() && collision && !(obj instanceof CollectableObject)) this.isHit=true;
 
         return collision;
     }
 
+ 
     isCollidingGroup(obj) {
-        let hitboxOther=this.getCoordinatesHitbox(obj);
-        for (hitbox of this.hitboxes) {
+        this.collision=false;
+        this.isHit=false;
+        let hitboxOther=obj.getHitbox();
+        for (let hb of this.hitboxes) {
+            let hitbox=this.getHitbox(hb);
             let collision=this.overlap(hitbox,hitboxOther);
+            if (!obj.isDead() && collision && !(obj instanceof CollectableObject)) this.isHit=true;
+
             if (collision) {
                 this.collision=true;
-                this.collisionHitbox=hitbox; 
                 break;
             }   
         }
         return this.collision;
     }
 
-    get isMovingLeft() {
-        if (this instanceof Character) return this.flip;
-        return !this.flip;
-    } 
- 
 
 }

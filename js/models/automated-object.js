@@ -9,7 +9,7 @@ class AutomatedObject extends ActiveObject {
     speedMax=1;
     speedIntervalRange=5000;
     speedIntervalMin=1000;
-    stoptimer=false;
+    stopTimer=false;
     respawnInterval=null;
     moveInterval=null;
 
@@ -20,7 +20,6 @@ class AutomatedObject extends ActiveObject {
     }
 
 
-
     // ab hier die Action Objects
     initListenerMoveLeft() {
         if (this.moveInterval) return;
@@ -28,6 +27,7 @@ class AutomatedObject extends ActiveObject {
             this.x-=this.speed;
         },1000/60)        
     }
+
 
     initListenerLeftPosition() {
         if (this.respawnInterval) retaurn;
@@ -41,33 +41,37 @@ class AutomatedObject extends ActiveObject {
         setTimeout(() => this.adjustSpeed(), this.speedInterval);
     }
 
+
     get speedInterval() {
         let intervalDelay=Math.random()*this.speedIntervalRange;
         return this.speedIntervalMin+intervalDelay;
     }
+
 
     /**
      * AdjustSpeed every 5 Seconds + random of 0-1 Seconds random
      * set speed to random of 0 to 2
      */
     adjustSpeed() {
+        if (this.stopTimer) return;
         if (this.speedType==0)  this.adjustSpeedRandom(); 
         if (this.speedType==1)  this.adjustSpeedSmooth(); 
         
-        if (!this.stoptimer) this.adjustSpeedTimer();
+        if (!this.stopTimer)    this.adjustSpeedTimer();
         
     }
+
 
     // Relkative adjust
     adjustSpeedSmoth() {
         this.speed=min(max(this.speedMin,this.speed+Math.random()*this.speedRange-this.speedRange/2),this.speedMax);
     }
 
+
     //Absolute Adjust
     adjustSpeedRandom() {
         this.speed=this.speedMin+Math.random()*this.speedRange;
     }
-
 
 
     respawn() {
@@ -81,7 +85,6 @@ class AutomatedObject extends ActiveObject {
                 dx=150;
             }
             this.x = this.world.character.x+dx;  
-
         }
     }
 

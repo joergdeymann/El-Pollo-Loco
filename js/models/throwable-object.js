@@ -17,19 +17,32 @@ class ThrowableObject extends AnimatedObject {
 
     IMAGES_THROW=[];
 
+
     constructor() {
         super();
     } 
 
+
     init() {
         this.animationStart();
+    }
+
+
+    
+    get isMovingLeft() {
+        return this.direction<0;
+    }
+
+ 
+    get isMovingRight() {
+        return this.direction>0;
     }
 
     /**
      * 
      * @param {*} x 
      * @param {*} y 
-     * @param {*} speed 0-100; good values between 50 and 100;
+     * @param {*} speed - 0-100; good values between 50 and 100;
      */
     throw(x,y,speed) {
         this.x = x;
@@ -41,4 +54,18 @@ class ThrowableObject extends AnimatedObject {
         this.applyGravity(); 
         this.applyGravityX(); 
     }
+
+
+    throwFromObject(character,speed) {
+        let dx=20;
+        if (character.isMovingLeft) {
+            speed=-speed;
+            dx-=dx;
+        } 
+        let x=character.getCenterX()-this.width/2;
+        let y=character.getCenterY()-this.height/2;
+        this.throw(x,y,speed);
+    }
+
+
  }

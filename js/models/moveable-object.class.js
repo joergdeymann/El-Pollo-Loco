@@ -1,32 +1,29 @@
-// extends ActionOnjects, 
-// hier solllen nur die direkten Movements rein
-
 class MovableObject extends AutomatedObject {
     speedY=1;
     accelerationY=0.2;
     accelerationX=0.1;
     direction=0;
 
-
-
     constructor() {
         super()
 
     }
+
 
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround()) {
                 this.fall();
             }
-
         },1000/60);
     }
+
 
     fall() {
         this.y -= this.speedY;
         this.speedY -= this.accelerationY;    
     }
+
 
     applyGravityX() {
         setInterval(() => {
@@ -43,31 +40,48 @@ class MovableObject extends AutomatedObject {
         if (this.speed < 0) this.speed=0;
     }                
     
+
     isAboveGround() {
         return (this.y+this.hitbox.height+this.hitbox.dy) < 420;
     }
 
+
     isFalling() {
         return this.speedY < 0 && this.isAboveGround();
     }
+
  
     isMoving() {
-        return this.speed >0;
+        return this.speed != 0;
     }
+
+
+    get isMovingLeft() {
+        if (this instanceof Character) return this.flip;  //  || this instanceof Endboss
+        return !this.flip;
+    } 
+
+    get isMovingRight() {
+        if (this instanceof Character) return !this.flip;
+        return this.flip;
+    } 
+
 
     moveRight(sound=null) {
         this.x+=this.speed;
-        this.flip=false;
+        this.flip=!this.FLIP;
         if (sound) sound.play();
         this.direction=1;
     }
 
+
     moveLeft(sound=null) {
         this.x-=this.speed;
-        this.flip=true;
+        this.flip=this.FLIP;
         if (sound) sound.play();
         this.direction=-1;
     }
+
 
     jump() {
         this.speedY=3; 
@@ -75,22 +89,47 @@ class MovableObject extends AutomatedObject {
     }
 
 
-
-
-
-    isLeftFromCharacter() {
-        return this.getCenterX(this) < this.getCenterX(this.world.character);
+    jumpSmall() {
+        this.speedY=3; 
+        this.y-=50;          
     }
 
-    isRightFromCharacter() {
-        return this.getCenterX(this) > this.getCenterX(this.world.character);
+
+    isLeftFrom(obj,limit) {
+        return this.getCenterX(this) < this.getCenterX(obj)-limit;
     }
 
-    // this.x + this.width/2
-    isNearCharacter() {
+
+    isLeftFromCharacter(limit=0) {
+        return this.isLeftFrom(this.world.character,limit);
+    }
+
+    
+
+    isRightFrom(obj,limit) {
+        return this.getCenterX(this) > this.getCenterX(obj)+limit;
+    }
+
+
+    isRightFromCharacter(limit=0) {
+        return this.isRightFrom(this.world.character,limit);
+    }
+
+    
+    isNear(obj,range=150) {
         let enemy = this.getCenterX(this);
-        let character = this.getCenterX(this.world.character);
-        return enemy > character-150 && enemy < character+150;
+        let character = this.getCenterX(obj);
+        return enemy > character-range && enemy < character+range;
     }    
+
+    
+    isNearCharacter(range=150) {
+        return this.isNear(this.world.character,range);
+    }    
+    
+
+    stopMovingX() {
+        this.speed=0;
+    }
 
 }

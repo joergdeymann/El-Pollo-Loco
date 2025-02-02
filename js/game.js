@@ -6,5 +6,5 @@ function init() {
     key = new Keyboard();
     world = new World(canvas,key);
     world.chooseLevel(level1);
-
+    world.debug=true;
 }

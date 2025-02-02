@@ -1,17 +1,27 @@
 class Background extends MovableObject {
     width=720;
     height=480;
-
-    constructor(imagePath,x) {
+    layer=0;
+    world;
+    startX=0;
+    
+    constructor(imagePath,x,layer) {
         super();
         this.loadImage(imagePath); 
 
-        // this.width=this.ctx.size.width;
-        // this.height=this.ctx.size.height;
         this.speed=0;
         this.x=x;
         this.y=480-this.height;
+        this.layer=layer;
+        this.startX=x;
+        if (layer > 0 && layer < 3) {
+            setTimeout(()=> this.addPositionListener(),1000);
+        }
     } 
 
-
+    addPositionListener() {
+        setInterval(() => {
+            this.x=this.startX-(this.world.character.x-this.world.character.startX)*this.layer/4*0.1;
+        },1000/60);
+    }    
 }

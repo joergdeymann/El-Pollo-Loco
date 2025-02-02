@@ -19,12 +19,12 @@ class Cloud extends MovableObject {
     } 
 
     init() {
-        // setTimeout(() => this.initMoveLeft(), Math.random()*1000*5); //Move Delay First Time
-        this.initStartPosition();          //set StartPosition
+        this.initStartPosition();
         this.adjustSpeed();
         this.initListenerMoveLeft(); 
-        this.initListenerLeftPosition();   //listener LeftPosition
+        this.initListenerLeftPosition(); 
     }
+
 
     initListenerLeftPosition() {
         setInterval(() => {
@@ -32,14 +32,12 @@ class Cloud extends MovableObject {
         },1000)
     }
 
-    initStartPosition() {
 
+    initStartPosition() {
         if (this.world?.level?.width) {
-            // this.x = Math.random()*(this.levelwidth+720); // Random Position in first screen + screensize-center 
             this.setRandomStartPositionX(); 
             this.setRandomPositionY();
             this.speed=0.3;    
- 
         } else {
             setTimeout(() => this.initStartPosition(),50);
         }
@@ -50,9 +48,11 @@ class Cloud extends MovableObject {
         this.x = Math.random()*2000 + this.world.level.width;
     }
 
+
     setRandomPositionY() {
         this.y=-15+Math.random()*100;
     }
+
 
     respawn() {
         super.respawn();
@@ -64,6 +64,4 @@ class Cloud extends MovableObject {
         this.setRandomPositionX(); 
         this.setRandomPositionY(); 
     }
-
-
 }

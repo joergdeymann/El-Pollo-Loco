@@ -13,18 +13,33 @@ class CollectableObject extends AnimatedObject {
     }
 
     
-    IMAGES_BOTTLE=[
-        'assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
-        'assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
+    IMAGES_ANIMATED=[
     ]
+
 
     constructor() {
         super();
-        this.loadImages(this.IMAGES_BOTTLE);
-        this.animationStart();
-
-        this.setRandomStartPositionX();
-
     }
 
+
+    removeSelf() {
+        this.removeObjectFromArray(this.world.level.collectableObjects,this);
+    }
+
+
+    removeObjectFromArray(array,obj) {
+        const index=array.findIndex(e => e == obj);
+        if (index != -1) array.splice(index,1);
+    } 
+
+
+    
+    setRandomStartPositionX() {
+        if (this.world?.level?.width) {
+            let unreachable=this.world.level.backgrounds[0].width/2*1.1;
+            this.x = Math.random()*(this.world.level.width - unreachable*2)+unreachable;
+        } else {
+            setTimeout(() => this.setRandomStartPositionX(),50);
+        }
+    }
 }

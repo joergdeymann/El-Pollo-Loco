@@ -30,21 +30,6 @@ class Statusbar extends DrawableObject {
         'assets/img/7_statusbars/3_icons/icon_health_endboss.png'
     ];
 
-    CALL={
-        0:{
-            IMAGES_BOTTLES: "textBottlesAbsolute",
-            IMAGES_COINS: "textCoinsAbsolute",
-            IMAGES_LIVE: "textLiveAbsolute",
-            IMAGES_ENDBOSS: "textLiveAbsolute",
-        },
-        1:{
-            IMAGES_BOTTLES: "textBottlesPercentage",
-            IMAGES_COINS: "textCoinsPercentage",
-            IMAGES_LIVE: "textLivePercentage",
-            IMAGES_ENDBOSS: "textLivePercentage"
-        }
-
-    }
 
     percentage=100;
     x=10;
@@ -57,8 +42,7 @@ class Statusbar extends DrawableObject {
     imgBackground;
     imgFront;
     association;
-    displaymode=this.ABSOLUTE;
-    keyCooldown=false;
+    displaymode=0; // this.ABSOLUTE;
     
 
     constructor(images,positionX,positionY,width=200,height=40) {
@@ -72,7 +56,7 @@ class Statusbar extends DrawableObject {
 
         this.setCollection();
         this.setPercentage(this.getPercentageStart(images));
-        this.addKeyListener();
+
     }
 
     
@@ -90,29 +74,19 @@ class Statusbar extends DrawableObject {
     setPercentage(p) {
         this.percentage=p;
         this.imgCollection[1].width=p*2;
+        this.dx=(100-p)/100*12;
         this.index=0;
-        this.dx=0;
-        if (this.isBottleBar()) {
-            this.dx=(100-p)/100*12;
-        }
-        // if (this.isCoinBar()) debugger;
+
         return;
     }
 
 
-    addKeyListener() {
-        this.keyCooldown=false;
-        document.addEventListener("keydown", () => {
-            if (this.world.key.OVERLAY && !this.keyCooldown && this.world.key.hasCooldown("OVERLAY")) {
-                this.displaymode=++this.displaymode%3;
-                this.keyCooldown=true;
-                setTimeout(() => {
-                    this.keyCooldown=false;
-                },this.world.key.COOLDOWN.OVERLAY);
-            }
-        })
-
+    XresolveImageIndex() {
+        if (this.percentage<0) this.percentage=0;
+        if (this.percentage>100) this.percentage=100;
+        return Math.floor((this.percentage+19)/20);
     }
+
 
     addImage(img,x=this.x,y=this.y,width=this.width,height=this.height) {
         let newImg=new Image();
@@ -142,23 +116,27 @@ class Statusbar extends DrawableObject {
         this.drawText(ctx,this.association);
     }
 
-    isBottleBar() {
-        return this.imageSet == "IMAGES_BOTTLES";
-    }
-
-    isCoinBar() {
-        return this.imageSet == "IMAGES_COINS";
-    }
-
-    XisCollectableBar() {
+    isCollectableBar() {
         return this.imageSet == "IMAGES_BOTTLES" || this.imageSet == "IMAGES_COINS";
     }
 
     // Hier die Anzahl der Coins / Bottles
     getDisplayMode(obj) {
-        if (this.displaymode==2) return "";
-        let call=this.CALL[this.displaymode][this.imageSet];
-        return obj[call];
+        let text;
+        if (this.displaymode==this.ABSOLUTE) {
+            if (this.isCollectableBar()) {
+                text=obj.textBottlesAbsolute;
+            } else {
+                text=obj.textLiveAbsolute;
+            }
+        } else {
+            if (this.isCollectableBar()) {
+                text=obj.textBottlesPercentage;
+            } else {
+                text=obj.textLivePercentage;
+            }
+        }
+        return text;
     }
 
 
@@ -172,7 +150,7 @@ class Statusbar extends DrawableObject {
 
     drawText(ctx,obj) {
         if (!obj) return;
-        let img=this.imgCollection[1];
+        let img=this.imgCollection[1]
         let text=this.getDisplayMode(obj);
         this.formatText(ctx);
 
