@@ -137,19 +137,33 @@ let coinPositions=[
 //     }        
 // }
 
+// let screenSizeX=backgrounds[0].width;
+// let layers=backgrounds.filter(e => e.layer == 0).length;
+// let layerSize=layers*screenSizeX;
+// let backgroundSize=layerSize*layers-screenSizeX;
 
-let x=-200;
-for (i=0;i<7;i++) {
-    let set=Math.floor(Math.random()*coinSet.length);
-    let dx=Math.random()*600+600;
-    x+=dx;
-    y=coinPositions[set].y+Math.random()*50;
 
-    for (let coin of coinSet[set]) {
-        level1.collectableObjects.push(new CollectableCoin(coin.x*2+x,coin.y+y));
-    }        
+function addCoins() {
+    let backgroundSize=backgrounds[backgrounds.length-1].x;
+
+    let x=-200;
+
+    while(true) {
+        let set=Math.floor(Math.random()*coinSet.length);
+        let dx=Math.random()*600+600;
+        x+=dx;
+        if (x > backgroundSize) break;
+
+        y=coinPositions[set].y+Math.random()*40;
+
+        for (let coin of coinSet[set]) {
+            level1.collectableObjects.push(new CollectableCoin(coin.x*2+x,coin.y+y));
+        }        
+    }
+    
 }
 
 
 
 
+addCoins();

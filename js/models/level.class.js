@@ -5,6 +5,7 @@ class Level {
     endboss=[];
     collectableObjects=[];
     width;
+    world;
     
     constructor(enemies,clouds,backgrounds,endboss) {
         this.enemies=enemies;
@@ -53,8 +54,8 @@ class Level {
     addCollectableBottles(count=countBottlesGround-10) {
         console.log("Neue Bottles");
         for (i=0;i<count;i++) {
-            let b=new CollectableBottle();
-            this.world.addWorld(b);
+            let b=new CollectableBottle(this.world);
+            // this.world.addWorld(b);
             this.collectableObjects.push(b);
         }
     }

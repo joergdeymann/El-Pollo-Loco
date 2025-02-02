@@ -19,11 +19,12 @@ class CollectableBottle extends CollectableObject {
     ]
 
 
-    constructor() {
+    constructor(world=null) {
         super();
+        this.world=world;
         this.loadImages(this.IMAGES_ANIMATED);
-        this.animationStart();
         this.setRandomStartPositionX();
+        this.animationStart();
     }
 
 }
