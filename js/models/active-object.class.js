@@ -102,7 +102,12 @@ class ActiveObject extends DrawableObject {
     reduceLive(obj,weapon) {
         if (obj.isDead() || !this.harmable) return;
 
-        this.live-=obj.damage[weapon];
+        if (this.collisionRegion?.damageFactor) {
+            console.log("reduceLiveRegion",this.collisionRegion.damageFactor);
+            this.live-=(obj.damage[weapon] * this.collisionRegion.damageFactor);
+        } else {
+            this.live-=obj.damage[weapon];
+        }
         if (this.live<0) this.live=0;    
 
 
@@ -114,7 +119,7 @@ class ActiveObject extends DrawableObject {
     }
 
     /**
-     * handling is in Chicken / Chick and so on
+     * handling is in Chicken Class/ Chick Class and so on
      */
     die() {
 
@@ -159,6 +164,7 @@ class ActiveObject extends DrawableObject {
     
 
     isColliding(obj) {
+        this.collisionRegion=null;
         if (this.hitboxes && this.hitboxes.length>0) return this.isCollidingGroup(obj);
 
         let hitbox=this.getHitbox();
@@ -182,6 +188,7 @@ class ActiveObject extends DrawableObject {
 
             if (collision) {
                 this.collision=true;
+                this.collisionRegion=hb;
                 break;
             }   
         }

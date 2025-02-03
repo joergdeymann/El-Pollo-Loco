@@ -9,23 +9,26 @@ class Endboss extends AnimatedObject {
 
 
     hitboxes = [
-        {
+        {   //Head
             dx:20,
             dy:70,
             width: 100,
-            height:100
+            height:100,
+            damageFactor: 1.3
         },
-        {
+        {   //Body
             dx:70,
             dy:135,
             width: 250,
-            height: 130
+            height: 130,
+            damageFactor: 1
         },
-        {
+        {   // Feet
             dx:135,
             dy:265,
             width: 115,
-            height:70
+            height:70,
+            damageFactor: 0.5
         },
         
 
