@@ -7,6 +7,7 @@ class Chicken extends AnimatedObject {
     removeTime=5000; // Time to remove dead body
 
     damage={touch:1,jump:5,fire:10};
+    name="Chicken";
 
     hitbox = {
         dx:2,

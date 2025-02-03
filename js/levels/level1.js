@@ -131,16 +131,6 @@ let coinPositions=[
     },
 ]
 
-// for (p of coinpositions) {
-//     for (let coin of coinset[p.set]) {
-//         level1.collectableObjects.push(new CollectableCoin(coin.x+p.x,coin.y+p.y));
-//     }        
-// }
-
-// let screenSizeX=backgrounds[0].width;
-// let layers=backgrounds.filter(e => e.layer == 0).length;
-// let layerSize=layers*screenSizeX;
-// let backgroundSize=layerSize*layers-screenSizeX;
 
 
 function addCoins() {
@@ -162,8 +152,5 @@ function addCoins() {
     }
     
 }
-
-
-
 
 addCoins();

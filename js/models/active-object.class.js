@@ -38,7 +38,7 @@ class ActiveObject extends DrawableObject {
 
     setRandomStartPositionX() {
         if (this.world?.level?.width) {
-            let range=this.world.level.width;
+            // let range=this.world.level.width;
             this.x = Math.random()*this.world.level.width;
         } else {
             setTimeout(() => this.setRandomStartPositionX(),50);
@@ -91,6 +91,7 @@ class ActiveObject extends DrawableObject {
 
     getHitbox(hitbox) {
         if (!hitbox) hitbox=this.hitbox;
+        if (this.flip) hitbox=this.reverseHitbox(hitbox);
         let x=this.x+hitbox.dx;
         let y=this.y+hitbox.dy;
         let width=hitbox.width;
@@ -99,23 +100,28 @@ class ActiveObject extends DrawableObject {
     }
 
 
-    reduceLive(obj,weapon) {
-        if (obj.isDead() || !this.harmable) return;
-
+    reduceLiveCalculation(obj,weapon) {
         if (this.collisionRegion?.damageFactor) {
-            console.log("reduceLiveRegion",this.collisionRegion.damageFactor);
             this.live-=(obj.damage[weapon] * this.collisionRegion.damageFactor);
         } else {
             this.live-=obj.damage[weapon];
         }
         if (this.live<0) this.live=0;    
 
+    }
 
+    reduceLiveDie() {
         if (this.live == 0) {
             this.speed=0;
             this.stopTimer=true;
             this.die();
         }
+    }
+
+    reduceLive(obj,weapon) {
+        if (obj.isDead() || !this.harmable) return;
+        this.reduceLiveCalculation(obj,weapon);
+        this.reduceLiveDie();
     }
 
     /**
@@ -184,15 +190,24 @@ class ActiveObject extends DrawableObject {
         for (let hb of this.hitboxes) {
             let hitbox=this.getHitbox(hb);
             let collision=this.overlap(hitbox,hitboxOther);
-            if (!obj.isDead() && collision && !(obj instanceof CollectableObject)) this.isHit=true;
+            if (!obj.isDead() && collision && !(obj instanceof CollectableObject)) {
+                this.isHit=true;
+                this.collisionRegion=hb;
+            }
 
             if (collision) {
                 this.collision=true;
-                this.collisionRegion=hb;
                 break;
             }   
         }
         return this.collision;
+    }
+
+
+    reverseHitbox(hitbox) {
+        let xc = this.width / 2;
+        let x  = 2 * xc - (hitbox.dx + hitbox.width) + 1;
+        return {...hitbox, dx:x};
     }
 
 
