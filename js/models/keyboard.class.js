@@ -39,6 +39,7 @@ class Keyboard {
     constructor() {
         document.addEventListener("keydown",e => this.getkeyDown(e));
         document.addEventListener("keyup",e => this.getkeyUp(e));
+        this.addKeyListener();
         this.setKeys(false);
     }
     
@@ -51,17 +52,21 @@ class Keyboard {
 
 
     isKeyDown() {
-        return this.keyDown; 
+        for  (let key of Object.values(this.KEYTABLE)) {
+            if (this[key]==true) return true;
+        }
+        return false;
     }
 
 
     getkeyDown(key) {
-        this.lastActionTime=Date.now();
+        console.log("keydown");
+        // this.lastActionTime=Date.now();
         this.keyDown=true;
         let keyname=this.KEYTABLE[key.keyCode];
         if (this.hasCooldown(keyname)) return;
         if (keyname) this[keyname]=true;           
-        key.preventDefault(); 
+        // key.preventDefault(); 
     }
 
 
@@ -69,8 +74,8 @@ class Keyboard {
         this.keyDown=false;
         let keyname=this.KEYTABLE[key.keyCode];
         if (keyname) this[keyname]=false;    
-        key.preventDefault(); 
-        this.lastActionTime=Date.now();
+        // key.preventDefault(); 
+        // this.lastActionTime=Date.now();
     }
 
 
@@ -93,5 +98,11 @@ class Keyboard {
     isSleeping() {
         let t=Date.now()-this.lastActionTime;
         return t > 20000;
+    }
+
+    addKeyListener() {
+        setInterval(() => {
+            if (this.isKeyDown()) this.lastActionTime=Date.now();
+        },50);
     }
 }

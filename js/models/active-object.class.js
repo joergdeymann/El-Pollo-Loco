@@ -148,9 +148,10 @@ class ActiveObject extends DrawableObject {
 
 
     isHurt() {
+        this.isHurting=this.isHurting || (this.isHit && this.harmable);
         return this.isHit && this.harmable;
     }
-
+    
 
     canTakeDamageFrom(obj) {
         return this.isColliding(obj) && !this.isDead() && this.harmable;

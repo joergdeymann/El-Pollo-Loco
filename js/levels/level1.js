@@ -144,7 +144,7 @@ let coinPositions=[
 
 
 function addCoins() {
-    let backgroundSize=backgrounds[backgrounds.length-1].x;
+    let backgroundSize=backgrounds[backgrounds.length-1].x-coinSet.length;
 
     let x=-200;
 
