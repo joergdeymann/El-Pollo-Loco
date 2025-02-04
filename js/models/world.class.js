@@ -156,7 +156,10 @@ class World {
         }
     }
 
-
+    /**
+     * Check Collision : Character enemy,endboss,bottle
+     * 
+     */
     checkCollisions() {
         this.character.resetCollision();
         for (let enemy of this.level.enemies) {
@@ -198,7 +201,7 @@ class World {
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
         this.ctx.translate(this.cameraX,0);
 
-        this.addToMap(this.level.backgrounds); // in Layer umwandeln
+        this.addToMap(this.level.backgrounds); 
         this.addToMap(this.level.clouds);
         this.addToMap(this.level.collectableObjects);
         this.addToMap(this.level.endboss);

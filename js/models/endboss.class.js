@@ -70,28 +70,28 @@ class Endboss extends AnimatedObject {
 
 
     IMAGES_ATTACK=[
-        './assets/img/4_enemie_boss_chicken/1_walk/G13.png',
-        './assets/img/4_enemie_boss_chicken/1_walk/G14.png',
-        './assets/img/4_enemie_boss_chicken/1_walk/G15.png',
-        './assets/img/4_enemie_boss_chicken/1_walk/G16.png',
-        './assets/img/4_enemie_boss_chicken/1_walk/G17.png',
-        './assets/img/4_enemie_boss_chicken/1_walk/G18.png',
-        './assets/img/4_enemie_boss_chicken/1_walk/G19.png',
-        './assets/img/4_enemie_boss_chicken/1_walk/G20.png',
+        './assets/img/4_enemie_boss_chicken/3_attack/G13.png',
+        './assets/img/4_enemie_boss_chicken/3_attack/G14.png',
+        './assets/img/4_enemie_boss_chicken/3_attack/G15.png',
+        './assets/img/4_enemie_boss_chicken/3_attack/G16.png',
+        './assets/img/4_enemie_boss_chicken/3_attack/G17.png',
+        './assets/img/4_enemie_boss_chicken/3_attack/G18.png',
+        './assets/img/4_enemie_boss_chicken/3_attack/G19.png',
+        './assets/img/4_enemie_boss_chicken/3_attack/G20.png',
     ];
 
 
     IMAGES_HURT=[
-        './assets/img/4_enemie_boss_chicken/1_walk/G21.png',
-        './assets/img/4_enemie_boss_chicken/1_walk/G22.png',
-        './assets/img/4_enemie_boss_chicken/1_walk/G23.png',
+        './assets/img/4_enemie_boss_chicken/4_hurt/G21.png',
+        './assets/img/4_enemie_boss_chicken/4_hurt/G22.png',
+        './assets/img/4_enemie_boss_chicken/4_hurt/G23.png',
     ];
 
 
     IMAGES_DEAD=[
-        './assets/img/4_enemie_boss_chicken/1_walk/G24.png',
-        './assets/img/4_enemie_boss_chicken/1_walk/G25.png',
-        './assets/img/4_enemie_boss_chicken/1_walk/G26.png',
+        './assets/img/4_enemie_boss_chicken/5_dead/G24.png',
+        './assets/img/4_enemie_boss_chicken/5_dead/G25.png',
+        './assets/img/4_enemie_boss_chicken/5_dead/G26.png',
     ];
 
 
@@ -108,47 +108,52 @@ class Endboss extends AnimatedObject {
 
         this.loadImages(this.IMAGES_STANDING);
         this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_ATTACK);
         this.init();
         this.setLive();
    } 
 
     init() {
         this.animationStart();
-        // this.initListenerMoveLeft();
-        // this.initListenerLeftPosition();
-        // this.animationStart();
     }
 
-    movementListener() {
-        let t=Math.random()*10;
-        if (t<10) {
-            this.speed=1.5;
-            if (this.isHurting) {
-                this.setImages(this.IMAGES_HURT);
-                setTimeout(() => {
-                    this.isHurting=false;
-                },500);
-            } else 
-            if (this.isLeftFromCharacter(20)) {
-                this.setImages(this.IMAGES_WALKING);
-                this.moveRight();
-            } else 
-            if (this.isRightFromCharacter(20)) {
-                this.setImages(this.IMAGES_WALKING);
-                this.moveLeft();
-            } else {
-                this.setImages(this.IMAGES_STANDING);
-            }
-
-
-
-            // this.speed=0;
+    hurting() {
+        if (!this.isImageSet(this.IMAGES_HURT)) {
+            this.setImages(this.IMAGES_HURT);
+            setTimeout(() => {
+                this.isHurtingMovement=false;
+            },500);
         }
     }
 
-    // isColliding(obj) {     
-    //     return this.isCollidingGroup(obj);
-    // }
+
+    movement() {
+        this.speed=1.5;
+        if (this.isLeftFromCharacter(20)) {
+            this.setImages(this.IMAGES_WALKING);
+            this.moveRight();
+        } else 
+        if (this.isRightFromCharacter(20)) {
+            this.setImages(this.IMAGES_WALKING);
+            this.moveLeft();
+        } else {
+            this.setImages(this.IMAGES_STANDING);
+        }
+    }
+    
+
+    movementListener() {
+        let t=Math.random()*10;
+        if (this.isHurtingMovement) {
+            this.hurting();
+        } else if (t<10) {
+            this.movement();
+        }
+    }
+
+
     activate() {
         this.active=true;
         this.listener.movement=setInterval(() => this.movementListener(),50);

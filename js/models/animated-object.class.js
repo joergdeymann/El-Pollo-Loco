@@ -65,4 +65,8 @@ class AnimatedObject extends MovableObject {
         }
     }
 
+    isImageSet(images) {
+        return this.IMAGES == images;
+    }
+
 }

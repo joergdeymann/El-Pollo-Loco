@@ -119,6 +119,7 @@ class ActiveObject extends DrawableObject {
     }
 
     reduceLive(obj,weapon) {
+        this.isHurtingMovement=true;
         if (obj.isDead() || !this.harmable) return;
         this.reduceLiveCalculation(obj,weapon);
         this.reduceLiveDie();
@@ -159,7 +160,6 @@ class ActiveObject extends DrawableObject {
 
 
     isHurt() {
-        this.isHurting=this.isHurting || (this.isHit && this.harmable);
         return this.isHit && this.harmable;
     }
     
@@ -178,6 +178,7 @@ class ActiveObject extends DrawableObject {
         let collision=this.overlap(hitbox,hitboxOther);
         if (collision) this.collision=true;
         if (!obj.isDead() && collision && !(obj instanceof CollectableObject)) this.isHit=true;
+        if (this.isHit) this.isHurtingMovement=true;
 
         return collision;
     }
@@ -193,6 +194,7 @@ class ActiveObject extends DrawableObject {
             if (!obj.isDead() && collision && !(obj instanceof CollectableObject)) {
                 this.isHit=true;
                 this.collisionRegion=hb;
+                this.isHurtingMovement=true;
             }
 
             if (collision) {
