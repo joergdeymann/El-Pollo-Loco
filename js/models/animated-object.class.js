@@ -69,4 +69,8 @@ class AnimatedObject extends MovableObject {
         return this.IMAGES == images;
     }
 
+
+    attack() {
+    }
+
 }

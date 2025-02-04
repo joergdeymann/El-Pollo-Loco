@@ -10,7 +10,7 @@ class Endboss extends AnimatedObject {
 
     hitboxes = [
         {   //Head
-            dx:20,
+            dx:40,
             dy:70,
             width: 100,
             height:100,
@@ -119,13 +119,23 @@ class Endboss extends AnimatedObject {
         this.animationStart();
     }
 
+    
+    attack() {
+        if (this.isImageSet(this.IMAGES_ATTACK)) return;
+        this.setImages(this.IMAGES_ATTACK);
+        setTimeout(() => {
+            this.setImages(this.IMAGES_STANDING);
+        },2000);                    
+    }
+
+
     hurting() {
-        if (!this.isImageSet(this.IMAGES_HURT)) {
-            this.setImages(this.IMAGES_HURT);
-            setTimeout(() => {
-                this.isHurtingMovement=false;
-            },500);
-        }
+        if (this.isImageSet(this.IMAGES_HURT)) return;
+
+        this.setImages(this.IMAGES_HURT);
+        setTimeout(() => {
+            this.isHurtingMovement=false;
+        },500);
     }
 
 
@@ -146,6 +156,8 @@ class Endboss extends AnimatedObject {
 
     movementListener() {
         let t=Math.random()*10;
+        if (this.isImageSet(this.IMAGES_ATTACK)) {
+        } else
         if (this.isHurtingMovement) {
             this.hurting();
         } else if (t<10) {
@@ -157,10 +169,19 @@ class Endboss extends AnimatedObject {
     activate() {
         this.active=true;
         this.listener.movement=setInterval(() => this.movementListener(),50);
+        // this.listener.jump=setInterval(() => this.jumpListener(),20000);
+        
     }
 
 
     pick() {
 
     }
+
+    // jumpListener() {
+    //     this.setImages(this.IMAGES_ATTACK);
+    //     setTimeout(() => {
+    //         this.setImages(this.IMAGES_STANDING);
+    //     },2000);
+    // }
 }

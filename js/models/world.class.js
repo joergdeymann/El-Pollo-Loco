@@ -77,7 +77,9 @@ class World {
 
     /**
      * 
-     * Check collision: Character with enemy
+     * Check collision: 
+     *  Character with enemy, 
+     *  Enemy is attacked
      * 
      * @param {Object} enemy - Chicken / Chicks 
      */
@@ -92,16 +94,28 @@ class World {
     }
 
 
+    /**
+     * 
+     * Check collision: 
+     *  Character with enemy, 
+     *  Character is attacked
+     * 
+     * @param {Object} enemy - Chicken / Chicks / Endboss
+     *  
+     */
     collisionAction(enemy) {
          if (this.character.isColliding(enemy)) {
             this.character.reduceLive(enemy,"touch");
+            enemy.attack();
         }
     }
 
 
-    /*
-        Colliding enemy width Bottle
-    */ 
+    /**
+     * Colliding enemy width thrown Bottle
+     * 
+     * @param {Object} enemy - Chicken / Chicks / Endboss
+     */
     checkCollisionThrowableObjects(enemy) {
         enemy.resetCollision();
         for (let obj of this.throwableObjects) {
@@ -113,6 +127,12 @@ class World {
         }
     }
 
+
+    /**
+     * 
+     * Activate Endboss when seen
+     * 
+     */
     checkEndbossActivation() {
         if (this.level.endboss[0].isNearCharacter(500) && !this.level.endboss[0].active) {
             this.level.endboss[0].activate();
@@ -120,6 +140,11 @@ class World {
     }
 
 
+    /**
+     * 
+     * Check collisions
+     * 
+     */
     addCollisionListener() {
         setInterval(() => {
             this.checkCollisions();
@@ -129,7 +154,11 @@ class World {
     }
 
 
-
+    /**
+     * 
+     * Add Statusbar to the character and endboss
+     * 
+     */
     addStatusbarAssosiation() {
         this.statusBar.ENDBOSS.association=this.level.endboss[0];
         this.statusBar.LIVE.association=this.character;
@@ -138,6 +167,13 @@ class World {
     }
 
 
+    /**
+     * 
+     * Check collisions of Collectable Items
+     * and Collect them
+     * 
+     * @param {Object} item 
+     */
     checkCollisionCollectableObjects(item) {
 
         if (this.character.isColliding(item)) {
@@ -156,8 +192,10 @@ class World {
         }
     }
 
+
     /**
-     * Check Collision : Character enemy,endboss,bottle
+     * Check Collision : 
+     * Character width enemy,endboss,bottle
      * 
      */
     checkCollisions() {
@@ -180,6 +218,10 @@ class World {
     }
 
 
+    /**
+     * 
+     * throw a bottle to Attack
+     */
     throwBottle() {
         let bottle=new ThrowableBottle();            
         bottle.throwFromObject(this.character,90);
@@ -187,6 +229,12 @@ class World {
     }
 
 
+    /**
+     * 
+     * Cheks if Player pressed Fire 
+     * and throws a bottle if one or more is in inventory
+     * 
+     */
     checkThrowObjects() {
         if (this.key.FIRE && this.character.hasBottle() ) { 
             this.key.FIRE=false;
@@ -197,6 +245,11 @@ class World {
     }
 
 
+    /**
+     * 
+     * Graphical Display of all Elements
+     * 
+     */
     draw() {
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
         this.ctx.translate(this.cameraX,0);
@@ -215,6 +268,11 @@ class World {
     }
 
 
+    /**
+     * Adds multipe Objects to the Graphical Display
+     * 
+     * @param {Array} objects - Enemies, Endboss, Charater, Clouds, Bottles Backgrounds 
+     */
     addToMap(objects) {
         for(let object of objects) {
             object.draw(this.ctx);
