@@ -70,7 +70,7 @@ class AnimatedObject extends MovableObject {
     }
 
 
-    attack() {
+    setAttackImages() {
     }
 
 }

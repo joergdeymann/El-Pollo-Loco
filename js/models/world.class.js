@@ -105,8 +105,8 @@ class World {
      */
     collisionAction(enemy) {
          if (this.character.isColliding(enemy)) {
-            this.character.reduceLive(enemy,"touch");
-            enemy.attack();
+            this.enemyAttack(enemy); // this.character.reduceLive(enemy,"touch");
+            enemy.setAttackImages();
         }
     }
 

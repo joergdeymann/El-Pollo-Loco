@@ -3,6 +3,7 @@ class MovableObject extends AutomatedObject {
     accelerationY=0.2;
     accelerationX=0.1;
     direction=0;
+    jumpHeight=100;
 
     constructor() {
         super()
@@ -85,13 +86,13 @@ class MovableObject extends AutomatedObject {
 
     jump() {
         this.speedY=3; 
-        this.y-=100;          
+        this.y-=this.jumpHeight;          
     }
 
 
     jumpSmall() {
         this.speedY=3; 
-        this.y-=50;          
+        this.y-=(this.jumpHeight/2);          
     }
 
 

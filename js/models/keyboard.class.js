@@ -60,13 +60,10 @@ class Keyboard {
 
 
     getkeyDown(key) {
-        console.log("keydown");
-        // this.lastActionTime=Date.now();
         this.keyDown=true;
         let keyname=this.KEYTABLE[key.keyCode];
         if (this.hasCooldown(keyname)) return;
         if (keyname) this[keyname]=true;           
-        // key.preventDefault(); 
     }
 
 
@@ -74,8 +71,6 @@ class Keyboard {
         this.keyDown=false;
         let keyname=this.KEYTABLE[key.keyCode];
         if (keyname) this[keyname]=false;    
-        // key.preventDefault(); 
-        // this.lastActionTime=Date.now();
     }
 
 

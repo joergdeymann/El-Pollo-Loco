@@ -23,7 +23,6 @@ class Background extends MovableObject {
         setInterval(() => {
             if (this.layer==2) this.x=this.startX+(this.world.character.x-this.world.character.startX)*0.1;
             if (this.layer==1) this.x=this.startX+(this.world.character.x-this.world.character.startX)*0.2;
-                        
         },1000/60);
     }    
 }
