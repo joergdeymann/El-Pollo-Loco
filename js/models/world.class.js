@@ -104,10 +104,11 @@ class World {
      *  
      */
     collisionAction(enemy) {
-         if (this.character.isColliding(enemy)) {
+        if (this.character.isColliding(enemy)) {
             this.enemyAttack(enemy); // this.character.reduceLive(enemy,"touch");
             enemy.setAttackImages();
         }
+
     }
 
 
@@ -137,6 +138,13 @@ class World {
         if (this.level.endboss[0].isNearCharacter(500) && !this.level.endboss[0].active) {
             this.level.endboss[0].activate();
         }
+    }
+
+    checkEndbossAttacks(enemy) {
+        if (enemy.attack.earthquake && !this.character.isAboveGround()) {
+            this.character.reduceLive(enemy,"earthquake");
+        }
+
     }
 
 
@@ -209,12 +217,15 @@ class World {
         for (let enemy of this.level.endboss) {
             this.collisionAction(enemy);
             this.checkCollisionThrowableObjects(enemy);
+            this.checkEndbossAttacks(enemy);
         }    
 
 
         for (let bottle of this.level.collectableObjects) {
             this.checkCollisionCollectableObjects(bottle);
-        }            
+        }
+
+        
     }
 
 

@@ -18,6 +18,11 @@ class Enemy extends AnimatedObject {
 
     die() {
         this.live=0;
+        if (this.isAboveGround() && this.IMAGES_DIE) {
+            this.nextImage(this.IMAGES_DIE);
+            setTimeout(() => this.die(),100);
+            return
+        }
         this.nextImage(this.IMAGES_DEAD);
         this.removeSelf();
     }

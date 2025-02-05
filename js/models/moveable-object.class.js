@@ -84,9 +84,23 @@ class MovableObject extends AutomatedObject {
     }
 
 
-    jump() {
+    getRandom(min,max) {
+        return min+Math.random()*(max-min);
+    }
+
+
+    jump(random=null) {
+        let height=this.jumpHeight;
+        if (random) {
+            if (typeof random === "boolean") {
+                height=this.getRandom(this.jumpHeight*0.25,this.jumpHeight); //  Math.random()*(this.jumpHeight*0.75)+this.jumpHeight
+            } 
+            if (typeof random === "number") {
+                height=random;
+            }
+        }
         this.speedY=3; 
-        this.y-=this.jumpHeight;          
+        this.y-=height;          
     }
 
 

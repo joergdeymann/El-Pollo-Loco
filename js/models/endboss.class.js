@@ -7,6 +7,12 @@ class Endboss extends AnimatedObject {
     active=false;
     FLIP=false;
 
+    jumpHeight=30;
+    accelerationY=0.05;
+
+    attack={
+        earthquake:false
+    }
 
     hitboxes = [
         {   //Head
@@ -42,7 +48,7 @@ class Endboss extends AnimatedObject {
     };
     
 
-    damage={touch:2,jump:1000,fire:10};
+    damage={touch:2,jump:1000,fire:10,earthquake:100};
     live=2000;
     name="Enboss";
 
@@ -113,6 +119,7 @@ class Endboss extends AnimatedObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.init();
         this.setLive();
+        this.applyGravity();
    } 
 
     init() {
@@ -120,7 +127,7 @@ class Endboss extends AnimatedObject {
     }
 
     
-    attack() {
+    setAttackImages() {
         if (this.isImageSet(this.IMAGES_ATTACK)) return;
         this.setImages(this.IMAGES_ATTACK);
         setTimeout(() => {
@@ -169,10 +176,46 @@ class Endboss extends AnimatedObject {
     activate() {
         this.active=true;
         this.listener.movement=setInterval(() => this.movementListener(),50);
-        // this.listener.jump=setInterval(() => this.jumpListener(),20000);
+        this.listener.earthquakeJump=setInterval(() => this.earthquakeJump(),20000);
         
     }
 
+
+    awaitEarthquake() {
+        if (this.isDead()) return;
+        if (this.isAboveGround()) {
+            setTimeout(()=> this.awaitEarthquake(),100);
+            return;
+        }
+        this.earthquake();
+    }
+
+
+    setBackgroundPosition(y) {
+        for(let background of this.world.level.backgrounds) {
+            background.setDY(y);
+        };
+    }
+
+    async earthquake() {   
+        this.attack.earthquake=true;
+        let time=1000;     
+        let t=Date.now();
+        while ((t+time)>Date.now()) {
+            let y=Math.random()*30-15;
+            this.setBackgroundPosition(y);
+            let to=100+Math.random(100);
+            await new Promise(e => setTimeout(e,to));
+        }
+        this.setBackgroundPosition(0);
+        this.attack.earthquake=false;
+    }
+
+
+    earthquakeJump() {
+        this.jump();
+        this.awaitEarthquake();
+    }
 
     pick() {
 
