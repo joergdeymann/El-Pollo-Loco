@@ -176,7 +176,8 @@ class Endboss extends AnimatedObject {
     activate() {
         this.active=true;
         this.listener.movement=setInterval(() => this.movementListener(),50);
-        this.listener.earthquakeJump=setInterval(() => this.earthquakeJump(),20000);
+        this.listener.earthquakeJump=setInterval(() => this.earthquakeJump(),40000);
+        this.listener.featherAttack=setInterval(() => this.featherAttack(),60000);
         
     }
 
@@ -216,6 +217,19 @@ class Endboss extends AnimatedObject {
         this.jump();
         this.awaitEarthquake();
     }
+
+
+    async featherAttack() {
+        let angel=0;
+        for(let i=0;i<30;i++) {
+            angel=(angel+5+Math.random()) % 100;
+            let enemy=new ThrowableBossObject(this,angel);
+            enemy.world=this.world;
+            this.world.level.enemies.push(enemy);
+            await new Promise(e => setTimeout(e,200));
+        }
+    }
+
 
     pick() {
 

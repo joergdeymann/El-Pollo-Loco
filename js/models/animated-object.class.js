@@ -59,7 +59,7 @@ class AnimatedObject extends MovableObject {
 
 
     setImages(images) {
-        if (this.IMAGES != images) {
+        if (!this.isImageSet(images)) {
             this.index=0;
             this.nextImage(images);
         }
@@ -70,6 +70,9 @@ class AnimatedObject extends MovableObject {
     }
 
 
+    /**
+     * Abstract Class must be there
+     */
     setAttackImages() {
     }
 

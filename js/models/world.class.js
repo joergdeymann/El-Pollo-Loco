@@ -62,6 +62,8 @@ class World {
     enemyDie(enemy) {
         if (enemy.isDead()) return;
         enemy.reduceLive(this.character,"jump");
+
+        if (enemy instanceof ThrowableBossObject) return;
         this.character.jumpSmall();
     }
 

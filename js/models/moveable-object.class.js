@@ -4,6 +4,7 @@ class MovableObject extends AutomatedObject {
     accelerationX=0.1;
     direction=0;
     jumpHeight=100;
+    jumpSpeed=3;
 
     constructor() {
         super()
@@ -99,13 +100,13 @@ class MovableObject extends AutomatedObject {
                 height=random;
             }
         }
-        this.speedY=3; 
+        this.speedY=this.jumpSpeed; 
         this.y-=height;          
     }
 
 
     jumpSmall() {
-        this.speedY=3; 
+        this.speedY=this.jumpSpeed; 
         this.y-=(this.jumpHeight/2);          
     }
 

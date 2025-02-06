@@ -7,8 +7,9 @@ class Chick extends Enemy {
     speedMin=0;
     speedMax=0.5;
     speedRange=0.5;
-    jumpHeight=20;
-    accelerationY=0.05;
+    jumpSpeed=1;  //3
+    jumpHeight=40; //20;
+    accelerationY=0.01// 0.05;
 
 
     removeTime=5000; // Time to remove dead body

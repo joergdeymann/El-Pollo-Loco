@@ -53,7 +53,7 @@ class Character extends AnimatedObject {
         }
     }
 
-    MAX_BOTTLES=20;
+    MAX_BOTTLES=40;
     MAX_COINS=20; // 50
 
     soundWalk=new Audio('./assets/sound/walknormal.mp3');
