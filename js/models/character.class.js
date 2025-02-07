@@ -247,7 +247,7 @@ class Character extends AnimatedObject {
  
         let animation=setInterval(() => this.nextImage(this.IMAGES_DEAD),interval);
 
-        let movement=setInterval(() => this.moveUp(2) ,1000/60);
+        let movement=setInterval(() => this.moveUp() ,1000/60);
  
         setTimeout(() => {
             clearInterval(animation);
@@ -300,9 +300,9 @@ class Character extends AnimatedObject {
             if (this.world.key.RIGHT || this.world.key.LEFT) this.nextImage(this.IMAGES_WALKING);  
         else
             if (this.isDead()) {
-                if (!this.isImageSet(this.IMAGES_DEAD)) {
+                // if (!this.isImageSet(this.IMAGES_DEAD)) {
                     this.deadAction();
-                }
+                // }
                 return;
             }
         else {
