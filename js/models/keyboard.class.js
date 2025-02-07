@@ -14,7 +14,8 @@ class Keyboard {
         "87":"JUMP",  // W
         "83":"DUCK",  // S
 
-        "79":"OVERLAY" //O
+        "79":"OVERLAY", //O
+        "191":"DEBUG"      //#
 
     }
 
@@ -22,13 +23,15 @@ class Keyboard {
         FIRE: 1000,
         ALTFIRE: 5000,
         POD: 30000,
-        OVERLAY: 50
+        OVERLAY: 50,
+        DEBUG: 50
     }
 
     cooldownTime = {
         FIRE: null,
         ALTFIRE: null,
-        OVERLAY: null
+        OVERLAY: null,
+        DEBUG: null
     }
 
     lastActionTime=Date.now()+60000;
@@ -63,7 +66,8 @@ class Keyboard {
         this.keyDown=true;
         let keyname=this.KEYTABLE[key.keyCode];
         if (this.hasCooldown(keyname)) return;
-        if (keyname) this[keyname]=true;           
+        if (keyname) this[keyname]=true;
+        // console.log(key.keyCode);           
     }
 
 

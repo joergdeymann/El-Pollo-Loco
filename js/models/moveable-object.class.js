@@ -93,7 +93,7 @@ class MovableObject extends AutomatedObject {
     }
 
     moveUp(dy=this.speedY) {
-        this.y-=dy;
+        this.y-=Math.abs(dy);
     } 
 
 

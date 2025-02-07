@@ -48,8 +48,8 @@ class Endboss extends AnimatedObject {
     };
     
 
-    damage={touch:2,jump:1000,fire:10,earthquake:100};
-    live=2000;
+    damage={touch:2,jump:200,fire:10,earthquake:100};
+    live=1000;
     name="Enboss";
 
     count=0;
@@ -197,6 +197,11 @@ class Endboss extends AnimatedObject {
             this.featherAttack();
             this.listener.featherAttack=setInterval(() => this.featherAttack(),30000);
         },30000);
+
+        setTimeout(() => {
+            this.jumpAttack();
+            this.listener.jumpAttack=setInterval(() => this.jumpAttack(),12000);
+        },8000);
     }
 
 
@@ -258,8 +263,11 @@ class Endboss extends AnimatedObject {
         }
     }
 
+    jumpAttack() {
+        this.jump(); // Jump to Character, Character must run away
+
+    }
 
     pick() {
-
     }
 }

@@ -289,25 +289,26 @@ class Character extends AnimatedObject {
             this.displaymode=(this.displaymode+1) %2;
         }    
 
+        if (this.world.key.DEBUG && !this.world.key.hasCooldown("DEBUG")) {
+            world.debug=!world.debug;
+        }
+
     }
 
 
     nextAnimation=() => {
-        if (this.isAboveGround()) {
-            this.nextImage(this.IMAGES_JUMPING);
-        } 
+        if (this.isDead()) {
+            this.deadAction();
+            return;
+        } else 
+            if (this.isAboveGround()) {
+                this.nextImage(this.IMAGES_JUMPING);
+            } 
         else 
             if (this.world.key.RIGHT || this.world.key.LEFT) this.nextImage(this.IMAGES_WALKING);  
-        else
-            if (this.isDead()) {
-                // if (!this.isImageSet(this.IMAGES_DEAD)) {
-                    this.deadAction();
-                // }
-                return;
-            }
-        else {
+        else 
             if (this.IMAGES != this.IMAGES_WALKING) this.nextImage(this.IMAGES_WALKING);
-        }
+        
         
         if(this.isHurt() || this.continueHurtAnimation()) {
             this.nextImage(this.IMAGES_HURT);
@@ -317,6 +318,8 @@ class Character extends AnimatedObject {
             if (key.isSleeping()) this.nextImage(this.IMAGES_SLEEP);
         else 
             if (key.isIdle()) this.nextImage(this.IMAGES_IDLE);
+
+    
     }
 
 
