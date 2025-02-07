@@ -188,9 +188,15 @@ class Endboss extends AnimatedObject {
     activate() {
         this.active=true;
         this.listener.movement=setInterval(() => this.movementListener(),50);
-        this.listener.earthquakeJump=setInterval(() => this.earthquakeJump(),40000);
-        this.listener.featherAttack=setInterval(() => this.featherAttack(),60000);
-        
+        setTimeout(() => {
+            this.earthquakeJump();
+            this.listener.earthquakeJump=setInterval(() => this.earthquakeJump(),30000);
+        },15000);
+
+        setTimeout(() => {
+            this.featherAttack();
+            this.listener.featherAttack=setInterval(() => this.featherAttack(),30000);
+        },30000);
     }
 
 
@@ -201,7 +207,7 @@ class Endboss extends AnimatedObject {
         }
     }
 
-    
+
     awaitEarthquake() {
         if (this.isDead()) return;
         if (this.isAboveGround()) {
