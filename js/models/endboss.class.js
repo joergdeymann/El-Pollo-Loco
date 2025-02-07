@@ -146,7 +146,8 @@ class Endboss extends AnimatedObject {
     }
 
 
-    movement() {
+
+    movementAndImages() {
         this.speed=1.5;
         if (this.isLeftFromCharacter(20)) {
             this.setImages(this.IMAGES_WALKING);
@@ -159,16 +160,27 @@ class Endboss extends AnimatedObject {
             this.setImages(this.IMAGES_STANDING);
         }
     }
+
+    movement() {
+        this.speed=1.5;
+        if (this.isLeftFromCharacter(20)) {
+            this.moveRight();
+        } else 
+        if (this.isRightFromCharacter(20)) {
+            this.moveLeft();
+        }
+    }
     
 
     movementListener() {
         let t=Math.random()*10;
         if (this.isImageSet(this.IMAGES_ATTACK)) {
-        } else
-        if (this.isHurtingMovement) {
+            this.movement();
+            // if (t<5) this.movementAndImages();
+        } else if (this.isHurtingMovement) {
             this.hurting();
         } else if (t<10) {
-            this.movement();
+            this.movementAndImages();
         }
     }
 
@@ -182,6 +194,14 @@ class Endboss extends AnimatedObject {
     }
 
 
+    stopAttacks() {
+        for(let listener of Object.values(this.listener)) {
+            clearInterval(listener);
+            listener=null;
+        }
+    }
+
+    
     awaitEarthquake() {
         if (this.isDead()) return;
         if (this.isAboveGround()) {
@@ -197,6 +217,7 @@ class Endboss extends AnimatedObject {
             background.setDY(y);
         };
     }
+
 
     async earthquake() {   
         this.attack.earthquake=true;
@@ -214,6 +235,7 @@ class Endboss extends AnimatedObject {
 
 
     earthquakeJump() {
+        if (!this.isNearCharacter(700)) return;
         this.jump();
         this.awaitEarthquake();
     }
@@ -234,11 +256,4 @@ class Endboss extends AnimatedObject {
     pick() {
 
     }
-
-    // jumpListener() {
-    //     this.setImages(this.IMAGES_ATTACK);
-    //     setTimeout(() => {
-    //         this.setImages(this.IMAGES_STANDING);
-    //     },2000);
-    // }
 }

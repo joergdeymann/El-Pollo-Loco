@@ -85,8 +85,7 @@ class Character extends AnimatedObject {
         './assets/img/2_character_pepe/5_dead/D-53.png',
         './assets/img/2_character_pepe/5_dead/D-54.png',
         './assets/img/2_character_pepe/5_dead/D-55.png',
-        './assets/img/2_character_pepe/5_dead/D-56.png',
-        './assets/img/2_character_pepe/5_dead/D-57.png'
+        './assets/img/2_character_pepe/5_dead/D-56.png'
     ];
 
     IMAGES_HURT=[
@@ -246,21 +245,23 @@ class Character extends AnimatedObject {
     deadAnimation() {
         let interval=this.randomInterval();
  
-        let animation=setInterval(() => {
-            this.nextImage(this.IMAGES_DEAD);
-        },interval);
+        let animation=setInterval(() => this.nextImage(this.IMAGES_DEAD),interval);
+
+        let movement=setInterval(() => this.moveUp(2) ,1000/60);
  
         setTimeout(() => {
             clearInterval(animation);
-        },2000);
+            clearInterval(movement);
+        },10000);
     }
 
 
     deadAction() {
-        this.nextImage(this.IMAGES_DEAD);  // let it run for some sconds and then stop everything 
-        // clearInterval(animation);
-        clearInterval(this.moveInterval);
-        // this.deadAnimation();
+        this.world.level.endboss[0].stopAttacks();
+        this.nextImage(this.IMAGES_DEAD);
+        this.animationStop();
+        this.clearGravity();
+        this.deadAnimation();
         return;
     } 
 
@@ -299,7 +300,9 @@ class Character extends AnimatedObject {
             if (this.world.key.RIGHT || this.world.key.LEFT) this.nextImage(this.IMAGES_WALKING);  
         else
             if (this.isDead()) {
-                this.deadAction();
+                if (!this.isImageSet(this.IMAGES_DEAD)) {
+                    this.deadAction();
+                }
                 return;
             }
         else {
@@ -321,7 +324,14 @@ class Character extends AnimatedObject {
         this.soundWalk.pause();
         this.moveInterval=setInterval(this.animateMovement,1000/60);
         let interval=this.randomInterval();
-        setInterval(this.nextAnimation,interval);
+        this.animationInterval=setInterval(this.nextAnimation,interval);
+    }
+
+    animationStop() {
+        clearInterval(this.moveInterval);
+        clearInterval(this.animationInterval);
+        this.moveInterval=null;
+        this.animationInterval=null;
     }
 
 }

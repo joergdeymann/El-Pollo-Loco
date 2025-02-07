@@ -11,6 +11,7 @@ class ThrowableBossObject extends AnimatedObject {
     radius=50;
     radiusStart=this.radius;
     harmable=false;
+    usable=false;
 
     hitbox = {
         dx:2,
@@ -53,7 +54,7 @@ class ThrowableBossObject extends AnimatedObject {
         this.y = y+this.dy*this.radiusStart;
         this.start={x:this.x,y:this.y};
 
-        this.interval=setInterval(() => this.movement(),1000/60);
+        this.interval=setInterval(() => this.movementListener(),1000/60);
     }
 
 
@@ -81,7 +82,7 @@ class ThrowableBossObject extends AnimatedObject {
     }
 
 
-    movement() {
+    movementListener() {
         this.x+=this.dx*this.speed;
         this.y+=this.dy*this.speed;
         this.radius+=Math.max(Math.abs(this.dx),Math.abs(this.dy));

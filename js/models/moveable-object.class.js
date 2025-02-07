@@ -5,6 +5,7 @@ class MovableObject extends AutomatedObject {
     direction=0;
     jumpHeight=100;
     jumpSpeed=3;
+    gravityInterval=null;
 
     constructor() {
         super()
@@ -13,18 +14,13 @@ class MovableObject extends AutomatedObject {
 
 
     applyGravity() {
-        setInterval(() => {
+        this.gravityInterval=setInterval(() => {
             if (this.isAboveGround()) {
                 this.fall();
             }
         },1000/60);
     }
 
-
-    fall() {
-        this.y -= this.speedY;
-        this.speedY -= this.accelerationY;    
-    }
 
 
     applyGravityX() {
@@ -34,7 +30,19 @@ class MovableObject extends AutomatedObject {
             }
         },1000/60);
     }
+
+
+    clearGravity() {
+        clearInterval(this.gravityInterval);
+        this.gravityInterval=null;
+    }
+
     
+    fall() {
+        this.y -= this.speedY;
+        this.speedY -= this.accelerationY;    
+    }
+
  
     slowDownX() {
         this.x += this.speed*this.direction;
@@ -83,6 +91,10 @@ class MovableObject extends AutomatedObject {
         if (sound) sound.play();
         this.direction=-1;
     }
+
+    moveUp(dy=this.speedY) {
+        this.y-=dy;
+    } 
 
 
     getRandom(min,max) {
