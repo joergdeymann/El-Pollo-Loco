@@ -44,7 +44,6 @@ class Chick extends Enemy {
 
     constructor() {
         super();
-
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_DIE);
@@ -52,6 +51,7 @@ class Chick extends Enemy {
         this.init();
         setInterval(() => this.initJumpListener(),1000+Math.random()*500);
         this.applyGravity();
+        this.initListenerReverseMove();
     } 
 
 
