@@ -28,18 +28,5 @@ class Chicken extends Enemy {
 
     constructor() {
         super();
-
-        this.loadImages(this.IMAGES_WALKING);
-        this.loadImages(this.IMAGES_DEAD);
-        this.init();
     } 
-
-
- 
-
-    pick() {
-
-    }
-
-
 }

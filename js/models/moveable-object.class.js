@@ -3,6 +3,9 @@ class MovableObject extends AutomatedObject {
     accelerationY=0.2;
     accelerationX=0.1;
     direction=0;
+    jumpHeight=100;
+    jumpSpeed=3;
+    gravityInterval=null;
 
     constructor() {
         super()
@@ -11,18 +14,13 @@ class MovableObject extends AutomatedObject {
 
 
     applyGravity() {
-        setInterval(() => {
+        this.gravityInterval=setInterval(() => {
             if (this.isAboveGround()) {
                 this.fall();
             }
         },1000/60);
     }
 
-
-    fall() {
-        this.y -= this.speedY;
-        this.speedY -= this.accelerationY;    
-    }
 
 
     applyGravityX() {
@@ -32,7 +30,19 @@ class MovableObject extends AutomatedObject {
             }
         },1000/60);
     }
+
+
+    clearGravity() {
+        clearInterval(this.gravityInterval);
+        this.gravityInterval=null;
+    }
+
     
+    fall() {
+        this.y -= this.speedY;
+        this.speedY -= this.accelerationY;    
+    }
+
  
     slowDownX() {
         this.x += this.speed*this.direction;
@@ -82,16 +92,34 @@ class MovableObject extends AutomatedObject {
         this.direction=-1;
     }
 
+    moveUp(dy=this.speedY) {
+        this.y-=Math.abs(dy);
+    } 
 
-    jump() {
-        this.speedY=3; 
-        this.y-=100;          
+
+    getRandom(min,max) {
+        return min+Math.random()*(max-min);
+    }
+
+
+    jump(random=null) {
+        let height=this.jumpHeight;
+        if (random) {
+            if (typeof random === "boolean") {
+                height=this.getRandom(this.jumpHeight*0.25,this.jumpHeight); //  Math.random()*(this.jumpHeight*0.75)+this.jumpHeight
+            } 
+            if (typeof random === "number") {
+                height=random;
+            }
+        }
+        this.speedY=this.jumpSpeed; 
+        this.y-=height;          
     }
 
 
     jumpSmall() {
-        this.speedY=3; 
-        this.y-=50;          
+        this.speedY=this.jumpSpeed; 
+        this.y-=(this.jumpHeight/2);          
     }
 
 

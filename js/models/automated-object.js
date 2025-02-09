@@ -19,21 +19,54 @@ class AutomatedObject extends ActiveObject {
 
     }
 
+    initListenerReverseMove() {
+        setInterval(() => {
+            if (Math.random()*50<10) {
+                clearInterval(this.moveInterval);
+                clearInterval(this.respawnInterval);
+                if (Math.random()<0.5) {
+                    this.moveInterval=this.initListenerMoveLeft();
+                    this.respawnInterval=this.initListenerLeftPosition();
+                } else {
+                    this.moveInterval=this.initListenerMoveRight();
+                    this.respawnInterval=this.initListenerRightPosition()
+                }
+            }
+        },1000);        
+    }
 
     // ab hier die Action Objects
     initListenerMoveLeft() {
         if (this.moveInterval) return;
-        setInterval(() => {
+        this.moveInterval=setInterval(() => {
+            this.x+=this.speed;
+        },1000/60);      
+    }
+
+    initListenerMoveRight() {
+        if (this.moveInterval) return;
+        this.moveInterval=setInterval(() => {
             this.x-=this.speed;
-        },1000/60)        
+        },1000/60);        
     }
 
 
     initListenerLeftPosition() {
-        if (this.respawnInterval) retaurn;
+        if (this.respawnInterval) return;
         this.respawnInterval=setInterval(() => {
             if (this.x < -this.width) this.respawn(); 
-        },1000)
+        },1000);
+    }
+ 
+    initListenerRightPosition() {
+        console.log("AutomatedObject screensize = ??");
+        if (this.respawnInterval) return;
+        this.respawnInterval=setInterval(() => {
+            if (this.x > this.world.level.screensize) {
+                this.moveInterval=this.initListenerMoveLeft();
+                this.respawnInterval=this.initListenerLeftPosition();
+            }
+        },1000);
     }
  
 

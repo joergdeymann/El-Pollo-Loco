@@ -4,6 +4,7 @@ class Background extends MovableObject {
     layer=0;
     world;
     startX=0;
+    startY=0;
     
     constructor(imagePath,x,layer) {
         super();
@@ -14,6 +15,8 @@ class Background extends MovableObject {
         this.y=480-this.height;
         this.layer=layer;
         this.startX=x;
+        this.startY=this.y;
+
         if (layer > 0 && layer < 3) {
             setTimeout(()=> this.addPositionListener(),1000);
         }
@@ -21,7 +24,12 @@ class Background extends MovableObject {
 
     addPositionListener() {
         setInterval(() => {
-            this.x=this.startX-(this.world.character.x-this.world.character.startX)*this.layer/4*0.1;
+            if (this.layer==2) this.x=this.startX+(this.world.character.x-this.world.character.startX)*0.1;
+            if (this.layer==1) this.x=this.startX+(this.world.character.x-this.world.character.startX)*0.2;
         },1000/60);
-    }    
+    }
+    
+    setDY(dy) {
+        this.y=this.startY+dy;
+    }
 }

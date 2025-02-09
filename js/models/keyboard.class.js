@@ -14,7 +14,8 @@ class Keyboard {
         "87":"JUMP",  // W
         "83":"DUCK",  // S
 
-        "79":"OVERLAY" //O
+        "79":"OVERLAY", //O
+        "191":"DEBUG"      //#
 
     }
 
@@ -22,13 +23,15 @@ class Keyboard {
         FIRE: 1000,
         ALTFIRE: 5000,
         POD: 30000,
-        OVERLAY: 50
+        OVERLAY: 50,
+        DEBUG: 50
     }
 
     cooldownTime = {
         FIRE: null,
         ALTFIRE: null,
-        OVERLAY: null
+        OVERLAY: null,
+        DEBUG: null
     }
 
     lastActionTime=Date.now()+60000;
@@ -39,6 +42,7 @@ class Keyboard {
     constructor() {
         document.addEventListener("keydown",e => this.getkeyDown(e));
         document.addEventListener("keyup",e => this.getkeyUp(e));
+        this.addKeyListener();
         this.setKeys(false);
     }
     
@@ -51,17 +55,19 @@ class Keyboard {
 
 
     isKeyDown() {
-        return this.keyDown; 
+        for  (let key of Object.values(this.KEYTABLE)) {
+            if (this[key]==true) return true;
+        }
+        return false;
     }
 
 
     getkeyDown(key) {
-        this.lastActionTime=Date.now();
         this.keyDown=true;
         let keyname=this.KEYTABLE[key.keyCode];
         if (this.hasCooldown(keyname)) return;
-        if (keyname) this[keyname]=true;           
-        key.preventDefault(); 
+        if (keyname) this[keyname]=true;
+        // console.log(key.keyCode);           
     }
 
 
@@ -69,8 +75,6 @@ class Keyboard {
         this.keyDown=false;
         let keyname=this.KEYTABLE[key.keyCode];
         if (keyname) this[keyname]=false;    
-        key.preventDefault(); 
-        this.lastActionTime=Date.now();
     }
 
 
@@ -93,5 +97,11 @@ class Keyboard {
     isSleeping() {
         let t=Date.now()-this.lastActionTime;
         return t > 20000;
+    }
+
+    addKeyListener() {
+        setInterval(() => {
+            if (this.isKeyDown()) this.lastActionTime=Date.now();
+        },50);
     }
 }

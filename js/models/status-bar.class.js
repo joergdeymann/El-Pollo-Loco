@@ -150,9 +150,6 @@ class Statusbar extends DrawableObject {
         return this.imageSet == "IMAGES_COINS";
     }
 
-    XisCollectableBar() {
-        return this.imageSet == "IMAGES_BOTTLES" || this.imageSet == "IMAGES_COINS";
-    }
 
     // Hier die Anzahl der Coins / Bottles
     getDisplayMode(obj) {

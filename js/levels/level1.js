@@ -1,6 +1,6 @@
 let countChicken=40;
 let countClouds=10;
-let countBackgrounds=5;
+let countBackgrounds=10;
 let countBottlesGround=50;
 
 
@@ -29,6 +29,11 @@ for(i=0;i<countClouds;i++) {
 for(i=0;i<countChicken;i++) {
     enemies.push(new Chicken());
 }
+
+for(i=0;i<countChicken;i++) {
+    enemies.push(new Chick());
+}
+
 endboss.push(new Endboss());
 const level1= new Level(enemies,clouds,backgrounds,endboss);
 // level1.width=backgrounds[0].width*(2*5+1);
@@ -131,20 +136,10 @@ let coinPositions=[
     },
 ]
 
-// for (p of coinpositions) {
-//     for (let coin of coinset[p.set]) {
-//         level1.collectableObjects.push(new CollectableCoin(coin.x+p.x,coin.y+p.y));
-//     }        
-// }
-
-// let screenSizeX=backgrounds[0].width;
-// let layers=backgrounds.filter(e => e.layer == 0).length;
-// let layerSize=layers*screenSizeX;
-// let backgroundSize=layerSize*layers-screenSizeX;
 
 
 function addCoins() {
-    let backgroundSize=backgrounds[backgrounds.length-1].x;
+    let backgroundSize=backgrounds[backgrounds.length-1].x-coinSet.length;
 
     let x=-200;
 
@@ -162,8 +157,5 @@ function addCoins() {
     }
     
 }
-
-
-
 
 addCoins();

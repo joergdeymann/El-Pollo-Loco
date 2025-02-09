@@ -92,11 +92,14 @@ class ThrowableBottle extends ThrowableObject {
     }
 
     
-
+    isBehind(enemy) {
+        return (enemy.isMovingLeft && this.isMovingLeft) || (enemy.isMovingRight && this.isMovingRight);
+    }
+    
 
     hitted(enemy) {
         if (this.isFalling() && this.live != 0) {
-            if ((enemy.isMovingLeft && this.isMovingLeft) || (enemy.isMovingRight && this.isMovingRight)) {
+            if (this.isBehind(enemy)) {
                 enemy.reduceLive(this,"touch");
             }
             enemy.reduceLive(this,"touch");
