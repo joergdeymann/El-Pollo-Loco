@@ -63,6 +63,8 @@ class AutomatedObject extends ActiveObject {
         if (this.respawnInterval) return;
         this.respawnInterval=setInterval(() => {
             if (this.x > this.world.level.screensize) {
+                clearInterval(this.moveInterval);
+                clearInterval(this.respawnInterval);
                 this.moveInterval=this.initListenerMoveLeft();
                 this.respawnInterval=this.initListenerLeftPosition();
             }
