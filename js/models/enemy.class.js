@@ -14,7 +14,6 @@ class Enemy extends AnimatedObject {
         this.animationStart();
         this.initListenerMoveLeft();
         this.initListenerLeftPosition();
-        // this.initListenerReverseMove();
 
         this.adjustSpeedTimer();
         
