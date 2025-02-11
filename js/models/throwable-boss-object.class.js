@@ -21,7 +21,8 @@ class ThrowableBossObject extends AnimatedObject {
     }
 
     IMAGES_THROW=[
-        './assets/img/4_enemie_boss_chicken/3_attack/feather01.svg'
+        // './assets/img/4_enemie_boss_chicken/3_attack/feather01.svg'
+        './assets/img/4_enemie_boss_chicken/6_feather/feder1-gimp.svg'
     ];
 
 

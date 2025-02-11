@@ -12,65 +12,82 @@ class AutomatedObject extends ActiveObject {
     stopTimer=false;
     respawnInterval=null;
     moveInterval=null;
+    listenerInteval=null;
+    direction=-1; //-1 for CHicken Chicks
+
 
 
     constructor() {
-        super()
-
+        super();
+        this.setDirection(this.direction);
     }
 
+    setDirectionLeft() {
+        this.flip=!this.FLIPIMG;
+        this.direction=-1;
+    }
+
+    setDirectionRight() {
+        this.flip=this.FLIPIMG;
+        this.direction=1;
+    }
+
+    setDirection(d) {
+        if (d<0) this.setDirectionLeft();
+        if (d>0) this.setDirectionRight();
+    }
+
+    changeDirection() {
+        if (this.direction>0) this.setDirectionLeft();
+        else if (this.direction<0) this.setDirectionRight();
+    }
+
+    getDirection() {
+        return this.direction;
+    }
+
+
+
+    stopInterval() {
+        clearInterval(this.moveInterval);
+        clearInterval(this.respawnInterval);
+    }
+
+
     initListenerReverseMove() {
-        setInterval(() => {
-            if (Math.random()*50<10) {
-                clearInterval(this.moveInterval);
-                clearInterval(this.respawnInterval);
-                if (Math.random()<0.5) {
-                    this.moveInterval=this.initListenerMoveLeft();
-                    this.respawnInterval=this.initListenerLeftPosition();
-                } else {
-                    this.moveInterval=this.initListenerMoveRight();
-                    this.respawnInterval=this.initListenerRightPosition()
-                }
+        this.listenerInteval=setInterval(() => {
+            let r=Math.random()*100;
+            if ((this.direction<1 && r<25) || (this.direction>1 && r<75)) {
+                this.changeDirection();
             }
-        },1000);        
+        },5000);        
     }
 
     // ab hier die Action Objects
     initListenerMoveLeft() {
         if (this.moveInterval) return;
+
         this.moveInterval=setInterval(() => {
-            this.x+=this.speed;
+            this.x+=this.speed*this.direction;
         },1000/60);      
     }
 
-    initListenerMoveRight() {
-        if (this.moveInterval) return;
-        this.moveInterval=setInterval(() => {
-            this.x-=this.speed;
-        },1000/60);        
-    }
+    // initListenerMoveRight() {
+    //     if (this.moveInterval) return;
+    //     this.moveInterval=setInterval(() => {
+    //         this.x+=this.speed;
+    //     },1000/60);        
+    // }
 
 
     initListenerLeftPosition() {
         if (this.respawnInterval) return;
         this.respawnInterval=setInterval(() => {
             if (this.x < -this.width) this.respawn(); 
+            if (this.x > this.world?.level?.width) this.respawn();
         },1000);
     }
- 
-    initListenerRightPosition() {
-        console.log("AutomatedObject screensize = ??");
-        if (this.respawnInterval) return;
-        this.respawnInterval=setInterval(() => {
-            if (this.x > this.world.level.screensize) {
-                clearInterval(this.moveInterval);
-                clearInterval(this.respawnInterval);
-                this.moveInterval=this.initListenerMoveLeft();
-                this.respawnInterval=this.initListenerLeftPosition();
-            }
-        },1000);
-    }
- 
+  
 
     adjustSpeedTimer() {
         setTimeout(() => this.adjustSpeed(), this.speedInterval);

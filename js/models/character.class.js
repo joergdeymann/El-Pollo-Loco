@@ -246,7 +246,7 @@ class Character extends AnimatedObject {
         let interval=this.randomInterval();
  
         let animation=setInterval(() => this.nextImage(this.IMAGES_DEAD),interval);
-
+        this.speedY=1;
         let movement=setInterval(() => this.moveUp() ,1000/60);
  
         setTimeout(() => {

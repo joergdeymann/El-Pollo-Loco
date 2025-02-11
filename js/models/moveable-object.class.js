@@ -79,7 +79,7 @@ class MovableObject extends AutomatedObject {
 
     moveRight(sound=null) {
         this.x+=this.speed;
-        this.flip=!this.FLIP;
+        this.flip=!this.FLIPIMG;
         if (sound) sound.play();
         this.direction=1;
     }
@@ -87,7 +87,7 @@ class MovableObject extends AutomatedObject {
 
     moveLeft(sound=null) {
         this.x-=this.speed;
-        this.flip=this.FLIP;
+        this.flip=this.FLIPIMG;
         if (sound) sound.play();
         this.direction=-1;
     }

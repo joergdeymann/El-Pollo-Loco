@@ -5,7 +5,8 @@ class Endboss extends AnimatedObject {
     height=350; // 60;
     speed=0;
     active=false;
-    FLIP=false;
+    FLIPIMG=false;
+    direction=0;
 
     jumpHeight=30;
     accelerationY=0.05;
@@ -48,7 +49,7 @@ class Endboss extends AnimatedObject {
     };
     
 
-    damage={touch:2,jump:200,fire:10,earthquake:100};
+    damage={touch:2,jump:20,fire:10,earthquake:100};
     live=1000;
     name="Enboss";
 
@@ -105,7 +106,14 @@ class Endboss extends AnimatedObject {
         movement:null,
         attackPick:null,
         attackEarthquake:null,
-        attackFeather:null
+        attackFeather:null,
+        attackJump:null
+    }
+    timeout={
+        attackPick:null,
+        attackEarthquake:null,
+        attackFeather:null,
+        attackJump:null
     }
 
 
@@ -188,19 +196,19 @@ class Endboss extends AnimatedObject {
     activate() {
         this.active=true;
         this.listener.movement=setInterval(() => this.movementListener(),50);
-        setTimeout(() => {
+        this.timeout.attackEarthquake=setTimeout(() => {
             this.earthquakeJump();
-            this.listener.earthquakeJump=setInterval(() => this.earthquakeJump(),30000);
+            this.listener.attackEarthquake=setInterval(() => this.earthquakeJump(),30000);
         },15000);
 
-        setTimeout(() => {
+        this.timeout.attackFeather=setTimeout(() => {
             this.featherAttack();
-            this.listener.featherAttack=setInterval(() => this.featherAttack(),30000);
+            this.listener.attackFeather=setInterval(() => this.featherAttack(),30000);
         },30000);
 
-        setTimeout(() => {
+        this.timeout.attackJump=setTimeout(() => {
             this.jumpAttack();
-            this.listener.jumpAttack=setInterval(() => this.jumpAttack(),12000);
+            this.listener.attackJump=setInterval(() => this.jumpAttack(),12000);
         },8000);
     }
 
@@ -210,6 +218,16 @@ class Endboss extends AnimatedObject {
             clearInterval(listener);
             listener=null;
         }
+        for(let listener of Object.values(this.timeout)) {
+            clearTimeout(listener);
+            listener=null;
+        }
+
+        // let id = setTimeout(() => {}, 0); // Letzte Timeout-ID ermitteln
+        // while (id--) {
+        //     clearTimeout(id); // Alle möglichen Timer stoppen
+        // }
+
     }
 
 

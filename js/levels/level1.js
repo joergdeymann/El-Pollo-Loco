@@ -1,4 +1,4 @@
-let countChicken=40;
+let countChicken=40; // 40;
 let countClouds=10;
 let countBackgrounds=10;
 let countBottlesGround=50;

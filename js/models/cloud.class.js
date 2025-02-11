@@ -10,6 +10,7 @@ class Cloud extends MovableObject {
     speedMax=2;
     speedIntervalRange=5000;
     speedIntervalMin=5000;
+    direction=-1;
 
     constructor(image) {
         super();

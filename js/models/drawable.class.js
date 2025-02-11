@@ -1,5 +1,5 @@
 class Drawable {
-    FLIP=true;   // State of flip changes standart from true to false 
+    FLIPIMG=true;
     flip=false;  // direction the Item looks
     img;
     x;

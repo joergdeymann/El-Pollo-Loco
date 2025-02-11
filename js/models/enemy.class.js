@@ -1,6 +1,9 @@
 class Enemy extends AnimatedObject {
     removeTime=5000; // Time to remove dead body
     listenerMove;
+    direction=-1;
+    FLIPIMG=true;
+
 
     constructor() {
         super();
@@ -9,8 +12,10 @@ class Enemy extends AnimatedObject {
 
     init() {
         this.animationStart();
-        this.moveInterval=this.initListenerMoveLeft();
-        this.respawnInterval=this.initListenerLeftPosition();
+        this.initListenerMoveLeft();
+        this.initListenerLeftPosition();
+        // this.initListenerReverseMove();
+
         this.adjustSpeedTimer();
         
         this.setRandomStartPositionX();
