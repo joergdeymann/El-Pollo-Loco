@@ -109,6 +109,7 @@ class Endboss extends AnimatedObject {
         attackFeather:null,
         attackJump:null
     }
+
     timeout={
         attackPick:null,
         attackEarthquake:null,
@@ -192,10 +193,17 @@ class Endboss extends AnimatedObject {
         }
     }
 
+    activateCheck() {
+        if (this.isNearCharacter(500) && !this.active && !this.isDead()) {
+            this.activate();
+        }
+    }
 
     activate() {
         this.active=true;
+        
         this.listener.movement=setInterval(() => this.movementListener(),50);
+
         this.timeout.attackEarthquake=setTimeout(() => {
             this.earthquakeJump();
             this.listener.attackEarthquake=setInterval(() => this.earthquakeJump(),30000);
@@ -287,5 +295,19 @@ class Endboss extends AnimatedObject {
     }
 
     pick() {
+    }
+
+    die() {
+        console.log("Attacks gestoppt");
+        this.stopAttacks();
+        this.setImages(this.IMAGES_DEAD);
+        this.world.stopCollisionListener();
+        this.active=false;
+        
+        setTimeout(() => {
+            this.stopAnimation();
+            console.log("Animation gestoppt");
+            this.world.character.setImages( this.world.character.IMAGES_WALKING);
+        },2000);
     }
 }

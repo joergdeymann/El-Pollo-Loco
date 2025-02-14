@@ -136,11 +136,11 @@ class World {
      * Activate Endboss when seen
      * 
      */
-    checkEndbossActivation() {
-        if (this.level.endboss[0].isNearCharacter(500) && !this.level.endboss[0].active) {
-            this.level.endboss[0].activate();
-        }
-    }
+    // checkEndbossActivation() {
+    //     if (this.level.endboss[0].isNearCharacter(500) && !this.level.endboss[0].active && !this.level.endboss[0].isDead()) {
+    //         this.level.endboss[0].activate();
+    //     }
+    // }
 
     checkEndbossAttacks(enemy) {
         if (enemy.attack.earthquake && !this.character.isAboveGround()) {
@@ -156,13 +156,17 @@ class World {
      * 
      */
     addCollisionListener() {
-        setInterval(() => {
+        this.collisionInterval=setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
-            this.checkEndbossActivation();
+            this.level.endboss[0].activateCheck();
         },50);
     }
 
+    stopCollisionListener() {
+        clearInterval(this.collisionInterval);
+        this.collisionInterval=null;
+    }
 
     /**
      * 
