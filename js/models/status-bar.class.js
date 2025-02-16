@@ -59,7 +59,7 @@ class Statusbar extends DrawableObject {
     association;
     displaymode=this.ABSOLUTE;
     keyCooldown=false;
-    
+    display=true;
 
     constructor(images,positionX,positionY,width=200,height=40) {
         super();
@@ -135,6 +135,8 @@ class Statusbar extends DrawableObject {
     
 
     drawImage(ctx) {
+        if (!this.isEndbossVisible()) return;
+
         this.imgCollection[1].x=this.x+10+this.dx;
         for(let img of this.imgCollection) {
             ctx.drawImage(img.img,img.x,img.y,img.width,img.height);
@@ -142,12 +144,24 @@ class Statusbar extends DrawableObject {
         this.drawText(ctx,this.association);
     }
 
+
     isBottleBar() {
         return this.imageSet == "IMAGES_BOTTLES";
     }
 
+
     isCoinBar() {
         return this.imageSet == "IMAGES_COINS";
+    }
+
+
+    isBossBar() {
+        return this.imageSet == "IMAGES_ENDBOSS";
+    }
+
+    isEndbossVisible() {
+        if (!this.isBossBar()) return true;
+        return this.isBossBar() && this.world.level.endboss[0].isVisible();
     }
 
 

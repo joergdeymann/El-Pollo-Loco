@@ -154,6 +154,10 @@ class MovableObject extends AutomatedObject {
     isNearCharacter(range=150) {
         return this.isNear(this.world.character,range);
     }    
+
+    isVisible(range=500) {
+        return this.isNear(this.world.character,range);
+    }    
     
 
     stopMovingX() {
