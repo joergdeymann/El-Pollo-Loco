@@ -3,6 +3,8 @@ class ActiveObject extends DrawableObject {
     y=250;
     width;
     height;
+    rotation=0;
+
     img;
     speed=1;
     flip=false;
@@ -356,5 +358,14 @@ class ActiveObject extends DrawableObject {
         let xc = this.width / 2;
         let x  = 2 * xc - (hitbox.dx + hitbox.width) + 1;
         return {...hitbox, dx:x};
+    }
+
+
+    rotate(degree) {
+        this.rotation=(this.rotation+degree)%360;
+    }
+
+    rotateTo(degree) {
+        this.rotation=degree%360;        
     }
 }

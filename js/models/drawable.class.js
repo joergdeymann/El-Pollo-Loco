@@ -50,8 +50,24 @@ class Drawable {
     }
 
 
+    drawRotatedImage(ctx) {
+        const halfWidth = this.width / 2;
+        const halfHeight = this.height / 2;
+    
+        ctx.save(); 
+    
+        ctx.translate(this.x + halfWidth, this.y + halfHeight);
+        ctx.rotate(this.rotation);
+
+        ctx.drawImage(this.img, -halfWidth, -halfHeight,this.width,this.height);
+    
+        ctx.restore(); // Transformationszustand zurücksetzen
+    }
+
+
     drawImage(ctx) {
-        ctx.drawImage(this.img,this.x,this.y,this.width,this.height);
+        this.drawRotatedImage(ctx);
+        // ctx.drawImage(this.img,this.x,this.y,this.width,this.height);
     }
 
 
