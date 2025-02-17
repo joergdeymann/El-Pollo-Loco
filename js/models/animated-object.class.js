@@ -59,7 +59,7 @@ class AnimatedObject extends MovableObject {
 
 
     setImages(images) {
-        if (!this.isImageSet(images)) {
+        if (!this.isImageSet(images) && this.active) {
             this.index=0;
             this.nextImage(images);
         }
