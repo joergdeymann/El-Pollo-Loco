@@ -1,15 +1,91 @@
+.d-none {
+    display: none;
+}
+
+
 body {
+    position: relative;
     display:flex;
     justify-content:center;
     align-items: center;
     flex-direction: column;
     height:100vh;
+    margin:0;
+    padding:0;
+    background-image: url("./assets/img/5_background/main/hintergrund.jpg");
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-position: bottom;
 }
+
+
+body>div {
+    display:flex;
+    flex-direction: column;
+    position: absolute;
+    width: 800px;
+    height: 550px;
+}
+
 canvas {
+    width: 720px;
+    height: 480px;
     border:1px solid black;
-    box-shadow: 4px 4px 8px, rgba(0,0,0,0.3);
     background-color: black;
+    box-shadow: 0px 0px 50px rgba(255,255,0,1);
+    border-radius: 10px;
 }
+
+.intro {
+    width:100%;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: -50px;
+
+    border:1px solid black;
+    box-shadow: 0px 0px 50px rgba(255,255,0,1);
+    border-radius: 10px;
+
+    background-image: url("./assets/img/9_intro_outro_screens/start/startscreen_2.png");
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.intro header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    height: 32px;
+}
+
+
+.intro header div {
+    display: flex;
+    gap: 20px;
+}
+
+
+.intro section {
+    flex:1;
+}
+
+.intro nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    height: 32px;
+
+}
+
 h1 {
     text-align:center;
 }

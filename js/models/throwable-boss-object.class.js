@@ -110,6 +110,9 @@ class ThrowableBossObject extends AnimatedObject {
     removeObjectFromArray(array,obj) {
         const index=array.findIndex(e => e == obj);
         if (index != -1) array.splice(index,1);
+        else {
+            console.error("Object nicht gefunden in thowable Boss Object");
+        }
     } 
 
  }

@@ -50,6 +50,18 @@ All my sounds are now CC0, so you don't have to credit me. But if you want to, c
 Lizens: https://creativecommons.org/publicdomain/zero/1.0/
 weitere von Ihm https://freesound.org/people/OwlStorm/packs/9344/
 
+Music by <a href="https://pixabay.com/de/users/backgroundmusicforvideo-46826676/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=261863">BackgroundMusicForVideo</a> from <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=261863">Pixabay</a>
+Music by <a href="https://pixabay.com/de/users/dannymurillo_poduction-36890779/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=257462">Danny Murillo</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=257462">Pixabay</a>
+
+
+Pixabay Lizenzen:
+1. Hintergrundbild
+Lizens: https://pixabay.com/de/service/license-summary/
+Quelle:
+Bild von <a href="https://pixabay.com/de/users/jorgeribas-1283080/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1049943">jorge luiz ribas</a> auf <a href="https://pixabay.com/de//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1049943">Pixabay</a>
+
+
+
 Game Information for Tester
 ============================
 KEY F12 -> View Hitboxes / toggle / Select Boss Attack / Live

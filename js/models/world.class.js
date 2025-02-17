@@ -44,6 +44,7 @@ class World {
         this.draw();
         this.addCollisionListener();
         this.addStatusbarAssosiation();
+        this.addBackgroundListener();
     }
 
 
@@ -178,6 +179,13 @@ class World {
         this.statusBar.LIVE.association=this.character;
         this.statusBar.BOTTLES.association=this.character;
         this.statusBar.COINS.association=this.character;
+    }
+
+    
+    addBackgroundListener() {
+        for(let bg of this.level.backgrounds) {
+            bg.addListener();
+        }
     }
 
 

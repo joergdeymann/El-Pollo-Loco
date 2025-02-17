@@ -17,13 +17,25 @@ class Background extends MovableObject {
         this.startX=x;
         this.startY=this.y;
 
-        if (layer > 0 && layer < 3) {
+    } 
+
+    addListener() {
+        if (this.layer > 0 && this.layer < 3) {
             setTimeout(()=> this.addPositionListener(),1000);
         }
-    } 
+    }
+
 
     addPositionListener() {
         setInterval(() => {
+            if (!this.world) {
+                console.log("No World",this);
+                debugger;
+            }
+            if (!this.world.character) {
+                console.log("No Character in World",this);
+                debugger;
+            }
             if (this.layer==2) this.x=this.startX+(this.world.character.x-this.world.character.startX)*0.1;
             if (this.layer==1) this.x=this.startX+(this.world.character.x-this.world.character.startX)*0.2;
         },1000/60);

@@ -132,7 +132,6 @@ class MovableObject extends AutomatedObject {
         return this.isLeftFrom(this.world.character,limit);
     }
 
-    
 
     isRightFrom(obj,limit) {
         return this.getCenterX(this) > this.getCenterX(obj)+limit;
@@ -154,6 +153,7 @@ class MovableObject extends AutomatedObject {
     isNearCharacter(range=150) {
         return this.isNear(this.world.character,range);
     }    
+
 
     isVisible(range=500) {
         return this.isNear(this.world.character,range);

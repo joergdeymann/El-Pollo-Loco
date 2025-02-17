@@ -209,10 +209,10 @@ class Endboss extends AnimatedObject {
             this.listener.attackEarthquake=setInterval(() => this.earthquakeJump(),30000);
         },15000);
 
-        this.timeout.attackFeather=setTimeout(() => {
-            this.featherAttack();
-            this.listener.attackFeather=setInterval(() => this.featherAttack(),30000);
-        },30000);
+        // this.timeout.attackFeather=setTimeout(() => {
+        //     this.featherAttack();
+        //     this.listener.attackFeather=setInterval(() => this.featherAttack(),30000);
+        // },30000);
 
         this.timeout.attackJump=setTimeout(() => {
             this.jumpAttack();
