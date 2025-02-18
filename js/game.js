@@ -35,6 +35,7 @@ function toggleFullscreen() {
 class Sound {
     constructor() {
         this.backgroundAudio=new Audio('../assets/sound/background01.mp3');
+        this.backgroundAudio.loop=true;       
         this.backgroundAudio.pause();
         this.backgroundAudio.volume=0.2;
     } 
