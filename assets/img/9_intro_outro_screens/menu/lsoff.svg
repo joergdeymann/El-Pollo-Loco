@@ -1,0 +1,29 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <!-- Hintergrund mit runden Ecken -->
+    <rect x="0" y="0" width="32" height="32" rx="6" ry="6" fill="#d2b48c" stroke="#a67c52" stroke-width="2"/>
+    
+    <!-- Lautsprecher Symbol -->
+    <polygon points="8,12 14,12 18,8 18,24 14,20 8,20" fill="#5a3e1b"/>
+    
+    <!-- Schallwellen -->
+    <path d="M 20 10 Q 24 16 20 22" stroke="#5a3e1b" stroke-width="2" fill="none"/>
+    <path d="M 23 7 Q 28 16 23 25" stroke="#5a3e1b" stroke-width="2" fill="none"/>
+    
+    <!-- Durchstreichendes X -->
+    <line x1="7" y1="7" x2="25" y2="25" stroke="red" stroke-width="3"/>
+    <line x1="7" y1="25" x2="25" y2="7" stroke="red" stroke-width="3"/>
+
+    <!-- Hover-Effekt über CSS -->
+    <style>
+        svg:hover rect {
+            fill: #f0d8af;
+        }
+        svg:hover polygon, svg:hover path {
+            fill: #3e2a14;
+            stroke: #3e2a14;
+        }
+        svg:hover line {
+            stroke: darkred;
+        }
+    </style>
+</svg>
