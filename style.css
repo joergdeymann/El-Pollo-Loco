@@ -16,6 +16,7 @@ body {
     background-repeat:no-repeat;
     background-size: cover;
     background-position: bottom;
+    overflow:hidden;
 }
 
 
@@ -34,11 +35,21 @@ body>div {
 
 canvas {
     max-height: 80%;
-    display: flex;
+    /* display: flex; */
     border:1px solid black;
     background-color: black;
     box-shadow: 0px 0px 50px rgba(255,255,0,1);
     border-radius: 10px;
+}
+
+canvas.full {
+    position: fixed;
+    width: 100%;
+    max-height: 100%;
+    top: 0;
+    object-fit: contain;
+    aspect-ratio: auto 720 / 480; 
+    background-color: transparent;
 }
 
 .intro {
@@ -58,13 +69,22 @@ canvas {
 }
 
 .intro.full {
+    position:fixed;
+    top:0;
     border:none;
     box-shadow: none;
     border-radius: 0;
-    max-width: 100%;
-    height: auto;
+    width: 100%;
+}
 
-    
+canvas.full {
+    position:fixed;
+    top:0;
+    border:none;
+    box-shadow: none;
+    border-radius: 0;
+    width: 100%;
+    aspect-ratio: 720/640;
 }
 
 

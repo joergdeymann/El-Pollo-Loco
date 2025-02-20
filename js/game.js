@@ -14,6 +14,7 @@ function showStartscreen() {
 function initGame() {
     console.trace("init Game");
     removeStartscreen();
+    setScreenSizeGame();
     initLevel1();
     canvas = document.getElementsByTagName("canvas")[0];
     key = new Keyboard();
@@ -28,42 +29,66 @@ function init() {
 }
 
 
-function toggleFullscreen() {
+function toggleFullscreenMenu() {
     fullscreen=document.getElementById("img-fullscreen");
     fullscreen.classList.toggle("off");
-    canvas=document.getElementsByTagName("canvas")[0];
     menu=document.getElementById("intro");
     menu.classList.toggle("full");
     return;
+}
 
-
+function setScreenSizeGame() {
+    fullscreen=document.getElementById("img-fullscreen");
+    if (fullscreen.classList.contains("off")) {
+        setGameScreenStandart();
+    } else {
+        setGameScreenFullsize();
+    }
 
     if (!document.fullscreenElement) {
+    }
 
+}
 
-        // Fullscreen aktivieren
-        if (canvas.requestFullscreen) {
-            canvas.requestFullscreen();
-        } else if (canvas.mozRequestFullScreen) { // Firefox
-            canvas.mozRequestFullScreen();
-        } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari
-            canvas.webkitRequestFullscreen();
-        } else if (canvas.msRequestFullscreen) { // Internet Explorer
-            canvas.msRequestFullscreen();
-        }
-    } else {
-        // Fullscreen verlassen
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) { // Firefox
-            document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) { // Chrome, Safari
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { // Internet Explorer
-            document.msExitFullscreen();
-        }
+function setGameScreenFullSize() {
+    if (document.fullscreenElement) return;
+    canvas=document.getElementsByTagName("canvas")[0];
+    
+    if (canvas.requestFullscreen) {
+        canvas.requestFullscreen();
+    } else if (canvas.mozRequestFullScreen) {  // Firefox
+        canvas.mozRequestFullScreen();
+    } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari
+        canvas.webkitRequestFullscreen();
+    } else if (canvas.msRequestFullscreen) { // Internet Explorer
+        canvas.msRequestFullscreen();
+    }
+} 
+
+function setGameScreenStandart() {
+    if (!document.fullscreenElement) return;
+    canvas=document.getElementsByTagName("canvas")[0];
+    
+    // Fullscreen verlassen
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) { // Firefox
+        document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) { // Chrome, Safari
+        document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { // Internet Explorer
+        document.msExitFullscreen();
     }
 }
+
+
+
+function resizeCanvas() {
+    const canvas = document.getElementsByTagName("canvas")[0];
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
 
 class Sound {
     constructor() {
