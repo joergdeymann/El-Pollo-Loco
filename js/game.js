@@ -3,7 +3,7 @@ let world;
 let sound;
 
 
-function removeStartscreen() {
+function hideStartscreen() {
     document.getElementById("startscreen").classList.add("d-none");
 }
 
@@ -11,10 +11,37 @@ function showStartscreen() {
     document.getElementById("startscreen").classList.remove("d-none");
 }
 
+function hideGamescreen() {
+    document.getElementsByTagName("canvas")[0].classList.add("d-none");
+}
+
+function showGamescreen() {
+    document.getElementsByTagName("canvas")[0].classList.remove("d-none");
+}
+
+function toggleFullscreen() {
+    toggleFullscreenMenu();
+}
+
+function isFullscreen() {
+    let fullscreen=document.getElementById("img-fullscreen");
+    return !fullscreen.classList.contains("off");
+}
+
+function setScreenSizeGame() {
+    if (isFullscreen()) {
+        setGameScreenFullsize();
+    } else {
+        setGameScreenStandart();
+    }
+}
+
 function initGame() {
     console.trace("init Game");
-    removeStartscreen();
+    hideStartscreen();
+
     setScreenSizeGame();
+    showGamescreen();
     initLevel1();
     canvas = document.getElementsByTagName("canvas")[0];
     key = new Keyboard();
@@ -28,12 +55,56 @@ function init() {
     sound = new Sound();
 }
 
+function requestFullscreen(canvas) {
+    if (canvas.requestFullscreen) {
+        canvas.requestFullscreen();
+    } else if (canvas.mozRequestFullScreen) {  // Firefox
+        canvas.mozRequestFullScreen();
+    } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari
+        canvas.webkitRequestFullscreen();
+    } else if (canvas.msRequestFullscreen) { // Internet Explorer
+        canvas.msRequestFullscreen();
+    }
+}
+
+function exitFullscreen() {
+    // Fullscreen verlassen
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) { // Firefox
+        document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) { // Chrome, Safari
+        document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { // Internet Explorer
+        document.msExitFullscreen();
+    }
+}
+
+function setGameScreenFullsize() {
+    if (document.fullscreenElement) return;
+    canvas=document.getElementsByTagName("canvas")[0];
+    canvas.classList.add("noBorderRadius");
+    requestFullscreen(canvas);    
+} 
+
+
+
+function setGameScreenStandart() {
+    if (!document.fullscreenElement) return;
+    canvas=document.getElementsByTagName("canvas")[0];
+    canvas.classList.remove("noBorderRadius");
+    exitFullscreen();
+    
+}
+
 
 function toggleFullscreenMenu() {
     fullscreen=document.getElementById("img-fullscreen");
     fullscreen.classList.toggle("off");
     menu=document.getElementById("intro");
     menu.classList.toggle("full");
+    body=document.getElementsByTagName("body")[0];
+    // body.classList.toggle("black");
     return;
 }
 
@@ -47,39 +118,23 @@ function setScreenSizeGame() {
 
     if (!document.fullscreenElement) {
     }
+    setInterval(() => listenerBorderRadius(),1000);
 
 }
 
-function setGameScreenFullSize() {
-    if (document.fullscreenElement) return;
+function listenerBorderRadius() {
     canvas=document.getElementsByTagName("canvas")[0];
+    body=document.getElementsByTagName("body")[0];
+    if (document.fullscreenElement) {
+        canvas.classList.add("noBorderRadius");
+        body.classList.add("black");
     
-    if (canvas.requestFullscreen) {
-        canvas.requestFullscreen();
-    } else if (canvas.mozRequestFullScreen) {  // Firefox
-        canvas.mozRequestFullScreen();
-    } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari
-        canvas.webkitRequestFullscreen();
-    } else if (canvas.msRequestFullscreen) { // Internet Explorer
-        canvas.msRequestFullscreen();
-    }
-} 
-
-function setGameScreenStandart() {
-    if (!document.fullscreenElement) return;
-    canvas=document.getElementsByTagName("canvas")[0];
-    
-    // Fullscreen verlassen
-    if (document.exitFullscreen) {
-        document.exitFullscreen();
-    } else if (document.mozCancelFullScreen) { // Firefox
-        document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) { // Chrome, Safari
-        document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) { // Internet Explorer
-        document.msExitFullscreen();
+    } else {
+        canvas.classList.remove("noBorderRadius");
+        body.classList.remove("black");
     }
 }
+
 
 
 

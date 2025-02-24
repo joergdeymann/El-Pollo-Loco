@@ -96,4 +96,19 @@ class Drawable {
         this.flipImageBack(ctx);
     }
 
+    resizeScreen(ctx) {
+        const canvas=document.getElementsByTagName("canvas")[0];
+
+        const baseWidth = 720;
+        const baseHeight = 480;
+        const aspectRatio = baseWidth / baseHeight;  
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight; 
+        canvas.width = screenWidth;
+        canvas.height = screenHeight;  
+        const visibleWidth = baseWidth * (screenWidth / baseWidth);
+        const visibleHeight = baseHeight * (screenHeight / baseHeight);   
+        ctx.setTransform(screenWidth / baseWidth, 0, 0, screenHeight / baseHeight, 0, 0);
+    }
+
 }
