@@ -4,11 +4,11 @@ let sound;
 
 
 function hideStartscreen() {
-    document.getElementById("startscreen").classList.add("d-none");
+    document.getElementById("intro").classList.add("d-none");
 }
 
 function showStartscreen() {
-    document.getElementById("startscreen").classList.remove("d-none");
+    document.getElementById("intro").classList.remove("d-none");
 }
 
 function hideGamescreen() {

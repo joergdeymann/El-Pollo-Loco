@@ -27,6 +27,7 @@
     <script src="./js/models/collectableObject.class.js"></script>
     <script src="./js/models/collectableBottle.class.js"></script>
     <script src="./js/models/collectableCoin.class.js"></script>
+    <!-- <script src="./js/models/gameover.class.js"></script> -->
 
     <script src="./js/models/keyboard.class.js"></script>
     <script src="./js/models/level.class.js"></script>
@@ -43,26 +44,27 @@
         <canvas width="720" height="480" class="d-none"></canvas>
     </div>
 
-    <div id="startscreen">
-        <h1>El Pollo Loco</h1>
-        <div class="intro" id="intro">
-            <header>
-                <button onmousedown="initGame()">Start Game</button>
-                <div>
-                    <img id="img-ls" class="ls off" src="./assets/img/9_intro_outro_screens/menu/ls.svg" alt="Mute" onmousedown="sound.toggleBackgroundMusic()">
-                    <img id="img-fullscreen" class="fullscreen off" src="" alt="Fullscreen" onmousedown="toggleFullscreen()">
-                </div>
-            </header>
-            <section></section>
-            <nav>
-                <button>Game Instruction</button>
-                <button>Setup</button>
-                <button>Imprint</button>
-            </nav>
-
-
+    <div class="intro" id="intro">
+        <div class="container">
+            <img src="./assets/img/9_intro_outro_screens/start/startscreen_2.png">
+            <div class="content">
+                <header>
+                    <button onmousedown="initGame()">Start Game</button>
+                    <div>
+                        <img id="img-ls" class="ls off" src="./assets/img/9_intro_outro_screens/menu/ls.svg" alt="Mute" onmousedown="sound.toggleBackgroundMusic()">
+                        <img id="img-fullscreen" class="fullscreen off" src="" alt="Fullscreen" onmousedown="toggleFullscreen()">
+                    </div>
+                </header>
+                <section></section>
+                <nav>
+                    <button>Game Instruction</button>
+                    <button>Setup</button>
+                    <button>Imprint</button>
+                </nav>
+            </div>
+                
         </div>
-
     </div>
+
 </body>
 </html>

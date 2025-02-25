@@ -252,6 +252,7 @@ class Character extends AnimatedObject {
         setTimeout(() => {
             clearInterval(animation);
             clearInterval(movement);
+            this.world.gameover.loose();            
         },10000);
     }
 

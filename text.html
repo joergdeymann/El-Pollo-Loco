@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .full {
+            position: fixed;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            overflow: hidden;
+        
+        }
+        .full .container {
+            position: relative;
+            box-sizing: border-box;
+            display: flex;
+            border: 2px solid red;
+        }
+
+        .full img {
+            object-fit: contain;
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+
+        .menu {
+            position: absolute;
+            display:flex;
+            border: 1px solid green;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+
+        }
+        header {
+            background-color: rgba(0,255,0,0.2);
+        }
+        footer {
+            background-color: red;
+        }
+        section {
+            flex: 1;
+            background-color: rgba(0,0,255,0.2);
+        
+        }
+
+    </style>
+</head>
+<body>
+    <div class="full">
+        <div class="container">
+            <img src="./assets/img/9_intro_outro_screens/start/startscreen_2.png">
+            <div class="menu"> 
+                <header>Head</header>
+                <section>Section</section>
+                <footer>Footer</footer>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
