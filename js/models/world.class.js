@@ -6,7 +6,7 @@ class World {
 
     debug=true;
     character=new Character();
-    // gameover=new Gameover();
+    gameover=new Gameover();
     level; 
     statusBar={
         LIVE:   new Statusbar("IMAGES_LIVE",10,0),
@@ -44,6 +44,7 @@ class World {
         this.addWorld(this.level.collectableObjects);  
         this.addWorld(Object.values(this.statusBar));  
         this.addWorld(this.level.backgrounds);  
+        this.addWorld(this.gameover);  
 
         this.draw();
         this.addCollisionListener();
@@ -293,7 +294,7 @@ class World {
         this.ctx.translate(-this.cameraX,0);
 
         this.addToMap(Object.values(this.statusBar));
-        // this.addToMap(this.gameover);
+        this.gameover.draw(this.ctx);
         requestAnimationFrame(() => this.draw());
     }
 

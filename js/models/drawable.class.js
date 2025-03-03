@@ -17,6 +17,8 @@ class Drawable {
 
     hitboxes = [];
 
+    invisible=false;
+
 
     rect(ctx,color,size) {
         ctx.beginPath();
@@ -90,6 +92,8 @@ class Drawable {
 
     
     draw(ctx) {
+        if (this.invisible) return;
+        
         this.flipImage(ctx);
         this.drawImage(ctx);
         this.drawRect(ctx);
