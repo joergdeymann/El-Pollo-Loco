@@ -298,16 +298,19 @@ class Endboss extends AnimatedObject {
     }
 
     die() {
-        console.log("Attacks gestoppt");
+        // console.log("Attacks gestoppt");
         this.stopAttacks();
         this.setImages(this.IMAGES_DEAD);
         this.world.stopCollisionListener();
         this.active=false;
+        this.world.character.win();
         
         setTimeout(() => {
             this.stopAnimation();
-            console.log("Animation gestoppt");
-            this.world.character.setImages( this.world.character.IMAGES_WALKING);
+
+            // console.log("Animation gestoppt");
+            // this.world.character.resetImages( this.world.character.IMAGES_WALKING);
         },2000);
     }
+
 }

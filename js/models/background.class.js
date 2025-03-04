@@ -5,6 +5,7 @@ class Background extends MovableObject {
     world;
     startX=0;
     startY=0;
+    listener=false;
     
     constructor(imagePath,x,layer) {
         super();
@@ -20,6 +21,8 @@ class Background extends MovableObject {
     } 
 
     addListener() {
+        if (this.listener) return;
+        this.listener=true;
         if (this.layer > 0 && this.layer < 3) {
             setTimeout(()=> this.addPositionListener(),1000);
         }
@@ -28,14 +31,6 @@ class Background extends MovableObject {
 
     addPositionListener() {
         setInterval(() => {
-            if (!this.world) {
-                console.log("No World",this);
-                debugger;
-            }
-            if (!this.world.character) {
-                console.log("No Character in World",this);
-                debugger;
-            }
             if (this.layer==2) this.x=this.startX+(this.world.character.x-this.world.character.startX)*0.1;
             if (this.layer==1) this.x=this.startX+(this.world.character.x-this.world.character.startX)*0.2;
         },1000/60);

@@ -11,7 +11,7 @@ class Gameover extends DrawableObject {
 
     IMAGES_WIN=[
         './assets/img/9_intro_outro_screens/game_over/game over.png',
-    ]
+        './assets/img/9_intro_outro_screens/win/win_2.png'    ]
 
     invisible=true;
     
@@ -22,17 +22,48 @@ class Gameover extends DrawableObject {
         this.loadImages(this.IMAGES_WIN); 
     }
 
+    /**
+     * You Win/You Lost
+     * Play Again - Button
+     * Overview - Button
+     */
+    displayEndscreen() {
+        // document.getElementById("endscreen-image").src=this.img;
+        document.getElementById("endscreen").classList.remove("d-none");
+        document.getElementById("intro").classList.add("d-none");
+    }
+
+    displayIntroScreen() {
+        document.getElementById("intro").classList.remove("d-none");
+        document.getElementById("endscreen").classList.add("d-none");        
+        document.getElementsByTagName("canvas")[0].classList.add("d-none");        
+    }
+
+    secondImageAndChoice() {
+        this.displayEndscreen(this.imgaes); 
+        setTimeout(() => {
+            this.nextImage(); 
+        },2000);       
+    }
 
     loose() {
+        this.invisible=false;
+        this.nextImage(this.IMAGES_LOOSE); 
         setTimeout(() => {
-            this.invisible=false;
             this.nextImage(this.IMAGES_LOOSE); 
-        },5000)       
+        },2000)
+        this.secondImageAndChoice();       
     }
 
     win() {
         this.invisible=false;
         this.nextImage(this.IMAGES_WIN); 
+        setTimeout(() => {
+            this.nextImage(this.IMAGES_WIN); 
+        },2000);
+        this.secondImageAndChoice();       
+       
     }
+
 
 }

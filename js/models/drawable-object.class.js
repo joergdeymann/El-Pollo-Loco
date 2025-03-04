@@ -8,6 +8,7 @@ class DrawableObject extends Drawable {
     images=[];
     IMAGES=[];
     currentImage =0;
+    index=0;
 
 
     constructor() {

@@ -19,6 +19,10 @@ function showGamescreen() {
     document.getElementsByTagName("canvas")[0].classList.remove("d-none");
 }
 
+function hideEndscreen() {
+    document.getElementById("endscreen").classList.add("d-none");
+}
+
 function toggleFullscreen() {
     toggleFullscreenMenu();
 }
@@ -37,8 +41,9 @@ function setScreenSizeGame() {
 }
 
 function initGame() {
-    console.trace("init Game");
     hideStartscreen();
+    hideEndscreen();
+
 
     setScreenSizeGame();
     showGamescreen();

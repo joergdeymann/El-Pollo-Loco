@@ -253,7 +253,7 @@ class Character extends AnimatedObject {
             clearInterval(animation);
             clearInterval(movement);
             this.world.gameover.loose();            
-        },10000);
+        },5000);
     }
 
 
@@ -336,6 +336,12 @@ class Character extends AnimatedObject {
         clearInterval(this.animationInterval);
         this.moveInterval=null;
         this.animationInterval=null;
+    }
+
+    win() {
+        // this.stopAnimation();
+        this.animationStop();
+        this.setImages(this.IMAGES_WALKING);
     }
 
 }

@@ -162,6 +162,7 @@ class World {
      * 
      */
     addCollisionListener() {
+        if (this.addCollisionListener) return;
         this.collisionInterval=setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
@@ -188,6 +189,7 @@ class World {
 
     
     addBackgroundListener() {
+        
         for(let bg of this.level.backgrounds) {
             bg.addListener();
         }

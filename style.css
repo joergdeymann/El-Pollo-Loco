@@ -253,3 +253,14 @@ button:hover {
 .black {
     background: black;
 }
+
+#endscreen section {
+    margin-top: 300px;
+    width: 300px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    flex:unset;
+    
+}

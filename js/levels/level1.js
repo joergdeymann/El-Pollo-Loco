@@ -105,6 +105,21 @@ let coinPositions=[
 
 
 function initLevel1() {
+    enemies.length=0;
+    clouds.length=0;
+    backgrounds.length=0;
+    endboss.length=0;
+    collectableObjects.length=0;
+    
+    clouds=[];
+    enemies=[];
+    endboss=[]; 
+    
+    backgrounds=[];
+    collectableObjects=[];
+
+
+        
     initBackgrounds();
     initClouds();
     initEnemies();
@@ -144,7 +159,6 @@ function initEnemies() {
     for(i=0;i<countChicken;i++) {
         enemies.push(new Chick());
     }
-    
     endboss.push(new Endboss());
     
 }
