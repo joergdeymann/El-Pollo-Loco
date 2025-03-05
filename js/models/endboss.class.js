@@ -298,7 +298,7 @@ class Endboss extends AnimatedObject {
     }
 
     die() {
-        // console.log("Attacks gestoppt");
+        console.log("DIE: Attacks gestoppt");
         this.stopAttacks();
         this.setImages(this.IMAGES_DEAD);
         this.world.stopCollisionListener();
@@ -307,8 +307,9 @@ class Endboss extends AnimatedObject {
         
         setTimeout(() => {
             this.stopAnimation();
+            this.world.gameover.win();
 
-            // console.log("Animation gestoppt");
+            console.log("DIE: Animation gestoppt");
             // this.world.character.resetImages( this.world.character.IMAGES_WALKING);
         },2000);
     }

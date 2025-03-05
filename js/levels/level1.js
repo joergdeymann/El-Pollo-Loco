@@ -111,9 +111,9 @@ function initLevel1() {
     endboss.length=0;
     collectableObjects.length=0;
     
-    clouds=[];
-    enemies=[];
-    endboss=[]; 
+    // clouds=[];
+    // enemies=[];
+    // endboss=[]; 
     
     backgrounds=[];
     collectableObjects=[];

@@ -7,11 +7,12 @@ class Gameover extends DrawableObject {
     IMAGES_LOOSE=[
         './assets/img/9_intro_outro_screens/game_over/game over.png',
         './assets/img/9_intro_outro_screens/game_over/you lost.png',
-    ]
+    ];
 
     IMAGES_WIN=[
         './assets/img/9_intro_outro_screens/game_over/game over.png',
-        './assets/img/9_intro_outro_screens/win/win_2.png'    ]
+        './assets/img/9_intro_outro_screens/win/win_2.png'   
+    ];
 
     invisible=true;
     
@@ -49,17 +50,23 @@ class Gameover extends DrawableObject {
     loose() {
         this.invisible=false;
         this.nextImage(this.IMAGES_LOOSE); 
-        setTimeout(() => {
-            this.nextImage(this.IMAGES_LOOSE); 
-        },2000)
+        // setTimeout(() => {
+        //     this.nextImage(this.IMAGES_LOOSE); 
+        // },2000)
         this.secondImageAndChoice();       
     }
 
     win() {
+        this.index=0;
         this.invisible=false;
         this.nextImage(this.IMAGES_WIN); 
         setTimeout(() => {
-            this.nextImage(this.IMAGES_WIN); 
+            this.width=this.width*0.5;
+            this.height=this.height*0.5;
+            this.x+=this.width/2;
+            this.y+=this.height/2-50;
+            
+            console.log("WIN Next image");
         },2000);
         this.secondImageAndChoice();       
        

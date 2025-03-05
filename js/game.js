@@ -61,6 +61,10 @@ function init() {
 }
 
 function requestFullscreen(canvas) {
+    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("load", resizeCanvas);
+    return;    
+
     if (canvas.requestFullscreen) {
         canvas.requestFullscreen();
     } else if (canvas.mozRequestFullScreen) {  // Firefox
@@ -73,6 +77,7 @@ function requestFullscreen(canvas) {
 }
 
 function exitFullscreen() {
+
     // Fullscreen verlassen
     if (document.exitFullscreen) {
         document.exitFullscreen();
@@ -89,6 +94,8 @@ function setGameScreenFullsize() {
     if (document.fullscreenElement) return;
     canvas=document.getElementsByTagName("canvas")[0];
     canvas.classList.add("noBorderRadius");
+    canvas.classList.toggle("full");
+    document.querySelector("body").classList.toggle("full");
     requestFullscreen(canvas);    
 } 
 
@@ -98,6 +105,9 @@ function setGameScreenStandart() {
     if (!document.fullscreenElement) return;
     canvas=document.getElementsByTagName("canvas")[0];
     canvas.classList.remove("noBorderRadius");
+    canvas.classList.toggle("full");
+    document.querySelector("body").classList.toggle("full");
+
     exitFullscreen();
     
 }
@@ -142,8 +152,48 @@ function listenerBorderRadius() {
 
 
 
-
 function resizeCanvas() {
+    const canvas = document.querySelector("canvas");
+    const ctx = canvas.getContext("2d");
+    const originalWidth = 720;  // Ursprüngliche Breite des Canvas
+    const originalHeight = 480; // Ursprüngliche Höhe des Canvas
+
+    const aspectRatio = originalWidth / originalHeight;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    // Berechnen der maximal möglichen Größe unter Beibehaltung des Seitenverhältnisses
+    let newWidth = windowWidth;
+    let newHeight = windowWidth / aspectRatio;
+
+    if (newHeight > windowHeight) {
+        // Falls die Höhe zu groß wird, passe die Breite entsprechend an
+        newHeight = windowHeight;
+        newWidth = windowHeight * aspectRatio;
+    }
+
+    // Setze die Canvas-Größe entsprechend
+    canvas.style.width = `${newWidth}px`;
+    canvas.style.height = `${newHeight}px`;
+
+    // Setze auch die internen Maße des Canvas (wichtig für Zeichnungen)
+    // canvas.width = newWidth;
+    // canvas.height = newHeight;
+    canvas.width = originalWidth;
+    canvas.height = originalHeight;
+
+    scaleX = newWidth / originalWidth;
+    scaleY = newHeight / originalHeight;
+
+    world.scaleX=scaleX;
+    world.scaleY=scaleY;
+    
+    ctx.scale(this.scaleX, this.scaleY);
+
+    return  {x: scaleX,y: scaleY};
+}
+
+function XresizeCanvas() {
     const canvas = document.getElementsByTagName("canvas")[0];
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;

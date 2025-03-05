@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Fullscreen mit Endscreen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: transparent;
+        }
+        .fullscreen canvas {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        #endscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 30px;
+            text-align: center;
+            display: none;
+        }
+        
+        #endscreen button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 20px;
+            border: none;
+            border-radius: 10px;
+            background: #e4c9a1;
+            cursor: pointer;
+        }
+        #endscreen button:hover {
+            background: #f0d8af;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <div id="endscreen">
+        <p>Game Over</p>
+        <button onclick="restartGame()">Play Again</button>
+    </div>
+    
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const endscreen = document.getElementById('endscreen');
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        
+        function showEndscreen() {
+            endscreen.style.display = 'flex';
+        }
+        
+        function hideEndscreen() {
+            endscreen.style.display = 'none';
+        }
+        
+        function restartGame() {
+            hideEndscreen();
+            console.log("Game restarted");
+        }
+        
+        function enterFullscreen() {
+            canvas.width = document.body.clientWidth;
+            canvas.height = document.body.clientHeight;
+            document.body.classList.add('fullscreen');
+            return;
+
+            if (canvas.requestFullscreen) {
+                canvas.requestFullscreen();
+            } else if (canvas.mozRequestFullScreen) {
+                canvas.mozRequestFullScreen();
+            } else if (canvas.webkitRequestFullscreen) {
+                canvas.webkitRequestFullscreen();
+            } else if (canvas.msRequestFullscreen) {
+                canvas.msRequestFullscreen();
+            }
+            document.body.classList.add('fullscreen');
+        }
+        
+        canvas.addEventListener('click', enterFullscreen);
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                document.body.classList.remove('fullscreen');
+            }
+        });
+        
+        setTimeout(showEndscreen, 3000);
+    </script>
+</body>
+</html>

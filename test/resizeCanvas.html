@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullscreen Canvas</title>
+    <script>
+        function resizeCanvas() {
+            const canvas = document.querySelector("canvas");
+            const ctx = canvas.getContext("2d");
+
+            const aspectRatio = 720 / 480; // Ursprüngliches Seitenverhältnis des Canvas
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+
+            // Berechnen, ob die Breite oder Höhe angepasst werden muss
+            if (windowWidth / windowHeight > aspectRatio) {
+                // Fenster ist breiter als das Verhältnis → Höhe muss 100% sein
+                canvas.style.width = `${windowWidth}px`;
+                canvas.style.height = `${windowWidth / aspectRatio}px`;
+            } else {
+                // Fenster ist höher als das Verhältnis → Breite muss 100% sein
+                canvas.style.width = `${windowHeight * aspectRatio}px`;
+                canvas.style.height = `${windowHeight}px`;
+            }
+
+            // Optional: Das Canvas selbst anpassen (falls du mit getContext arbeitest)
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            
+            // Beispielhintergrund zeichnen
+            ctx.fillStyle = "aquamarine";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        window.addEventListener("load", resizeCanvas);
+    </script>
+</head>
+<body style="overflow: hidden; margin: 0;">
+    <div style="
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+    ">
+        <canvas style="
+            background-color: aquamarine;
+            border: 5px solid green;
+            box-sizing: border-box;
+        "></canvas>
+    </div>
+</body>
+</html>

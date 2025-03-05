@@ -21,16 +21,34 @@ body {
 
 
 
+/* body>div {
+    position: absolute;
+    top: 0px;
+    top: 20px; #### 
+
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 80vw;
+    height: 80vh;
+} */
+
 body>div {
-    position:fixed;
+    position: absolute;
+    top: 10%;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+    /* width: 80%; */
+    /* height: 80%; */
+    /* max-width: 80%; */
 }
 
 canvas {
@@ -43,7 +61,7 @@ canvas {
     aspect-ratio: 720 / 480;
 }
 
-Xcanvas.full {
+canvas.full {
     position: fixed;
     width: 100%;
     max-height: 100%;
@@ -51,18 +69,6 @@ Xcanvas.full {
     object-fit: contain;
     aspect-ratio: auto 720 / 480; 
     background-color: transparent;
-}
-
-canvas.full {
-    border-radius: unset;
-    border: unset;
-    box-shadow: unset;
-    max-width: 100%;
-    max-height: 100%;
-}
-
-body.full {
-    background: black;
 }
 
 
@@ -147,19 +153,16 @@ canvas.full {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-left: min(20px, 3%);
-    margin-right: min(20px, 3%);
-    margin-top: min(20px, 3%);
-    height: 4vw;
-    max-height: 32px;
-    border: 1px solid red;
-    box-sizing: border-box;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    height: 32px;
 }
+
 
 .intro header div {
     display: flex;
     gap: 20px;
-    justify-content: flex-end;
 }
 
 
@@ -171,11 +174,10 @@ canvas.full {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-left: min(20px, 3%);
-    margin-right: min(20px, 3%);
-    margin-bottom: min(20px, 3%);
-    height: 4vw;
-    max-height: 32px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    height: 32px;
 }
 
 h1 {
@@ -203,7 +205,7 @@ button {
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     overflow: hidden;
-    padding-left: 1em; 
+    padding-left:1em;
     padding-right: 1em;
 }
 

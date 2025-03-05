@@ -20,6 +20,10 @@ class World {
 
 
     width=720*2*5;
+    scaleX=null;
+    scaleY=null;
+
+
     
 
     constructor(canvas,keyboard) {
@@ -162,7 +166,7 @@ class World {
      * 
      */
     addCollisionListener() {
-        if (this.addCollisionListener) return;
+        if (this.collisionInterval) return;
         this.collisionInterval=setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
