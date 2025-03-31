@@ -31,7 +31,7 @@ class World {
         this.key=keyboard;
 
         this.ctx=canvas.getContext('2d');
-        this.ctx.size=this.canvas;
+        // this.ctx.size=this.canvas;
         // this.resizeScreen();
 
     }
@@ -316,7 +316,7 @@ class World {
         }
     }
 
-    resizeScreen() {
+    XresizeScreen() {
         const canvas=document.getElementsByTagName("canvas")[0];
 
         const baseWidth = 720;
@@ -328,7 +328,7 @@ class World {
         canvas.height = screenHeight;  
         const visibleWidth = baseWidth * (screenWidth / baseWidth);
         const visibleHeight = baseHeight * (screenHeight / baseHeight);   
-        this.ctx.setTransform(screenWidth / baseWidth, 0, 0, screenHeight / baseHeight, 0, 0);
+        // this.ctx.setTransform(screenWidth / baseWidth, 0, 0, screenHeight / baseHeight, 0, 0);
     }
 
 

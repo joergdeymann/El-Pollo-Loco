@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Buttons</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas"></canvas>
+
+    <script>
+        let canvas = document.getElementById('myCanvas');
+        let ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Button-Eigenschaften
+        const button = {
+            x: canvas.width / 2 - 75,
+            y: canvas.height / 2 - 25,
+            width: 150,
+            height: 50,
+            color: 'blue',
+            text: 'Klick mich!',
+        };
+
+        // Button zeichnen
+        function drawButton() {
+            ctx.fillStyle = button.color;
+            ctx.fillRect(button.x, button.y, button.width, button.height);
+            ctx.fillStyle = 'white';
+            ctx.font = '20px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(button.text, button.x + button.width / 2, button.y + button.height / 2);
+        }
+
+        // Überprüfen, ob der Button angeklickt wurde
+        function isButtonClicked(x, y) {
+            return x >= button.x && x <= button.x + button.width &&
+                   y >= button.y && y <= button.y + button.height;
+        }
+
+        // Canvas rendern
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Canvas leeren
+            drawButton();
+        }
+
+        // Event-Listener für Klick
+        canvas.addEventListener('click', function(event) {
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+
+            if (isButtonClicked(mouseX, mouseY)) {
+                alert('Button wurde geklickt!');
+            }
+        });
+
+        // Initiales Rendering
+        render();
+    </script>
+</body>
+</html>

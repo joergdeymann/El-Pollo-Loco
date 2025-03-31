@@ -32,6 +32,9 @@ class Gameover extends DrawableObject {
         // document.getElementById("endscreen-image").src=this.img;
         document.getElementById("endscreen").classList.remove("d-none");
         document.getElementById("intro").classList.add("d-none");
+        this.exitFullscreenMenu();
+
+        // if (document.fullscreenElement) document.getElementById("endscreen").requestFullscreen();
     }
 
     displayIntroScreen() {
@@ -72,5 +75,20 @@ class Gameover extends DrawableObject {
        
     }
 
+
+    // !!" Achtung das Falsche ???
+    exitFullscreenMenu() {
+        if (document.fullscreenElement) return;
+        // if (!isFullscreen) return;
+    
+        let fullscreen=document.getElementById("img-fullscreen");
+        fullscreen.classList.toggle("off");
+        menu=document.getElementById("intro");
+        menu.classList.toggle("full");
+        body=document.getElementsByTagName("body")[0];
+        // body.classList.toggle("black");
+        return;
+    }
+    
 
 }

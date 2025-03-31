@@ -3,6 +3,10 @@ let world;
 let sound;
 
 
+function isStartscreen() {
+    return !document.getElementById("intro").classList.contains("d-none");
+}
+
 function hideStartscreen() {
     document.getElementById("intro").classList.add("d-none");
 }
@@ -26,26 +30,34 @@ function hideEndscreen() {
 function toggleFullscreen() {
     toggleFullscreenMenu();
 }
-
-function isFullscreen() {
-    let fullscreen=document.getElementById("img-fullscreen");
-    return !fullscreen.classList.contains("off");
+function isFullScreen() {
+    return document.fullscreenElement;
 }
 
-function setScreenSizeGame() {
-    if (isFullscreen()) {
-        setGameScreenFullsize();
-    } else {
-        setGameScreenStandart();
-    }
-}
+// function isFullscreen() {
+//     let fullscreen=document.getElementById("img-fullscreen");
+//     return !fullscreen.classList.contains("off");
+// }
+
+// function XsetScreenSizeGame() {
+//     if (isFullscreen()) {
+//         setGameScreenFullsize();
+//     } else {
+//         setGameScreenStandart();
+//     }
+// }
 
 function initGame() {
     hideStartscreen();
     hideEndscreen();
 
+    if (isFullScreen()) {
+        toggleGameScreen();
+        let canvas = document.getElementsByTagName("canvas")[0];
+        canvas.requestFullscreen();         
+    } 
 
-    setScreenSizeGame();
+    // setScreenSizeGame();
     showGamescreen();
     initLevel1();
     canvas = document.getElementsByTagName("canvas")[0];
@@ -57,14 +69,45 @@ function initGame() {
 }
 
 function init() {
+    // document.body.requestPointerLock();
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "F11") { 
+            e.preventDefault();             
+            if (!document.fullscreenElement) {
+                if (isStartscreen())  {
+                    let intro = document.getElementById("intro");
+                    intro.requestFullscreen();     
+                } else {
+                    let canvas = document.getElementsByTagName("canvas")[0];
+                    canvas.requestFullscreen(); 
+                    // console.log("2. Request");    
+                    // let intro = document.getElementById("intro");
+                    // intro.requestFullscreen();     
+                    // console.log("3. Request");    
+                    // let endscreen = document.getElementById("endscreen");
+                    // endscreen.requestFullscreen();     
+                }
+                // toggleFullscreen(); 
+            }
+        } 
+    });
+
+
+    document.addEventListener("fullscreenchange", (e) => {
+        e.preventDefault();             
+        console.log("Screen changed");
+        toggleFullscreen(); 
+        toggleGameScreen();
+
+    });
+
     sound = new Sound();
 }
 
 function requestFullscreen(canvas) {
-    window.addEventListener("resize", resizeCanvas);
-    window.addEventListener("load", resizeCanvas);
-    return;    
-
+    // window.addEventListener("resize", resizeCanvas);
+    // window.addEventListener("load", resizeCanvas);
+    // return;    
     if (canvas.requestFullscreen) {
         canvas.requestFullscreen();
     } else if (canvas.mozRequestFullScreen) {  // Firefox
@@ -74,9 +117,11 @@ function requestFullscreen(canvas) {
     } else if (canvas.msRequestFullscreen) { // Internet Explorer
         canvas.msRequestFullscreen();
     }
+
 }
 
 function exitFullscreen() {
+    if (!document.fullscreenElement) return;
 
     // Fullscreen verlassen
     if (document.exitFullscreen) {
@@ -90,31 +135,46 @@ function exitFullscreen() {
     }
 }
 
-function setGameScreenFullsize() {
-    if (document.fullscreenElement) return;
-    canvas=document.getElementsByTagName("canvas")[0];
-    canvas.classList.add("noBorderRadius");
+
+function toggleGameScreen() {
+    let canvas=document.getElementsByTagName("canvas")[0];
+    canvas.classList.toggle("noBorderRadius");
     canvas.classList.toggle("full");
     document.querySelector("body").classList.toggle("full");
-    requestFullscreen(canvas);    
+}
+
+function setGameScreenFullsize() {
+    if (document.fullscreenElement) return;
+    console.log("setGameScreenFullsize");
+
+    let canvas=document.getElementsByTagName("canvas")[0];
+    canvas.classList.add("noBorderRadius");
+    canvas.classList.add("full");
+    document.querySelector("body").classList.add("full");
+    // document.body.focus();
+    // requestFullscreen(canvas);    
 } 
 
 
 
 function setGameScreenStandart() {
-    if (!document.fullscreenElement) return;
-    canvas=document.getElementsByTagName("canvas")[0];
+    // if (!document.fullscreenElement) return;
+    // if (!isFullscreen) return;
+    let canvas=document.getElementsByTagName("canvas")[0];
     canvas.classList.remove("noBorderRadius");
-    canvas.classList.toggle("full");
-    document.querySelector("body").classList.toggle("full");
+    canvas.classList.remove("full");
+    document.querySelector("body").classList.remove("full");
 
-    exitFullscreen();
+    // exitFullscreen();
     
 }
 
 
 function toggleFullscreenMenu() {
-    fullscreen=document.getElementById("img-fullscreen");
+    if (document.fullscreenElement) return;
+    // if (!isFullscreen) return;
+
+    let fullscreen=document.getElementById("img-fullscreen");
     fullscreen.classList.toggle("off");
     menu=document.getElementById("intro");
     menu.classList.toggle("full");
@@ -124,22 +184,24 @@ function toggleFullscreenMenu() {
 }
 
 function setScreenSizeGame() {
-    fullscreen=document.getElementById("img-fullscreen");
+    let fullscreen=document.getElementById("img-fullscreen");
     if (fullscreen.classList.contains("off")) {
         setGameScreenStandart();
     } else {
         setGameScreenFullsize();
     }
 
+    listenerBorderRadius();
+
     if (!document.fullscreenElement) {
     }
-    setInterval(() => listenerBorderRadius(),1000);
+    // setInterval(() => listenerBorderRadius(),1000);
 
 }
 
 function listenerBorderRadius() {
-    canvas=document.getElementsByTagName("canvas")[0];
-    body=document.getElementsByTagName("body")[0];
+    let canvas=document.getElementsByTagName("canvas")[0];
+    let body=document.getElementsByTagName("body")[0];
     if (document.fullscreenElement) {
         canvas.classList.add("noBorderRadius");
         body.classList.add("black");
@@ -153,6 +215,7 @@ function listenerBorderRadius() {
 
 
 function resizeCanvas() {
+    return;
     const canvas = document.querySelector("canvas");
     const ctx = canvas.getContext("2d");
     const originalWidth = 720;  // Ursprüngliche Breite des Canvas
@@ -185,6 +248,9 @@ function resizeCanvas() {
     scaleX = newWidth / originalWidth;
     scaleY = newHeight / originalHeight;
 
+    scaleX = 1;
+    scaleY = originalHeight;
+
     world.scaleX=scaleX;
     world.scaleY=scaleY;
     
@@ -199,6 +265,26 @@ function XresizeCanvas() {
     canvas.height = window.innerHeight;
 }
 
+// function getkeyDown(e) {
+//     console.log("Taste gedrückt");
+//     if (e.key == "F11") {
+//         console.log(e);
+//         toggleFullscreen();
+//         setGameScreenFullsize();
+//         listenerBorderRadius();
+
+//         e.preventDefault();
+//         e.stopPropagation();
+//     }
+//     if (e.key == "Escape" && isFullscreen())  {
+//         console.log(e);
+//         toggleFullscreen();
+//         setScreenSizeGame();
+//         listenerBorderRadius();
+//         e.preventDefault();        
+//         e.stopPropagation();  
+//     }
+// }
 
 class Sound {
     constructor() {
@@ -226,3 +312,31 @@ class Sound {
     // }
         
 }
+
+
+
+
+// -----------------------------------------------------
+// document.addEventListener("keydown", (e) => {
+//     if (e.key === "F11") { 
+//         e.preventDefault(); // Verhindert den Browser-Fullscreen
+//         toggleFullscreen(); // Aktiviert dein eigenes Fullscreen
+//     }
+// });
+
+// // Funktion für Fullscreen
+// function toggleFullscreen() {
+//     let canvas = document.getElementById("game-canvas");
+
+//     if (!document.fullscreenElement) {
+//         canvas.requestFullscreen().catch(err => {
+//             console.error(`Fullscreen error: ${err.message}`);
+//         });
+//     } else {
+//         document.exitFullscreen();
+//     }
+// }
+
+// <button id="fs-button">Fullscreen umschalten</button>
+// document.getElementById("fs-button").addEventListener("click", toggleFullscreen);
+    

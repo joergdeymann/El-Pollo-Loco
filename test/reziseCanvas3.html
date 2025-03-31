@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullscreen Canvas mit Overlay</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+        }
+
+        /* Das iframe für den Canvas */
+        iframe {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            z-index: 0; /* Iframe bleibt im Hintergrund */
+        }
+
+        /* Das Overlay bleibt immer sichtbar über dem Canvas */
+        #overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-size: 20px;
+            border-radius: 10px;
+            display: none; /* Startet unsichtbar */
+            z-index: 9999; /* Overlay bleibt über allem sichtbar */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Iframe für das Canvas -->
+    <iframe id="canvasFrame" src="about:blank"></iframe>
+
+    <!-- Overlay bleibt immer sichtbar -->
+    <div id="overlay">Ich bin über dem Canvas!</div>
+
+    <script>
+        let iframe = document.getElementById('canvasFrame');
+        let overlay = document.getElementById("overlay");
+
+        // Den Canvas in das Iframe einfügen
+        let iframeDoc = iframe.contentWindow.document;
+        iframeDoc.open();
+        iframeDoc.write(`
+            <html>
+                <body style="margin:0; overflow: hidden; background-color: black;">
+                    <canvas id="myCanvas"></canvas>
+                    <script>
+                        let canvas = document.getElementById("myCanvas");
+                        let ctx = canvas.getContext("2d");
+
+                        // Canvas-Größe an Fenster anpassen
+                        function resizeCanvas() {
+                            canvas.width = window.innerWidth;
+                            canvas.height = window.innerHeight;
+                        }
+                        window.addEventListener("resize", resizeCanvas);
+                        resizeCanvas();
+
+                        // Animierte Zeichnung auf das Canvas (ein bewegender Kreis)
+                        let x = 50;
+                        let dx = 2;
+
+                        function draw() {
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            ctx.beginPath();
+                            ctx.arc(x, canvas.height / 2, 50, 0, Math.PI * 2);
+                            ctx.fillStyle = "red";
+                            ctx.fill();
+                            ctx.closePath();
+
+                            x += dx;
+                            if (x > canvas.width - 50 || x < 50) {
+                                dx = -dx;
+                            }
+
+                            requestAnimationFrame(draw);
+                        }
+                        draw();
+                    <\/script>
+                </body>
+            </html>
+        `);
+        iframeDoc.close();
+
+        // Vollbildmodus für das iframe-Canvas
+        function enterFullscreen() {
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen().then(() => {
+                    // Overlay nach 1 Sekunde sichtbar machen
+                    setTimeout(() => {
+                        overlay.style.display = "block";  // Das Overlay wird jetzt über dem Canvas angezeigt
+                    }, 1000);
+                });
+            }
+        }
+
+        // Startet den Vollbildmodus beim Klick
+        document.addEventListener("click", enterFullscreen);
+    </script>
+
+</body>
+</html>

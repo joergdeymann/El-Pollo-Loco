@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Button Design</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas"></canvas>
+
+    <script>
+        let canvas = document.getElementById('myCanvas');
+        let ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Button-Eigenschaften
+        const button = {
+            x: canvas.width / 2 - 150,
+            y: canvas.height / 2 - 25,
+            width: 300,
+            height: 50,
+            colorTop: '#e4c9a1', // Oberer Farbton
+            colorBottom: '#a67c52', // Unterer Farbton
+            borderColor: '#d2b48c',
+            textColor: '#5a3e1b',
+            fontSize: 1.5 * window.innerWidth / 100, // Dynamische Schriftgröße basierend auf der Fenstergröße
+            text: 'Klick mich!',
+        };
+
+        // Button zeichnen
+        function drawButton() {
+            // Hintergrund
+            let grd = ctx.createLinearGradient(button.x, button.y, button.x, button.y + button.height);
+            grd.addColorStop(0, button.colorTop);
+            grd.addColorStop(1, button.colorBottom);
+            
+            ctx.fillStyle = grd;
+            ctx.fillRect(button.x, button.y, button.width, button.height);
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = button.borderColor;
+            ctx.strokeRect(button.x, button.y, button.width, button.height);
+            ctx.fillStyle = button.textColor;
+            ctx.font = `${button.fontSize}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(button.text, button.x + button.width / 2, button.y + button.height / 2);
+
+            // Glanz-Effekt (für das "before" Pseudo-Element)
+            ctx.beginPath();
+            ctx.arc(button.x + button.width * 0.7, button.y + button.height * 0.2, button.width * 0.15, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.fill();
+        }
+
+        // Überprüfen, ob der Button angeklickt wurde
+        function isButtonClicked(x, y) {
+            return x >= button.x && x <= button.x + button.width &&
+                   y >= button.y && y <= button.y + button.height;
+        }
+
+        // Canvas rendern
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Canvas leeren
+            drawButton();
+        }
+
+        // Event-Listener für Klick
+        canvas.addEventListener('click', function(event) {
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+
+            if (isButtonClicked(mouseX, mouseY)) {
+                alert('Button wurde geklickt!');
+            }
+        });
+
+        // Initiales Rendering
+        render();
+
+        // Optional: Animieren des Buttons bei Hover oder Klick
+        let mouseOver = false;
+        canvas.addEventListener('mousemove', function(event) {
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+            mouseOver = isButtonClicked(mouseX, mouseY);
+            render();
+        });
+    </script>
+</body>
+</html>
