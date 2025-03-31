@@ -176,9 +176,9 @@ function toggleFullscreenMenu() {
 
     let fullscreen=document.getElementById("img-fullscreen");
     fullscreen.classList.toggle("off");
-    menu=document.getElementById("intro");
+    let menu=document.getElementById("intro");
     menu.classList.toggle("full");
-    body=document.getElementsByTagName("body")[0];
+    let body=document.getElementsByTagName("body")[0];
     // body.classList.toggle("black");
     return;
 }

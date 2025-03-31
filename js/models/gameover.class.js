@@ -32,7 +32,8 @@ class Gameover extends DrawableObject {
         // document.getElementById("endscreen-image").src=this.img;
         document.getElementById("endscreen").classList.remove("d-none");
         document.getElementById("intro").classList.add("d-none");
-        this.exitFullscreenMenu();
+        this.toggleGameScreen();
+        this.exitFullscreen();
 
         // if (document.fullscreenElement) document.getElementById("endscreen").requestFullscreen();
     }
@@ -77,8 +78,8 @@ class Gameover extends DrawableObject {
 
 
     // !!" Achtung das Falsche ???
-    exitFullscreenMenu() {
-        if (document.fullscreenElement) return;
+    XexitFullscreenMenu() {
+        if (!document.fullscreenElement) return;
         // if (!isFullscreen) return;
     
         let fullscreen=document.getElementById("img-fullscreen");
@@ -90,5 +91,51 @@ class Gameover extends DrawableObject {
         return;
     }
     
+
+
+    exitFullscreen() {
+        if (!document.fullscreenElement) return;
+        this.toggleGameScreen();
+        this.toggleFullscreenMenu();
+        this.exitFullscreenWindow();
+
+
+    }
+
+    // Copy of game.js function toggleGameScreen
+    toggleGameScreen() {
+        let canvas=document.getElementsByTagName("canvas")[0];
+        canvas.classList.toggle("noBorderRadius");
+        canvas.classList.toggle("full");
+        document.querySelector("body").classList.toggle("full");
+
+    }
+
+    // Copy of game.js function exitFullScreen
+    exitFullscreenWindow() {
+        if (!document.fullscreenElement) return;
+
+        // Fullscreen verlassen
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // Internet Explorer
+            document.msExitFullscreen();
+        }
+    }
+    
+    toggleFullscreenMenu() {
+        let fullscreen=document.getElementById("img-fullscreen");
+        fullscreen.classList.toggle("off");
+        let menu=document.getElementById("intro");
+        menu.classList.toggle("full");
+        let body=document.getElementsByTagName("body")[0];
+        // body.classList.toggle("black");
+        return;
+    }
+            
 
 }
