@@ -22,10 +22,8 @@ class ThrowableBossObject extends AnimatedObject {
     }
 
     IMAGES_THROW=[
-        // './assets/img/4_enemie_boss_chicken/3_attack/feather01.svg'
-        './assets/img/4_enemie_boss_chicken/6_feather/feder1-gimp.svg'
+            './assets/img/4_enemie_boss_chicken/6_feather/feder1-gimp.svg'
     ];
-
 
     constructor(character,angel) {
         super();
@@ -36,6 +34,9 @@ class ThrowableBossObject extends AnimatedObject {
     } 
 
 
+    /**
+     * Starts the animation
+     */
     init() {
         this.animationStart();
     }
@@ -43,9 +44,11 @@ class ThrowableBossObject extends AnimatedObject {
 
     /**
      * 
-     * @param {*} x 
-     * @param {*} y 
-     * @param {*} speed - 0-100; good values between 50 and 100;
+     * Throws a Feather has another behaviour than a Bottle
+     * 
+     * @param {int} x - Direction to x 
+     * @param {int} y - Direction to y
+     * @param {int} angel - 0-100 Rad Direction where the Feather flys
      */
     throw(x,y,angel) {
         
@@ -61,6 +64,13 @@ class ThrowableBossObject extends AnimatedObject {
     }
 
 
+    /**
+     * 
+     * The Fether gets here direction and timer
+     * 
+     * @param {Object} character - The Player / Enemy 
+     * @param {int} angel - 0-100 The Angel
+     */
     throwFromObject(character,angel) {
         let x=character.getCenterX()-this.width/2;
         let y=character.getCenterY()-this.height/2;
@@ -69,6 +79,11 @@ class ThrowableBossObject extends AnimatedObject {
     }
 
     
+    /**
+     * 
+     * The Position whre the Fether is moving from / starts
+     * 
+     */
     setStartposition() {
         this.radius=this.radiusStart;
         this.x=this.start.x;
@@ -76,20 +91,37 @@ class ThrowableBossObject extends AnimatedObject {
     }
 
 
+    /**
+     * Overwrite the Method to do nothing
+     */
     removeSelf() {
-
     }
 
+
+    /**
+     * 
+     * Stop the feathers movement
+     * 
+     */
     stop() {
         clearInterval(this.interval);
     }
 
 
+    /**
+     * 
+     * Listener: Rotates the feather for a smoother view
+     * 
+     */
     rotationListener() {
         this.rotationDegree=Math.random()*0.1+0.03;
         this.intervalRotation=setInterval(() => this.rotate(this.rotationDegree),1000/60);
     }
 
+
+    /**
+     * Listner: moves the Fether 
+     */
     movementListener() {
         this.x+=this.dx*this.speed;
         this.y+=this.dy*this.speed;
@@ -98,8 +130,12 @@ class ThrowableBossObject extends AnimatedObject {
     }
 
 
-
-
+    /**
+     * 
+     * Destoys the Feahter when timer is reached
+     * so this is removed
+     * 
+     */
     destroyTimer() {
         setTimeout(()=>{
             this.stop();
@@ -107,6 +143,15 @@ class ThrowableBossObject extends AnimatedObject {
         },this.lifeTime)
     }
 
+
+    /**
+     * 
+     * Removes a Feather tha is not used anymore
+     * 
+     * @param {List} array - List of Feathers, created from outside
+     * @param {Object} obj - Object to remove
+     * 
+     */
     removeObjectFromArray(array,obj) {
         const index=array.findIndex(e => e == obj);
         if (index != -1) array.splice(index,1);
@@ -114,5 +159,4 @@ class ThrowableBossObject extends AnimatedObject {
             console.error("Object nicht gefunden in thowable Boss Object");
         }
     } 
-
  }

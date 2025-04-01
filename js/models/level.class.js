@@ -17,6 +17,39 @@ class Level {
         this.addLevelListener();
     }
 
+
+    /**
+     * 
+     * Count the Bottles
+     * @returns the count of bottles
+     * 
+     */
+    get collectableBottleCount() {
+        let b=this.collectableObjects.filter(e => e instanceof CollectableBottle);
+        return b.length; 
+    }
+
+
+    /**
+     * 
+     * Count the Coins
+     * @returns the count of coins
+     * 
+     */
+    get collectableCoinCount() {
+        let b=this.collectableObjects.filter(e => e instanceof CollectableCoin);
+        return b.length; 
+    }
+
+
+    /**
+     * 
+     * Creates a Background
+     * 
+     * @param {Object} backgrounds 
+     * @param {int} layer 
+     * @param {int} count 
+     */
     addBackgroundLayer(backgrounds,layer,count) {
         let bg_layer=backgrounds.filter(e => e.layer == layer);
         let position=0;
@@ -31,8 +64,9 @@ class Level {
     }
 
 
-
     /**
+     * 
+     * Creates a Background Layer for different speed for move
      * 
      * Layer 1 Sky
      * Layer 2 Shadow 
@@ -51,6 +85,12 @@ class Level {
     }
 
     
+    /**
+     * 
+     * Adds additional Bottles ingame
+     * 
+     * @param {int} count 
+     */
     addCollectableBottles(count=countBottlesGround-10) {
         for (i=0;i<count;i++) {
             let b=new CollectableBottle(this.world);
@@ -58,16 +98,13 @@ class Level {
         }
     }
 
-    get collectableBottleCount() {
-        let b=this.collectableObjects.filter(e => e instanceof CollectableBottle);
-        return b.length; 
-    }
 
-    get collectableCoinCount() {
-        let b=this.collectableObjects.filter(e => e instanceof CollectableCoin);
-        return b.length; 
-    }
-
+    /**
+     * 
+     * set an Interval that asks if ther is still bottle on the map
+     * and add new ones if empty.
+     * 
+     */
     addLevelListener() {
         setInterval(() => {
             if (this.collectableBottleCount == 0) {
@@ -75,5 +112,4 @@ class Level {
             }
         },200);
     }
-    
 }

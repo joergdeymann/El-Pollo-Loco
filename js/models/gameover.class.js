@@ -32,10 +32,10 @@ class Gameover extends DrawableObject {
         // document.getElementById("endscreen-image").src=this.img;
         document.getElementById("endscreen").classList.remove("d-none");
         document.getElementById("intro").classList.add("d-none");
-        this.toggleGameScreen();
-        this.exitFullscreen();
+        // return;
+        // this.toggleGameScreen();
 
-        // if (document.fullscreenElement) document.getElementById("endscreen").requestFullscreen();
+        // document.exitFullscreen();
     }
 
     displayIntroScreen() {
@@ -48,15 +48,17 @@ class Gameover extends DrawableObject {
         this.displayEndscreen(this.imgaes); 
         setTimeout(() => {
             this.nextImage(); 
-        },2000);       
+        },1000);     
+
+        setTimeout(() => {
+            this.exitFullscreen();        
+        },2000);
     }
+
 
     loose() {
         this.invisible=false;
         this.nextImage(this.IMAGES_LOOSE); 
-        // setTimeout(() => {
-        //     this.nextImage(this.IMAGES_LOOSE); 
-        // },2000)
         this.secondImageAndChoice();       
     }
 
@@ -77,63 +79,61 @@ class Gameover extends DrawableObject {
     }
 
 
-    // !!" Achtung das Falsche ???
-    XexitFullscreenMenu() {
-        if (!document.fullscreenElement) return;
-        // if (!isFullscreen) return;
+
+    async exitFullscreen() {
     
-        let fullscreen=document.getElementById("img-fullscreen");
-        fullscreen.classList.toggle("off");
-        menu=document.getElementById("intro");
-        menu.classList.toggle("full");
-        body=document.getElementsByTagName("body")[0];
-        // body.classList.toggle("black");
-        return;
-    }
-    
-
-
-    exitFullscreen() {
         if (!document.fullscreenElement) return;
-        this.toggleGameScreen();
-        this.toggleFullscreenMenu();
-        this.exitFullscreenWindow();
+        console.log("Toggle GameScreen wird ausgefühtrt");
+
+        // if (document.fullscreenElement) {
+        //     document.exitFullscreen()
+        //         .then(() => console.log("Vollbildmodus beendet."))
+        //         .catch(err => console.error("Fehler beim Beenden des Vollbildmodus:", err));
+        // } else {
+        //     console.log("Kein Element ist im Vollbildmodus.");
+        // }
+
+        console.log("Step1"); 
+        await this.exitFullscreenWindow();
+
+        console.log("Step2"); 
+        this.exitFullscreenGame();
+        console.log("Step3"); 
+        this.exitFullscreenMenu();
+        console.log("Step4"); 
 
 
     }
+
 
     // Copy of game.js function toggleGameScreen
-    toggleGameScreen() {
+    exitFullscreenGame() {
+        console.log("Toggle GameScreen funktion");
         let canvas=document.getElementsByTagName("canvas")[0];
-        canvas.classList.toggle("noBorderRadius");
-        canvas.classList.toggle("full");
-        document.querySelector("body").classList.toggle("full");
-
+        canvas.classList.remove("noBorderRadius");
+        canvas.classList.remove("full");
+        document.querySelector("body").classList.remove("full");
     }
 
     // Copy of game.js function exitFullScreen
-    exitFullscreenWindow() {
-        if (!document.fullscreenElement) return;
-
+    async exitFullscreenWindow() {
         // Fullscreen verlassen
         if (document.exitFullscreen) {
-            document.exitFullscreen();
+            await document.exitFullscreen();
         } else if (document.mozCancelFullScreen) { // Firefox
-            document.mozCancelFullScreen();
+            await document.mozCancelFullScreen();
         } else if (document.webkitExitFullscreen) { // Chrome, Safari
-            document.webkitExitFullscreen();
+            await document.webkitExitFullscreen();
         } else if (document.msExitFullscreen) { // Internet Explorer
-            document.msExitFullscreen();
+            await document.msExitFullscreen();
         }
     }
     
-    toggleFullscreenMenu() {
+    exitFullscreenMenu() {
         let fullscreen=document.getElementById("img-fullscreen");
-        fullscreen.classList.toggle("off");
+        fullscreen.classList.add("off");
         let menu=document.getElementById("intro");
-        menu.classList.toggle("full");
-        let body=document.getElementsByTagName("body")[0];
-        // body.classList.toggle("black");
+        menu.classList.remove("full");
         return;
     }
             

@@ -157,7 +157,6 @@ canvas.full {
     margin-top: min(20px, 3%);
     height: 4vw;
     max-height: 32px;
-    border: 1px solid red;
     box-sizing: border-box;
 }
 

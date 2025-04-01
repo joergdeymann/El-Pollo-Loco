@@ -40,7 +40,9 @@ class ThrowableBottle extends ThrowableObject {
         this.init();
     }
     
-
+    /**
+     * Throws a smaller bow
+     */
     smaller() {
         this.x+=18;
         this.y+=0;
@@ -55,6 +57,11 @@ class ThrowableBottle extends ThrowableObject {
     }
 
 
+    /**
+     * 
+     * Stops the splash Animation
+     * 
+     */
     stopAnimation() {
         clearInterval(this.splashInterval);
         this.splashInterval=null;
@@ -64,6 +71,11 @@ class ThrowableBottle extends ThrowableObject {
     }
 
 
+    /**
+     * 
+     * If the bottle falls to ground the bottle begins to spash
+     * 
+     */
     splashOnGround() {
         if (this.IMAGES != this.IMAGES_SPLASH) {
             this.nextImage(this.IMAGES_SPLASH);
@@ -75,6 +87,11 @@ class ThrowableBottle extends ThrowableObject {
     }
 
 
+    /**
+     * 
+     * Splash the Botlle now
+     * 
+     */
     splashBottle() {
         if (!this.isMoving()) {
             this.splashOnGround();
@@ -82,6 +99,11 @@ class ThrowableBottle extends ThrowableObject {
     }
 
 
+    /**
+     * 
+     * Watch if a bottle is on Ground, and triggers a splash
+     * 
+     */
     initListenerSplash() {
         if (this.splashInterval) return;
 
@@ -92,11 +114,25 @@ class ThrowableBottle extends ThrowableObject {
     }
 
     
+    /**
+     * 
+     * If the bottle is behind the enemy you make more damage, so you can seperate score
+     * 
+     * @param {Object} enemy - enmy we hit with the Bottlle e.g. 
+     * @returns - true if Bottle is behind the given Enemy 
+     * 
+     */
     isBehind(enemy) {
         return (enemy.isMovingLeft && this.isMovingLeft) || (enemy.isMovingRight && this.isMovingRight);
     }
     
 
+    /**
+     * 
+     * Test if  Bottle hits the enemy
+     * 
+     * @param {Object} enemy 
+     */
     hitted(enemy) {
         if (this.isFalling() && this.live != 0) {
             if (this.isBehind(enemy)) {

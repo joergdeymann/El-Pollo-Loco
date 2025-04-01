@@ -3,7 +3,6 @@ class World {
     canvas;
     key;
     cameraX=-100;
-
     debug=true;
     character=new Character();
     gameover=new Gameover();
@@ -16,27 +15,33 @@ class World {
     };
     throwableObjects = [];
     collectableObjects;
-    
-
-
     width=720*2*5;
     scaleX=null;
     scaleY=null;
 
-
     
-
+    /**
+     * 
+     * Constructor for the World
+     * 
+     * @param {Element} canvas - Our Visual Gamne GUI 
+     * @param {Object} keyboard - ask for the allowed Key we pressed
+     *  
+     */
     constructor(canvas,keyboard) {
         this.canvas=canvas;
         this.key=keyboard;
 
         this.ctx=canvas.getContext('2d');
-        // this.ctx.size=this.canvas;
-        // this.resizeScreen();
-
     }
 
-
+    /**
+     * 
+     * Choose the Level we want to play
+     * and add the world
+     * 
+     * @param {Object} level - the Level we created 
+     */
     chooseLevel(level) {
         this.character.MAX_COINS=level.collectableCoinCount;
         this.level=level;
@@ -57,6 +62,13 @@ class World {
     }
 
 
+    /**
+     * 
+     * Add World to all Drawable Objects
+     * 
+     * @param {Object} objects 
+     * @returns 
+     */
     addWorld(objects) {
         if (!Array.isArray(objects)) {
             objects.world=this;
@@ -68,7 +80,13 @@ class World {
     }
 
 
-
+    /**
+     * 
+     * Reduce Live of of any Enemy
+     * 
+     * @param {Object} enemy - The enemy thatr looses its Live and dies
+     * @returns 
+     */
     enemyDie(enemy) {
         if (enemy.isDead()) return;
         enemy.reduceLive(this.character,"jump");
@@ -78,6 +96,12 @@ class World {
     }
 
 
+    /**
+     * 
+     * Reduce Live of Character when attacked from Enemy
+     * 
+     * @param {Object} enemy 
+     */
     enemyAttack(enemy) {
         if (enemy.isAboveGround()) {
             this.character.reduceLive(enemy,"jump");
@@ -143,20 +167,13 @@ class World {
 
     /**
      * 
-     * Activate Endboss when seen
+     * Activate Endboss Attackls when seen
      * 
      */
-    // checkEndbossActivation() {
-    //     if (this.level.endboss[0].isNearCharacter(500) && !this.level.endboss[0].active && !this.level.endboss[0].isDead()) {
-    //         this.level.endboss[0].activate();
-    //     }
-    // }
-
     checkEndbossAttacks(enemy) {
         if (enemy.attack.earthquake && !this.character.isAboveGround()) {
             this.character.reduceLive(enemy,"earthquake");
         }
-
     }
 
 
@@ -174,6 +191,11 @@ class World {
         },50);
     }
 
+    /**
+     * 
+     * Stop all Collission Events
+     * 
+     */
     stopCollisionListener() {
         clearInterval(this.collisionInterval);
         this.collisionInterval=null;
@@ -191,9 +213,11 @@ class World {
         this.statusBar.COINS.association=this.character;
     }
 
-    
-    addBackgroundListener() {
-        
+    /**
+     * Movement of Background
+     * 
+     */
+    addBackgroundListener() {  
         for(let bg of this.level.backgrounds) {
             bg.addListener();
         }
@@ -315,21 +339,5 @@ class World {
             object.draw(this.ctx);
         }
     }
-
-    XresizeScreen() {
-        const canvas=document.getElementsByTagName("canvas")[0];
-
-        const baseWidth = 720;
-        const baseHeight = 480;
-        const aspectRatio = baseWidth / baseHeight;  
-        const screenWidth = window.innerWidth;
-        const screenHeight = window.innerHeight; 
-        canvas.width = screenWidth;
-        canvas.height = screenHeight;  
-        const visibleWidth = baseWidth * (screenWidth / baseWidth);
-        const visibleHeight = baseHeight * (screenHeight / baseHeight);   
-        // this.ctx.setTransform(screenWidth / baseWidth, 0, 0, screenHeight / baseHeight, 0, 0);
-    }
-
 
 }
