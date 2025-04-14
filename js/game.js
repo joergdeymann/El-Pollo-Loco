@@ -19,6 +19,7 @@ function initGame() {
     world.chooseLevel(level1);
     world.level.world=world;
     world.debug=true;
+    world.sound=sound;
 }
 
 

@@ -143,7 +143,22 @@ class Screen {
         this.intro.classList.toggle("full");
         return;
     }
- 
+
+
+    toggleFullscreenMenuUser(e) {
+        e.preventDefault();    
+        if (!document.fullscreenElement) {
+            if (this.isStartscreen)  {
+                this.intro.requestFullscreen();     
+            } else {
+                this.canvas.requestFullscreen(); 
+            }
+        } else {
+            document.exitFullscreen();         
+        }
+    }
+
+
 
     /**
      * 

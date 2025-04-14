@@ -108,6 +108,11 @@ class World {
         } else {
             this.character.reduceLive(enemy,"touch");
         }
+
+        // if (this.character.isHurt() ) {
+        //     console.log("Hurt Sound ind World");
+        //     this.sound.play('hit');
+        // }
     }
 
 

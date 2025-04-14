@@ -23,27 +23,30 @@ class Gameover extends DrawableObject {
         this.loadImages(this.IMAGES_WIN); 
     }
 
+    
     /**
      * You Win/You Lost
      * Play Again - Button
      * Overview - Button
      */
     displayEndscreen() {
-        // document.getElementById("endscreen-image").src=this.img;
         document.getElementById("endscreen").classList.remove("d-none");
         document.getElementById("intro").classList.add("d-none");
-        // return;
-        // this.toggleGameScreen();
-
-        // document.exitFullscreen();
     }
 
+    /**
+     * Shows the "Gameover" Screen
+     */
     displayIntroScreen() {
         document.getElementById("intro").classList.remove("d-none");
         document.getElementById("endscreen").classList.add("d-none");        
         document.getElementsByTagName("canvas")[0].classList.add("d-none");        
     }
 
+
+    /**
+     * Shows the 2nd "Gameover" Screen and exits Fullscreen Mode
+     */
     secondImageAndChoice() {
         this.displayEndscreen(this.imgaes); 
         setTimeout(() => {
@@ -56,12 +59,19 @@ class Gameover extends DrawableObject {
     }
 
 
+    /**
+     * Character is dead - show Endscreen
+     */
     loose() {
         this.invisible=false;
         this.nextImage(this.IMAGES_LOOSE); 
         this.secondImageAndChoice();       
     }
 
+
+    /**
+     * Character has won - show Endscreen
+     */
     win() {
         this.index=0;
         this.invisible=false;
@@ -71,51 +81,39 @@ class Gameover extends DrawableObject {
             this.height=this.height*0.5;
             this.x+=this.width/2;
             this.y+=this.height/2-50;
-            
-            console.log("WIN Next image");
         },2000);
         this.secondImageAndChoice();       
        
     }
 
 
-
+    /**
+     * 
+     * Exits the Fullscreen Mode completely
+     * 
+     */
     async exitFullscreen() {
-    
         if (!document.fullscreenElement) return;
-        console.log("Toggle GameScreen wird ausgefühtrt");
-
-        // if (document.fullscreenElement) {
-        //     document.exitFullscreen()
-        //         .then(() => console.log("Vollbildmodus beendet."))
-        //         .catch(err => console.error("Fehler beim Beenden des Vollbildmodus:", err));
-        // } else {
-        //     console.log("Kein Element ist im Vollbildmodus.");
-        // }
-
-        console.log("Step1"); 
         await this.exitFullscreenWindow();
-
-        console.log("Step2"); 
         this.exitFullscreenGame();
-        console.log("Step3"); 
         this.exitFullscreenMenu();
-        console.log("Step4"); 
-
-
     }
 
 
-    // Copy of game.js function toggleGameScreen
+    /**
+     * Exits the Fullscreen Mode for the Game Screen
+     */
     exitFullscreenGame() {
-        console.log("Toggle GameScreen funktion");
         let canvas=document.getElementsByTagName("canvas")[0];
         canvas.classList.remove("noBorderRadius");
         canvas.classList.remove("full");
         document.querySelector("body").classList.remove("full");
     }
 
-    // Copy of game.js function exitFullScreen
+
+    /**
+     * Exits the System Fullscreen Mode
+     */
     async exitFullscreenWindow() {
         // Fullscreen verlassen
         if (document.exitFullscreen) {
@@ -129,13 +127,14 @@ class Gameover extends DrawableObject {
         }
     }
     
+
+    /**
+     * Exits the Fullscreen Mode for the Menu Screen
+     */
     exitFullscreenMenu() {
         let fullscreen=document.getElementById("img-fullscreen");
         fullscreen.classList.add("off");
         let menu=document.getElementById("intro");
         menu.classList.remove("full");
-        return;
     }
-            
-
 }

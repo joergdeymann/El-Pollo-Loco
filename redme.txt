@@ -167,3 +167,23 @@ Character:
     You can carry 200 Flask 
     that you have to collect best before you enter the Boss
 
+
+Sound Licence:
+    feet-on-glass.mp3
+        Sound Effect by <a href="https://pixabay.com/de/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=45176">freesound_community</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=45176">Pixabay</a>
+    bottle-smash.mp3
+        Sound Effect by <a href="https://pixabay.com/de/users/universfield-28281460/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=277554">Universfield</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=277554">Pixabay</a>
+    grunt.mp3
+        Sound Effect by <a href="https://pixabay.com/de/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=14723">freesound_community</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=14723">Pixabay</a>
+    jump.mp3
+        Sound Effect by <a href="https://pixabay.com/de/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=106134">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=106134">Pixabay</a>
+    hit.mp3
+        Sound Effect by <a href="https://pixabay.com/de/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=80175">freesound_community</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=80175">Pixabay</a>
+    chicken-jump.mp3
+        Sound Effect by <a href="https://pixabay.com/de/users/alex_jauk-16800354/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=196746">Alexander Jauk</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=196746">Pixabay</a>
+    rooster.mp3
+        Sound Effect by <a href="https://pixabay.com/de/users/stefan_grace-8153913/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=233738">Stefan Grace</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=233738">Pixabay</a>
+
+    button.mp3
+        Sound Effect by <a href="https://pixabay.com/de/users/alban_gogh-28413822/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=308750">Alban_Gogh</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=308750">Pixabay</a>
+

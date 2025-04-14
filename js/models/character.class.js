@@ -344,4 +344,27 @@ class Character extends AnimatedObject {
         this.setImages(this.IMAGES_WALKING);
     }
 
+    /*
+        TODO:
+        Overwritings for Sounds
+        I could also implement a sound Array for each enemy and ask if this Array exist 
+        If the Array exists it can make Sound
+        Maybe that is better than this solution 
+    */
+
+    jump() {
+        super.jump();
+        this.world.sound.play('jump');
+    }
+
+    jumpSmall() {
+        super.jumpSmall();
+        this.world.sound.play('jump');  
+    }
+
+    reduceLive(obj,weapon) {
+        super.reduceLive(obj,weapon);
+        if (obj.isDead() || !this.harmable || !this.isHurt()) return;
+        this.world.sound.play('hit');  
+    }   
 }

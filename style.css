@@ -235,6 +235,18 @@ button:hover {
     z-index:1000;
 }
 
+.button {
+    transition: transform 0.4s ease-in-out;
+    z-index: 1000;
+    cursor: pointer;    
+}
+
+.button:hover {
+    background: linear-gradient(to bottom, #f0d8af, #b88a5f); /* Hellerer Verlauf */
+    transform: scale(1.05);
+    z-index:1000;
+}
+
 
 .ls {
     content:url( "./assets/img/9_intro_outro_screens/menu/ls.svg");
