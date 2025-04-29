@@ -80,6 +80,7 @@ class ThrowableBottle extends ThrowableObject {
         if (this.IMAGES != this.IMAGES_SPLASH) {
             this.nextImage(this.IMAGES_SPLASH);
             this.index=0;
+            this.sound.play('bottleSmash');
         } else 
         if (this.index == this.IMAGES.length) {
             this.stopAnimation();

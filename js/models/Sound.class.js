@@ -1,4 +1,5 @@
 class Sound {
+    sfx=true; // Sound Effects
     sound={};
     /**
      * 
@@ -11,7 +12,8 @@ class Sound {
         this.backgroundAudio.pause();
         this.backgroundAudio.volume=0.2;
         this.element={
-            ls: document.getElementById("img-ls")
+            ls: document.getElementById("img-ls"),
+            sfx: document.getElementById("img-sfx")
         }
         this.addSounds();
     } 
@@ -27,6 +29,13 @@ class Sound {
         } else {
             this.backgroundAudio.pause();
         }
+    }
+    
+    /**
+     * Toggle SFX
+     */
+    toggleBackgroundSFX() {
+        this.element.sfx.classList.toggle("off");
     }
     
 
@@ -45,7 +54,7 @@ class Sound {
     }
 
 
-    addSound(src, name, volume = 100,start = 0,stop=0) {
+    addSound(src, name, volume = 100,start = 0,stop=0,blocking=true) {
         let audio = new Audio(src);
         audio.volume = volume / 100;    
         audio.loop = false;
@@ -54,34 +63,40 @@ class Sound {
         this.sound[name]={
             audio: audio,
             start: start,
-            stop: stop  
+            stop: stop,
+            blocking: blocking   
         }
     }
 
     
     addSounds() {
-        this.addSound('../assets/sound/bottle-smash.mp3', 'bottleSmash');
+        this.addSound('../assets/sound/bottle-smash.mp3', 'bottleSmash',10,0,0,false);
         this.addSound('../assets/sound/button.mp3', 'button');       
         this.addSound('../assets/sound/chicken-jump.mp3', 'chickenJump');
-        this.addSound('../assets/sound/feet-on-glass.mp3', 'feetOnGlass');
+        this.addSound('../assets/sound/feet-on-glass.mp3', 'feetOnGlass',10,0,0.4);
         this.addSound('../assets/sound/grunt.mp3', 'grunt');
         this.addSound('../assets/sound/hit.mp3', 'hit',1,0.1);
         this.addSound('../assets/sound/jump.mp3', 'jump',50,0.3,0.6);
         this.addSound('../assets/sound/rooster.mp3', 'rooster');    
+        this.addSound('../assets/sound/squish.mp3', 'squish',10,0,0,false);    
+        this.addSound('../assets/sound/coin.mp3', 'coin',30,0,0,false);    
+        this.addSound('../assets/sound/bottle.mp3', 'bottle',30,0,0,false);    
     }
 
     
     play(name) {
-        console.log("play sound",name);
-        if (this.sound[name] && !this.isPlaying(name)) {
-            // console.log("play sound is noctz playing starting:",name);
-            this.sound[name].audio.currentTime = this.sound[name].start; // Reset the sound to the beginning
-            this.sound[name].audio.play(); // Play the sound
-            if (this.sound[name].stop) {
-                let timer=(this.sound[name].stop-this.sound[name].start)*1000;
+        if (this.sfx === false) return; // Sound is off
+        // console.log("play sound",name);
+        let sound=this.sound[name];
+        let audio=sound.audio;  
+        if (sound && (!this.isPlaying(name) || !sound.blocking)) {
+            audio.currentTime = sound.start;
+            audio.play(); 
+            if (sound.stop) {
+                let timer=(sound.stop-sound.start)*1000;
                 setTimeout(() => {
-                    this.sound[name].audio.pause();
-                }, timer); // Stop the timer
+                    audio.pause();
+                }, timer); 
             }
         }
     }

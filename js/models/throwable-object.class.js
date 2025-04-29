@@ -1,4 +1,5 @@
 class ThrowableObject extends AnimatedObject {
+    sound;
     x;
     y;
     width=50;
@@ -29,6 +30,17 @@ class ThrowableObject extends AnimatedObject {
      */
     init() {
         this.animationStart();
+    }
+    
+
+    /**
+     * 
+     * Enables Sounds when splashing
+     * 
+     * @param {Sound Object} sound 
+     */
+    addSound(sound) {
+        this.sound=sound;
     }
 
 

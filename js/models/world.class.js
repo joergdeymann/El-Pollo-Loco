@@ -2,6 +2,7 @@ class World {
     ctx;
     canvas;
     key;
+    sound
     cameraX=-100;
     debug=true;
     character=new Character();
@@ -127,6 +128,7 @@ class World {
     collisionActionEnemy(enemy) {
         if (this.character.isColliding(enemy)) {
             if (this.character.isFalling()) {
+                if( !enemy.isDead()) this.sound.play('squish');
                 this.enemyDie(enemy);
             } else {
                 this.enemyAttack(enemy);
@@ -241,11 +243,13 @@ class World {
         if (this.character.isColliding(item)) {
 
             if (item instanceof CollectableBottle && this.character.hasBottleSpace()) {
+                this.sound.play('bottle');
                 this.character.addBottle();
                 item.removeSelf();
                 this.statusBar.BOTTLES.setPercentage(this.character.bottlesPercentage);    
             } else 
             if (item instanceof CollectableCoin) {
+                this.sound.play('coin');
                 this.character.addCoin();
                 item.removeSelf();
                 this.statusBar.COINS.setPercentage(this.character.coinsPercentage);    
@@ -279,6 +283,16 @@ class World {
             this.checkCollisionCollectableObjects(bottle);
         }
 
+        for (let bottle of this.throwableObjects) {
+            if (bottle instanceof ThrowableBottle && 
+                bottle.isDead() && 
+                bottle.isColliding(this.character) &&
+                (this.key.RIGHT || this.key.LEFT)
+            )   {
+                this.sound.play('feetOnGlass');
+            }
+        }
+
         
     }
 
@@ -290,6 +304,7 @@ class World {
     throwBottle() {
         let bottle=new ThrowableBottle();            
         bottle.throwFromObject(this.character,90);
+        bottle.addSound(this.sound);
         this.throwableObjects.push(bottle);
     }
 
