@@ -1,6 +1,29 @@
 .d-none {
     display: none !important;
 }
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+table {
+    font-size: 0.8em;
+    background-color: wheat;
+}
+
+td {
+    /* height: 1em */
+    vertical-align: middle;
+    font-size: min( 3vh, 12px);
+}
+
+td:nth-of-type(1) {
+    font-weight: 700;
+}
 
 
 body {
@@ -286,4 +309,82 @@ button:hover {
 body.full .intro img {
     max-width: 100%;
     max-height: 100%;
+}
+
+
+.instructions {
+    background-color: wheat;
+    width: 80%;
+    height: 80%;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 50px rgba(255, 255, 0, 1);
+    overflow-x: hidden;
+
+}
+.instructions header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1em;
+}
+.instructions section:not(header) {
+    font-size: 10px;
+}
+
+.instructions H2 {
+    margin: 0;
+}
+
+
+.right {
+    margin-left: 1rem;
+    flex:1;
+}
+
+.instructions::-webkit-scrollbar {    
+    width: 6px;
+    height: 10px;
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #e3b97f; 
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-radius: 10px;
+    background-clip: padding-box;
+}
+
+p {
+    text-align: justify;
+}
+
+@media (max-width: 500px) {
+    .instructions section:nth-of-type(1) {
+        flex-direction: column;
+    }
+    .right {
+        margin-left: 0;
+    }
+}
+
+#change-key>div{
+    border-radius: 8px;
+    background-color: wheat;
+    padding: 0.5em;
+    border: 1px solid rgba(0,0,0,0.4);
+    box-shadow: 0px 0px 50px rgba(255, 255, 0, 1);
+    text-align: center;
+}
+#change-key>div>span {
+    font-weight: 700;
 }

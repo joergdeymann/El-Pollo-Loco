@@ -14,7 +14,6 @@ function initGame() {
 
     initLevel1();
     canvas = document.getElementsByTagName("canvas")[0];
-    key = new Keyboard();
     world = new World(canvas,key);
     world.chooseLevel(level1);
     world.level.world=world;
@@ -31,4 +30,5 @@ function initGame() {
 function init() {
     screen=new Screen();
     sound = new Sound();
+    key = new Keyboard();
 }

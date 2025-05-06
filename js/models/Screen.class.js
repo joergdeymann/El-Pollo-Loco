@@ -209,4 +209,15 @@ class Screen {
             this.canvas.requestFullscreen();      
         }     
     }
+
+    hideInstruction() {
+        document.getElementById("instructions").classList.add("d-none");
+        console.log("hide instructions");
+    }
+
+    showInstruction() {
+        document.getElementById("instructions").classList.remove("d-none");
+        console.log("show instructions");
+
+    }
 }

@@ -57,7 +57,7 @@
                 </header>
                 <section></section>
                 <nav>
-                    <button>Game Instruction</button>
+                    <button onmousedown="screen.showInstruction()">Game Instruction</button>
                     <button>Setup</button>
                     <button>Imprint</button>
                 </nav>
@@ -87,7 +87,7 @@
                 </header>
                 <section></section>
                 <nav>
-                    <button>Game Instruction</button>
+                    <button onmousedown="screen.showInstruction()">Game Instruction</button>
                     <button>Setup</button>
                     <button>Imprint</button>
                 </nav>
@@ -95,6 +95,77 @@
                 
         </div>
     </div>
+
+    <div class="intro bg-text" id="instructions">
+        <div class="container flex-column instructions">
+            <header>Instructions</header>
+
+            <section class="flex-row">
+                <div class="left">
+                    <table>
+                        <tr><td id="display-JUMP">SPACE</td><td>jump</td><td><button onclick="key.setKeyChanger('JUMP')">Change</button></td></tr>
+                        <tr><td id="display-LEFT">LEFT</td><td>move left</td><td><button  onclick="key.setKeyChanger('LEFT')">Change</button></td></tr>
+                        <tr><td id="display-RIGHT">RIGHT</td><td>move right</td><td><button onclick="key.setKeyChanger('RIGHT')">Change</button></td></tr>
+                        <tr><td id="display-FAST">SHIFT</td><td>run</td><td><button onclick="key.setKeyChanger('FAST')">Change</button></td></tr>
+                        <tr><td id="display-MUSIC">M</td><td>toggle music</td><td><button onclick="key.setKeyChanger('MUSIC')">Change</button></td></tr>
+                        <tr><td id="display-SOUND">S</td><td>toggle sound</td><td><button onclick="key.setKeyChanger('SOUND')">Change</button></td></tr>
+                        <tr><td id="display-DEBUG">#</td><td>toggle hitboxes</td><td><button onclick="key.setKeyChanger('DEBUG')">Change</button></td></tr>
+                    </table>
+                </div>
+
+                <div class="right">
+                    <h2>Overview</h2>
+                    <p>
+                    You are an Mexican Hero, who has to save the world from evil chickens. There are small chickens which can fly and bigger 
+                    chickens which can only walk. They can decide to change its directions, so be careful. At the End of each Level the Big Evil Boss 
+                    is waiting for you, and you have to defeat him. He has some different Abilities.<br>
+                    Also you can collect bottles and coins. The bottles are used to throw them at the enemies, and the coins are used to buy some upgrades.
+                    (Yes, I have not implemented the upgrades by now, but I will do it in the future. Look in Ideas for more information.)<br>
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <header>Items</header>
+                <h2>Bottles</h2>
+                <p>You can collect bottles and throw them at the enemies. Each Level has 40 bottles in the Area and you can cary 40 bottels. 
+                If you have collected all bottles in the area there will appear new bottles. 
+                You can throw them at all chickens. Small chickens will die if they are hit by bottles. The End Boss takes damage. The Head takes 
+                most damage, the body less and the feet take the lowest damage.<br></p>
+                <h2>Coins</h2>
+                <p>You can also collect coins. You can use them to buy upgrades later. There is no limit, except the count of coins in the level.</p>
+                <header>Boss abilities</header>
+                <h2>JUMP</h2>
+                <p>The Boss can jump. If he jumps, he will not be able to move for a short time. If you have the skill you can try to move behind him to make double damage.
+                Do not move under the Boss while he is falling down, or you get massive damage.</p>
+                <h2>EARTHQUAKE</h2>
+                <p>The Boss jumps like the normal JUMP, but if he lands on EARTH the ground will shake. You have to jump over the ground, 
+                or you will take lots of damage.</p>
+                <h2>FEATHER ATTACK</h2>
+                <p>The Boss will throw feathers at you and all directions. You have to dodge them, to avoid damage at you.</p>
+                <header>other</header>
+                <h2>Idea open</h2>
+                <p>There are planned two boxes, where you can buy useful items with your coins.<br>
+                The first box is for drink flasks, which can make you faster, or give you more health, or doubles damage for 20 seconds.<br>
+                the second box is for permantent upgrade. You can get a secondary Weapon like a hot chily flask, that makes more damage, or you 
+                get a shield, that absorbs damage you take.<br></p>
+            </section>
+    
+            <section>
+                <header><button onmousedown="screen.hideInstruction()">Back</button></header>
+            </section>
+        </div>
+
+    </div>
+
+    <div class="intro d-none" id ="change-key">
+        <div>Press new key for<br><span>JUMP</span></div>
+    </div>
+
+
+
+
+
 
 </body>
 </html>
