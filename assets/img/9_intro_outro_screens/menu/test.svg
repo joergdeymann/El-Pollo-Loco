@@ -1,0 +1,37 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hintergrund mit runden Ecken -->
+  <rect x="0" y="0" width="32" height="32" rx="6" ry="6" fill="#d2b48c" stroke="#a67c52" stroke-width="2"/>
+
+
+  <!-- FX Linienzeichnung mit abgerundeten Ecken, 50% kleiner, zentriert -->
+  <!-- F -->
+  <!-- g transform="translate(5, 7) scale(0.008)">
+    <path d="M1435 0H276C262 0 250 12 250 26V1440C250 1454 262 1466 276 1466H1352C1366 1466 1378 1454 1378 1440V1241C1378 1227 1366 1215 1352 1215H532V858H1249C1263 858 1275 846 1275 832V635C1275 621 1263 609 1249 609H532V227H1435C1449 227 1461 215 1461 201V26C1461 12 1449 0 1435 0Z" fill="black"/>
+  </g -->
+  <!-- g transform="translate(5, 7) scale(0.008)">
+	<path d="M1435 0H276C262 0 250 12 250 26V858C250 872 262 884 276 884H1249C1263 884 1275 872 1275 858V635C1275 621 1263 609 1249 609H532V227H1435C1449 227 1461 215 1461 201V26C1461 12 1449 0 1435 0Z" fill="black"/>
+  </g -->
+  <!-- g transform="translate(5, 7) scale(0.008)">
+	<path d="M1435 0H276C262 0 250 12 250 26V1440C250 872 262 1440 276 884H1249C1263 884 1275 872 1275 858V635C1275 621 1263 609 1249 609H532V227H1435C1449 227 1461 215 1461 201V26C1461 12 1449 0 1435 0Z" fill="black"/>
+  </g -->
+
+  <g transform="translate(5, 11) scale(0.008)">
+	<path d="M1200 0H276C262 0 250 12 250 26 V1240 h250 V700 h400 v-250 h-400 V250 h500" fill="black"/>
+  </g>
+
+  <!-- X -->
+  <g transform="translate(15, 11) scale(0.008)">
+    <path d="M1223 0H956C946 0 937 5 931 14L657 434 383 14C377 5 368 0 358 0H88C66 0 54 26 67 45L502 643 98 1181C85 1198 96 1226 118 1226H369C379 1226 388 1221 394 1212L661 826 928 1212C934 1221 943 1226 953 1226H1223C1245 1226 1257 1199 1244 1181L837 631 1244 45C1257 26 1245 0 1223 0Z" fill="black"/>
+  </g>
+
+  <!-- Durchstreichendes X -->
+  <line x1="7" y1="7" x2="25" y2="25" stroke="red" stroke-width="3"/>
+  <line x1="7" y1="25" x2="25" y2="7" stroke="red" stroke-width="3"/>
+
+  <!-- Hover-Effekt über CSS -->
+  <style>
+    svg:hover rect {
+      fill: #f0d8af;
+    }
+  </style>
+</svg>
